@@ -22,7 +22,6 @@ class VirusButton extends React.Component {
             onClick={this.handleClick}
             src={Virus}
             alt="logo"
-            style={{ width: "400px", margin: "100px" }}
           />
         </Tada>
       </div>
