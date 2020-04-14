@@ -9,4 +9,15 @@ class user extends React.Component{
             team: "",
         }
     }
+    render () {
+        return(
+            <div>
+                <h2>{this.state.id}</h2>
+                <img src={this.state.logo} alt={this.state.team}></img>
+                <h3>{this.state.team}</h3>
+            </div>
+        )
+    }
 }
+
+export default user;
