@@ -1,5 +1,5 @@
 import React from 'react';
-import user from './components/user_infos';
+import user from './components/User_Infos';
 import axios from 'axios';
 
 function App() {
