@@ -1,8 +1,8 @@
 import React from 'react';
 
 class user extends React.Component{
-    constructor (id, logo, team){
-        super(id,logo,team);
+    constructor (props){
+        super(props);
         this.state = {
             id : "",
             logo: "",
