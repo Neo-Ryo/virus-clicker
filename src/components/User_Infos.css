@@ -1,14 +1,16 @@
 img {
-    height: 7vw;
-    width: 7vw;
+    height: 5vw;
+    width: 5vw;
+    margin-left: 1vw;
 }
 .pseudo {
     font-weight: bold;
     font-size: 2vw;
 }
 .teamname {
-    font-size: 1.8vw;
+    font-size: 1.2vw;
+    margin-left: 1vw;
 }
 .userblock {
-    margin-left: 3vw;
+    margin-left: 2vw;
 }
