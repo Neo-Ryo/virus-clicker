@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import './User_Infos.css'
+import styles from './userInfos.module.css'
 
 class User extends React.Component{
     constructor (props){
@@ -26,10 +26,10 @@ class User extends React.Component{
       }
     render () {
         return(
-            <div className="userblock">
-                <p className="pseudo">{this.state.id ? this.state.id : "Loading..." }</p>
+            <div className={styles.userBlock}>
+                <p className={styles.pseudoName}>{this.state.id ? this.state.id : "Loading..." }</p>
                 <img src={this.state.logo ? this.state.id : 'https://via.placeholder.com/70'} alt={this.state.team}/>
-                <p className="teamname">{this.state.team ? this.state.team : "Loading..."}</p>
+                <p className={styles.teamName}>{this.state.team ? this.state.team : "Loading..."}</p>
             </div>
         )
     }
