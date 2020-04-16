@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import TableScore from './components/TableScore'
+import TableScore from './components/TableScore/TableScore'
 
 function App() {
   return (

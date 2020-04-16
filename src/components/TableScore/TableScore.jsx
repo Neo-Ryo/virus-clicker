@@ -1,6 +1,6 @@
 import React from "react";
 import { Header, Image, Table,Button} from "semantic-ui-react";
-import "./style/tableScore.css";
+import "../style/tableScore.css";
 
 class TableScore extends React.Component {
   constructor(props) {
@@ -16,7 +16,7 @@ class TableScore extends React.Component {
   }
   render() {
     return (
-      <>
+      <div id="tableScore">
         <Table basic="very" celled collapsing>
           <Table.Body>
             <Table.Row>
@@ -41,7 +41,7 @@ class TableScore extends React.Component {
         <Button color='teal'onClik={()=>""}>
         +
       </Button>
-      </>
+      </div>
     );
   }
 }
