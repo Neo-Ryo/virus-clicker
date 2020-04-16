@@ -1,0 +1,16 @@
+img {
+    height: 5vw;
+    width: 5vw;
+    margin-left: 1vw;
+}
+.pseudoName {
+    font-weight: bold;
+    font-size: 1.6vw;
+}
+.teamName {
+    font-size: 1.2vw;
+    margin-left: 1vw;
+}
+.userBlock {
+    margin-left: 2vw;
+}
