@@ -1,9 +1,9 @@
-.title-in-game {
+.titleInGame {
   font-family: "Stalinist One", cursive;
   font-size: small;
   padding-top: 10px;
   color: rgba(73, 71, 71, 0.95);
 }
-.score-count {
+.scoreCount {
   font-size: smaller;
 }

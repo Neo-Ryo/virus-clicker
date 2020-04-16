@@ -1,13 +1,19 @@
 import React from "react";
 import "./App.css";
-import TitleInGame from "./components/Title-InGame";
+import TitleInGame from "./components/TitleInGame";
 
-function App() {
-  return (
-    <div className="App">
-      <TitleInGame />
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { counter: 0 };
+  }
+  render() {
+    return (
+      <div className="App">
+        <TitleInGame counter={this.state.counter} />
+      </div>
+    );
+  }
 }
 
 export default App;
