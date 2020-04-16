@@ -4,8 +4,7 @@ import { Container } from "semantic-ui-react";
 
 import styles from "./titleInGame.module.css";
 
-function TitleInGame() {
-  const { counter } = this.props;
+function TitleInGame({ counter }) {
   return (
     <Container>
       <h1 className={styles.titleInGame}>Virus clicker</h1>
