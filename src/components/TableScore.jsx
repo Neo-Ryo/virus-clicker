@@ -5,6 +5,14 @@ import "./style/tableScore.css";
 class TableScore extends React.Component {
   constructor(props) {
     super(props);
+    this.state={
+      users:{
+        teamName :"Pokémon",
+        imageTeam: "https://react.semantic-ui.com/images/avatar/small/lena.png",
+        pseudo :"Lena",
+        score :"150 000",
+      }
+    }
   }
   render() {
     return (
@@ -16,17 +24,17 @@ class TableScore extends React.Component {
               <Table.Cell>
                 <Header as="h4" image>
                   <Image
-                    src="https://react.semantic-ui.com/images/avatar/small/lena.png"
+                    src={this.state.users.imageTeam}
                     rounded
                     size="mini"
                   />
                   <Header.Content>
-                    Lena
-                    <Header.Subheader>Human Resources</Header.Subheader>
+                    {this.state.users.pseudo}
+                    <Header.Subheader>{this.state.users.teamName}</Header.Subheader>
                   </Header.Content>
                 </Header>
               </Table.Cell>
-              <Table.Cell>1000</Table.Cell>
+              <Table.Cell>{this.state.users.score}</Table.Cell>
             </Table.Row>
           </Table.Body>
         </Table>
