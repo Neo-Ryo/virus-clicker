@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import TableScore from './components/TableScore/TableScore'
+import TableScoreInGame from './components/TableScore/TableScoreInGame'
 
 function App() {
   return (
     <div className="App">
-      <TableScore />
+      <TableScoreInGame />
     </div>
   );
 }

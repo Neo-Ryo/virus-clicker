@@ -1,8 +1,8 @@
 import React from "react";
 import { Header, Image, Table,Button} from "semantic-ui-react";
-import "../style/tableScore.css";
+import "./style/tableScore.css";
 
-class TableScore extends React.Component {
+class TableScoreInGame extends React.Component {
   constructor(props) {
     super(props);
     this.state={
@@ -46,4 +46,4 @@ class TableScore extends React.Component {
   }
 }
 
-export default TableScore;
+export default TableScoreInGame;
