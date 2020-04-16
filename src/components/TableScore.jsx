@@ -1,5 +1,5 @@
 import React from "react";
-import { Header, Image, Table } from "semantic-ui-react";
+import { Header, Image, Table,Button} from "semantic-ui-react";
 import "./style/tableScore.css";
 
 class TableScore extends React.Component {
@@ -38,6 +38,9 @@ class TableScore extends React.Component {
             </Table.Row>
           </Table.Body>
         </Table>
+        <Button color='teal'onClik={()=>""}>
+        +
+      </Button>
       </>
     );
   }
