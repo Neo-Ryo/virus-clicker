@@ -1,5 +1,10 @@
 .logo {
-    cursor: pointer;
-    width: 200px;
-    height: 200px;
+  cursor: pointer;
+  width: 200px;
+  height: 200px;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.row {
+  text-align: -webkit-center;
 }

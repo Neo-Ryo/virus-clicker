@@ -2,6 +2,7 @@ import React from "react";
 import Virus from "./virus.png";
 import Tada from "react-reveal/Tada";
 import "./VirusButton.css";
+import { Container, Image } from "semantic-ui-react";
 
 class VirusButton extends React.Component {
   constructor(props) {
@@ -15,16 +16,16 @@ class VirusButton extends React.Component {
 
   render() {
     return (
-      <div>
+      <Container className="row">
         <Tada spy={this.state.counter}>
-          <img
+          <Image
             className="logo"
             onClick={this.increment}
             src={Virus}
             alt="logo"
           />
         </Tada>
-      </div>
+      </Container>
     );
   }
 }
