@@ -5,3 +5,7 @@
 
   float: left;
 }
+
+.buttonTable {
+  translate: -10vw 20vw;
+}
