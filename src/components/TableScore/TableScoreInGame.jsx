@@ -1,5 +1,5 @@
 import React from "react";
-import { Header, Image, Table, Button } from "semantic-ui-react";
+import { Header, Image, Table, Button, Container } from "semantic-ui-react";
 import styles from "./style/tableScore.module.css";
 
 const team = [
@@ -26,49 +26,35 @@ const team = [
   },
 ];
 
-class TableScoreInGame extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      users: {
-        teamName: "Pokémon",
-        imageTeam: "https://react.semantic-ui.com/images/avatar/small/lena.png",
-        pseudo: "Lena",
-        score: "150 000",
-        rank: "355",
-      },
-    };
-  }
-  render() {
-    return (
-      <div id="tableScore">
-        <Button className={styles.buttonTable} color="teal" onClik={() => ""}>
-          +
-        </Button>
-        <Table basic="very" celled collapsing>
-          <Table.Body>
-            {team.map((user) => (
-              <>
-                <Table.Row>
-                  <Table.Cell>#{user.rank}</Table.Cell>
-                  <Table.Cell>
-                    <Header as="h4" image>
-                      <Image src={user.imageTeam} rounded size="mini" />
-                      <Header.Content>
-                        {user.pseudo}
-                        <Header.Subheader>{user.teamName}</Header.Subheader>
-                      </Header.Content>
-                    </Header>
-                  </Table.Cell>
-                  <Table.Cell>{user.score}</Table.Cell>
-                </Table.Row>
-              </>
-            ))}
-          </Table.Body>
-        </Table>
-      </div>
-    );
-  }
+function TableScoreInGame() {
+  return (
+    <Container className={styles.tableScore}>
+      <Button className={styles.buttonTable} color="teal" onClik={() => ""}>
+        +
+      </Button>
+      <Table basic="very" celled collapsing>
+        <Table.Body>
+          {team.map((user) => (
+            <>
+              <Table.Row>
+                <Table.Cell>#{user.rank}</Table.Cell>
+                <Table.Cell>
+                  <Header as="h4" image>
+                    <Image src={user.imageTeam} rounded size="mini" />
+                    <Header.Content>
+                      {user.pseudo}
+                      <Header.Subheader>{user.teamName}</Header.Subheader>
+                    </Header.Content>
+                  </Header>
+                </Table.Cell>
+                <Table.Cell>{user.score}</Table.Cell>
+              </Table.Row>
+            </>
+          ))}
+        </Table.Body>
+      </Table>
+    </Container>
+  );
 }
 
 export default TableScoreInGame;
