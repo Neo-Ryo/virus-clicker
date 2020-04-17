@@ -1,46 +1,71 @@
 import React from "react";
-import { Header, Image, Table,Button} from "semantic-ui-react";
+import { Header, Image, Table, Button } from "semantic-ui-react";
 import styles from "./style/tableScore.module.css";
+
+const team = [
+  {
+    teamName: "Digimon",
+    imageTeam: "https://react.semantic-ui.com/images/avatar/small/lena.png",
+    pseudo: "Xena",
+    score: "1 000 000",
+    rank: "#1",
+  },
+  {
+    teamName: "YuGiHo",
+    imageTeam: "https://react.semantic-ui.com/images/avatar/small/lena.png",
+    pseudo: "Seito Kaiba",
+    score: "9 000 000",
+    rank: "#2",
+  },
+  {
+    teamName: "Heroes of The Storm",
+    imageTeam: "https://react.semantic-ui.com/images/avatar/small/lena.png",
+    pseudo: "Neo Ryo",
+    score: "7 94420923049",
+    rank: "#1",
+  },
+];
 
 class TableScoreInGame extends React.Component {
   constructor(props) {
     super(props);
-    this.state={
-      users:{
-        teamName :"Pokémon",
+    this.state = {
+      users: {
+        teamName: "Pokémon",
         imageTeam: "https://react.semantic-ui.com/images/avatar/small/lena.png",
-        pseudo :"Lena",
-        score :"150 000",
-      }
-    }
+        pseudo: "Lena",
+        score: "150 000",
+        rank: "#355",
+      },
+    };
   }
   render() {
     return (
       <div id="tableScore">
         <Table basic="very" celled collapsing>
           <Table.Body>
-            <Table.Row>
-              <Table.Cell>#355</Table.Cell>
-              <Table.Cell>
-                <Header as="h4" image>
-                  <Image
-                    src={this.state.users.imageTeam}
-                    rounded
-                    size="mini"
-                  />
-                  <Header.Content>
-                    {this.state.users.pseudo}
-                    <Header.Subheader>{this.state.users.teamName}</Header.Subheader>
-                  </Header.Content>
-                </Header>
-              </Table.Cell>
-              <Table.Cell>{this.state.users.score}</Table.Cell>
-            </Table.Row>
+            {team.map((user) => (
+              <>
+                <Table.Row>
+                  <Table.Cell>{user.rank}</Table.Cell>
+                  <Table.Cell>
+                    <Header as="h4" image>
+                      <Image src={user.imageTeam} rounded size="mini" />
+                      <Header.Content>
+                        {user.pseudo}
+                        <Header.Subheader>{user.teamName}</Header.Subheader>
+                      </Header.Content>
+                    </Header>
+                  </Table.Cell>
+                  <Table.Cell>{user.score}</Table.Cell>
+                </Table.Row>
+              </>
+            ))}
           </Table.Body>
         </Table>
-        <Button color='teal'onClik={()=>""}>
-        +
-      </Button>
+        <Button color="teal" onClik={() => ""}>
+          +
+        </Button>
       </div>
     );
   }
