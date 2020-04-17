@@ -4,6 +4,7 @@ import TitleInGame from "./components/TitleInGame";
 import User from "./components/UserInfos";
 import VirusButton from "./components/VirusButton";
 import Planet from "./components/Planet";
+import TableScoreInGame from './components/TableScore/TableScoreInGame'
 
 class App extends React.Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <User />
+        <TableScoreInGame />
         <Planet />
         <TitleInGame counter={this.state.counter} />
         <VirusButton />
