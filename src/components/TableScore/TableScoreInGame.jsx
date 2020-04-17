@@ -1,6 +1,6 @@
 import React from "react";
 import { Header, Image, Table,Button} from "semantic-ui-react";
-import "./style/tableScore.css";
+import styles from "./style/tableScore.module.css";
 
 class TableScoreInGame extends React.Component {
   constructor(props) {
