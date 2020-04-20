@@ -2,7 +2,7 @@ import React from "react";
 import Virus from "./virus.png";
 import Tada from "react-reveal/Tada";
 import styles from "./virusButton.module.css";
-import { Container, Image } from "semantic-ui-react";
+import { Grid, Image } from "semantic-ui-react";
 
 class VirusButton extends React.Component {
   constructor(props) {
@@ -16,7 +16,7 @@ class VirusButton extends React.Component {
 
   render() {
     return (
-      <Container className={styles.row}>
+      <Grid.Row className={styles.virusLogoContainer}>
         <Tada spy={this.state.counter}>
           <Image
             className={styles.virusLogo}
@@ -25,7 +25,7 @@ class VirusButton extends React.Component {
             alt="logo"
           />
         </Tada>
-      </Container>
+      </Grid.Row>
     );
   }
 }
