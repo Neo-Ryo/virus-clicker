@@ -1,0 +1,10 @@
+.virusLogo {
+  cursor: pointer;
+  width: 220px;
+  height: 220px;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.virusLogoContainer {
+  text-align: -webkit-center;
+}
