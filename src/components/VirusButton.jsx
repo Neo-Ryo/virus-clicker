@@ -19,7 +19,7 @@ class VirusButton extends React.Component {
       <Container className={styles.row}>
         <Tada spy={this.state.counter}>
           <Image
-            className={styles.logo}
+            className={styles.virusLogo}
             onClick={this.increment}
             src={Virus}
             alt="logo"
