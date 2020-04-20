@@ -1,7 +1,7 @@
 import React from "react";
-import Virus from "./virus.png";
+import Virus from "./images/virus.png";
 import Tada from "react-reveal/Tada";
-import "./VirusButton.css";
+import "./styles/VirusButton.css";
 
 class VirusButton extends React.Component {
   constructor(props) {

@@ -1,9 +1,10 @@
 import React from "react";
 import { Header, Image, Table, Button, Container } from "semantic-ui-react";
-import styles from "./style/tableScore.module.css";
+import styles from "./styles/tableScore.module.css";
 
 const team = [
   {
+    id: 1,
     teamName: "Digimon",
     imageTeam: "https://react.semantic-ui.com/images/avatar/small/lena.png",
     pseudo: "Xena",
@@ -11,6 +12,7 @@ const team = [
     rank: 1,
   },
   {
+    id: 2,
     teamName: "YuGiHo",
     imageTeam: "https://react.semantic-ui.com/images/avatar/small/lena.png",
     pseudo: "Seito Kaiba",
@@ -18,6 +20,7 @@ const team = [
     rank: 2,
   },
   {
+    id: 3,
     teamName: "Heroes of The Storm",
     imageTeam: "https://react.semantic-ui.com/images/avatar/small/lena.png",
     pseudo: "Neo Ryo",
