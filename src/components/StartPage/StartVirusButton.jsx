@@ -1,7 +1,7 @@
 import React from "react";
 import Virus from "../virus.png";
 import styles from "./startVirusButton.module.css";
-import { Image, Grid, Button } from "semantic-ui-react";
+import { Image, Grid, Button, GridRow } from "semantic-ui-react";
 import Zoom from "react-reveal/Zoom";
 import Fade from "react-reveal/Fade";
 
@@ -21,12 +21,17 @@ class StartVirusButton extends React.Component {
           <Zoom left>
             <Image
               onClick={this.showButtons}
-              className={`${styles.startButton}`}
+              className={`${styles.startButton} ${
+                this.state.show
+                  ? styles.virusButtonActive
+                  : styles.virusButtonNotActive
+              }`}
               src={Virus}
               alt="logo"
             />
           </Zoom>
         </Grid.Column>
+
         <Fade bottom when={this.state.show}>
           <Button className="ui purple button">Create a team</Button>
           <Button className="ui purple button">Join a team</Button>
