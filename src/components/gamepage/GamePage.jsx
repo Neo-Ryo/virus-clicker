@@ -14,30 +14,34 @@ class GamePage extends React.Component {
 
   render() {
     return (
-      <Grid>
-        <Grid.Row columns={3}>
-          <Grid.Column width={4}>
-            <UserInfos />
-          </Grid.Column>
-          <Grid.Column width={8}>
-            <TitleInGame />
-          </Grid.Column>
-          <Grid.Column width={4}></Grid.Column>
-        </Grid.Row>
-        <Grid.Row columns={2}>
-          <Grid.Column width={9}>
-            <TableScoreInGame />
-          </Grid.Column>
-          <Grid.Column width={7}>
-            <Planet />
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row columns={1}>
-          <Grid.Column width={16}>
-            <VirusButton />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <>
+        <Grid>
+          <Grid.Row columns={3}>
+            <Grid.Column width={4}>
+              <UserInfos />
+            </Grid.Column>
+            <Grid.Column width={8}>
+              <TitleInGame />
+            </Grid.Column>
+            <Grid.Column width={4}></Grid.Column>
+          </Grid.Row>
+          <Grid.Row centered columns={3}>
+            <Grid.Column width={6}>
+              <Planet />
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row columns={1}>
+            <Grid.Column width={16}>
+              <TableScoreInGame />
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row centered columns={2}>
+            <Grid.Column>
+              <VirusButton />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </>
     );
   }
 }

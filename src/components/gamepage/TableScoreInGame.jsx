@@ -31,9 +31,9 @@ const team = [
 
 function TableScoreInGame() {
   return (
-    <Container>
+    <Container className={styles.tableScore}>
       <Button size="mini" color="teal" onClick={() => ""} content="+"></Button>
-      <Table className={styles.tableScore} basic="very" celled collapsing>
+      <Table basic="very" celled collapsing>
         <Table.Body>
           {team
             .map((user) => (
