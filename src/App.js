@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import TeamMaker from "./components/TeamMaker";
 
 class App extends React.Component {
   constructor(props) {
@@ -7,7 +8,11 @@ class App extends React.Component {
     this.state = { counter: 0 };
   }
   render() {
-    return <div className="App"></div>;
+    return (
+      <div className="App">
+        <TeamMaker />
+      </div>
+    );
   }
 }
 

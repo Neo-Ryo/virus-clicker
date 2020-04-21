@@ -1,68 +1,69 @@
 import React, { Component } from "react";
 import { Segment, Header, Card } from "semantic-ui-react";
+import Pika from "./pika.png";
 const teams = [
   {
-    teamlogo: "https://react.semantic-ui.com/images/avatar/small/lena.png",
+    teamlogo: { Pika },
     teamname: "Pikapika",
     members: 23,
   },
   {
-    teamlogo: "https://react.semantic-ui.com/images/avatar/small/lena.png",
+    teamlogo: { Pika },
     teamname: "Pikapika",
     members: 23,
   },
   {
-    teamlogo: "https://react.semantic-ui.com/images/avatar/small/lena.png",
+    teamlogo: { Pika },
     teamname: "Pikapika",
     members: 23,
   },
   {
-    teamlogo: "https://react.semantic-ui.com/images/avatar/small/lena.png",
+    teamlogo: { Pika },
     teamname: "Pikapika",
     members: 23,
   },
   {
-    teamlogo: "https://react.semantic-ui.com/images/avatar/small/lena.png",
+    teamlogo: { Pika },
     teamname: "Pikapika",
     members: 23,
   },
   {
-    teamlogo: "https://react.semantic-ui.com/images/avatar/small/lena.png",
+    teamlogo: { Pika },
     teamname: "Pikapika",
     members: 23,
   },
   {
-    teamlogo: "https://react.semantic-ui.com/images/avatar/small/lena.png",
+    teamlogo: { Pika },
     teamname: "Pikapika",
     members: 23,
   },
   {
-    teamlogo: "https://react.semantic-ui.com/images/avatar/small/lena.png",
+    teamlogo: { Pika },
     teamname: "Pikapika",
     members: 23,
   },
   {
-    teamlogo: "https://react.semantic-ui.com/images/avatar/small/lena.png",
+    teamlogo: { Pika },
     teamname: "Pikapika",
     members: 23,
   },
   {
-    teamlogo: "https://react.semantic-ui.com/images/avatar/small/lena.png",
+    teamlogo: { Pika },
     teamname: "Pikapika",
     members: 23,
   },
   {
-    teamlogo: "https://react.semantic-ui.com/images/avatar/small/lena.png",
+    teamlogo: { Pika },
     teamname: "Pikapika",
     members: 23,
   },
   {
-    teamlogo: "https://react.semantic-ui.com/images/avatar/small/lena.png",
+    teamlogo: { Pika },
     teamname: "Pikapika",
     members: 23,
   },
   {
-    teamlogo: "https://react.semantic-ui.com/images/avatar/small/lena.png",
+    teamlogo: { Pika },
     teamname: "Pikapika",
     members: 23,
   },
