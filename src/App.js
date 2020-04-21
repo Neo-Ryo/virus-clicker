@@ -1,10 +1,6 @@
 import React from "react";
 import "./App.css";
-import TitleInGame from "./components/TitleInGame";
-import User from './components/UserInfos';
-import VirusButton from "./components/VirusButton";
-import Planet from "./components/Planet";
-import TableScoreInGame from './components/TableScore/TableScoreInGame'
+import CreateTeamPage from "./components/CreateTeamPage";
 
 class App extends React.Component {
   constructor(props) {
@@ -14,11 +10,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <User />
-        <TableScoreInGame />
-        <Planet />
-        <TitleInGame counter={this.state.counter} />
-        <VirusButton />
+        <CreateTeamPage/>
       </div>
     );
   }
