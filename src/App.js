@@ -15,11 +15,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <User />
-        <TableScoreInGame />
-        <Planet />
-        <TitleInGame counter={this.state.counter} />
-        <VirusButton />
+
         <CreateUser />
       </div>
     );
