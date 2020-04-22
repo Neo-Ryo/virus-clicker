@@ -1,5 +1,6 @@
 import React from "react";
 import CreateTeamTitles from "./CreateTeamTitles";
+import CreateTeamInput from "./CreateTeamInput";
 
 class CreateTeamPage extends React.Component {
     constructor(props) {
@@ -9,8 +10,10 @@ class CreateTeamPage extends React.Component {
         }
     }
     render  () {
-        return(
+        return(<>
             <CreateTeamTitles/>
+            <CreateTeamInput/>
+            </>
         )
     }
 }
