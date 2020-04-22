@@ -7,11 +7,14 @@ function CreateTeamInput(props) {
       <GridRow columns={2} centered>
         <GridColumn>
           <Input
+            size="small"
             label={{ icon: "asterisk" }}
             labelPosition="right corner"
             placeholder="Team name..."
           />
-          <Icon name="checkmark" color="green"/>
+        </GridColumn>
+        <GridColumn width={2} centered>
+          <Icon size="small" name="checkmark" color="green" />
         </GridColumn>
       </GridRow>
     </Grid>

@@ -1,11 +1,21 @@
 import React from "react";
-import {Header, Container} from "semantic-ui-react";
+import { Header, Grid, GridRow, GridColumn } from "semantic-ui-react";
 
-function CreateTeamTitles (props) {
-    return (<Container>
-    <Header as="h1">Game Builder</Header>
-    <Header as="h3">Create a team</Header>
-    </Container>)
+function CreateTeamTitles(props) {
+  return (
+    <Grid>
+      <GridRow columns={2} centered>
+        <GridColumn>
+          <Header textAlign="center" as="h2">Game Builder</Header>
+        </GridColumn>
+      </GridRow>
+      <GridRow>
+        <GridColumn>
+          <Header as="h3">Create a team</Header>
+        </GridColumn>
+      </GridRow>
+    </Grid>
+  );
 }
 
 export default CreateTeamTitles;
