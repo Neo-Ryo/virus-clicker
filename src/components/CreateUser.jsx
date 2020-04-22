@@ -1,12 +1,6 @@
 import React from "react";
 import { Input } from "semantic-ui-react";
-
-
-const userOne = {
-  uuid: "uuidv4",
-  pseudo: "Mdoudou",
-  score: 10000,
-};
+import axios from 'axios'
 
 
 class CreateUser extends React.Component {
@@ -14,14 +8,31 @@ class CreateUser extends React.Component {
     super(props);
     this.state = {
       pseudoTape: "",
+      users:{}
     };
     this.handleChange = this.handleChange.bind(this);
   }
   handleChange(event) {
-    if (!event.target.value.includes("*")) {
       this.setState({ pseudoTape: event.target.value });
     }
+
+    getUsers() {
+      //const infoPokemon = result.data;
+      axios
+        .get(
+          `https://virusclicker.herokuapp.com/users`
+        )
+        .then(res => {
+          this.setState({ users: res.data[0]});
+          console.log(res.data[0])
+        });
+    }
+
+  componentDidMount() {
+   this.getUsers()
+   
   }
+
 
 
   render() {
