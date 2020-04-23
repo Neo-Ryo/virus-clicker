@@ -3,6 +3,12 @@ import { Segment, Header } from "semantic-ui-react";
 import TeamCards from "./TeamCards";
 
 class TeamMaker extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      futurestateincoming: "",
+    };
+  }
   render() {
     return (
       <>
