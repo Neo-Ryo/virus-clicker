@@ -1,73 +1,6 @@
 import React, { Component } from "react";
-import { Segment, Header, Card } from "semantic-ui-react";
-import Pika from "./pika.png";
-const teams = [
-  {
-    teamlogo: { Pika },
-    teamname: "Pikapika",
-    members: 23,
-  },
-  {
-    teamlogo: { Pika },
-    teamname: "Pikapika",
-    members: 23,
-  },
-  {
-    teamlogo: { Pika },
-    teamname: "Pikapika",
-    members: 23,
-  },
-  {
-    teamlogo: { Pika },
-    teamname: "Pikapika",
-    members: 23,
-  },
-  {
-    teamlogo: { Pika },
-    teamname: "Pikapika",
-    members: 23,
-  },
-  {
-    teamlogo: { Pika },
-    teamname: "Pikapika",
-    members: 23,
-  },
-  {
-    teamlogo: { Pika },
-    teamname: "Pikapika",
-    members: 23,
-  },
-  {
-    teamlogo: { Pika },
-    teamname: "Pikapika",
-    members: 23,
-  },
-  {
-    teamlogo: { Pika },
-    teamname: "Pikapika",
-    members: 23,
-  },
-  {
-    teamlogo: { Pika },
-    teamname: "Pikapika",
-    members: 23,
-  },
-  {
-    teamlogo: { Pika },
-    teamname: "Pikapika",
-    members: 23,
-  },
-  {
-    teamlogo: { Pika },
-    teamname: "Pikapika",
-    members: 23,
-  },
-  {
-    teamlogo: { Pika },
-    teamname: "Pikapika",
-    members: 23,
-  },
-];
+import { Segment, Header } from "semantic-ui-react";
+import TeamCards from "./TeamCards";
 
 class TeamMaker extends Component {
   render() {
@@ -80,18 +13,8 @@ class TeamMaker extends Component {
           <Header as="h3">Join a team</Header>
           {/*input await*/}
         </Segment>
-        <Segment>
-          <Card.Group itemsPerRow={3}>
-            {teams.map((team, i) => (
-              <Card
-                image={team.teamlogo}
-                header={team.teamname}
-                extra={team.members}
-                size="mini"
-              />
-            ))}
-          </Card.Group>
-        </Segment>
+
+        <TeamCards />
       </>
     );
   }
