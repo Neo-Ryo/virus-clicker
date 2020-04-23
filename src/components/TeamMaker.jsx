@@ -11,7 +11,8 @@ class TeamMaker extends Component {
         </Header>
         <Segment>
           <Header as="h3">Join a team</Header>
-          {/*input await*/}
+          <input value="" placeholder="pseudo" />
+          <input value="" placeholder="team search" />
         </Segment>
 
         <TeamCards />

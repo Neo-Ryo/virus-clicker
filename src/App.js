@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import TeamMaker from "./components/TeamMaker";
+import Router from './components/Router'
 
 class App extends React.Component {
   constructor(props) {
@@ -10,7 +10,8 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <TeamMaker />
+
+        <Router />
       </div>
     );
   }
