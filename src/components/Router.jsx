@@ -6,11 +6,13 @@ function Router() {
   return (
     <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={StartVirusButton} />
-          <Route path="/createteam" component={CreateTeamPage} />
-          <Route path="/jointeam" component={JoinTeam} />
-          <Route path="/game" component={GamePage} />
+          <Route exact path="/"  />
+          <Route path="/createteam" />
+          <Route path="/jointeam"  />
+          <Route path="/game"  />
         </Switch>
     </BrowserRouter>
   );
 }
+
+export default Router;
