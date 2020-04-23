@@ -20,7 +20,7 @@ class CreateUser extends React.Component {
   getUsers() {
     axios.get(`https://virusclicker.herokuapp.com/users`).then((res) => {
       this.setState({ users: res.data });
-      
+  
     });
   }
   handleSubmit(){
@@ -49,7 +49,7 @@ class CreateUser extends React.Component {
           id="pseudo"
           onChange={this.handleChange}
         />
-        <p>{this.state.pseudoTape}</p>
+        
         <button onClick={this.handleSubmit}>Submit</button>
       </>
     );
