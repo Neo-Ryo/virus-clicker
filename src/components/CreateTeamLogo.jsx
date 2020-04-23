@@ -10,16 +10,14 @@ import {
 function CreateTeamLogo(props) {
   return (
     <Grid>
-      <GridRow columns={2} centered>
-        <GridColumn>
+      <GridRow columns={3} centered>
+        <GridColumn verticalAlign='middle'>
           <Placeholder style={{ height: 150, width: 150 }}>
             <Placeholder.Image rounded />
           </Placeholder>
         </GridColumn>
-      </GridRow>
-      <GridRow columns={2} centered>
-        <GridColumn>
-          <Button color="teal" icon="add" content="Add a logo" size="tiny"/>
+        <GridColumn verticalAlign="bottom">
+          <Button icon="add" size="tiny" />
         </GridColumn>
       </GridRow>
     </Grid>
