@@ -1,11 +1,5 @@
 import React from "react";
 import "./App.css";
-import TitleInGame from "./components/TitleInGame";
-import User from './components/UserInfos';
-import VirusButton from "./components/VirusButton";
-import Planet from "./components/Planet";
-import TableScoreInGame from './components/TableScore/TableScoreInGame'
-import CreateUser from "./components/CreateUser";
 
 class App extends React.Component {
   constructor(props) {
@@ -16,7 +10,7 @@ class App extends React.Component {
     return (
       <div className="App">
 
-        <CreateUser />
+        <Router />
       </div>
     );
   }
