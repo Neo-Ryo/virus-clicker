@@ -1,19 +1,21 @@
 import React from "react";
-import { Button, Icon, Grid, GridRow } from "semantic-ui-react";
+import { Button, Grid, GridRow } from "semantic-ui-react";
 
-class CreateTeamStartButton extends React.Component {
-  render() {
-    return (
+function CreateTeamStartButton({searchingTeam}) {
+
+    return (<>
       <Grid>
         <GridRow columns={2} centered>
-            <Button color="teal" icon labelPosition="right">
+            <Button 
+            color="teal"
+            onClick={() => {searchingTeam()}}
+            >
               Start
-              <Icon name="right arrow" />
             </Button>
         </GridRow>
       </Grid>
+      </>
     );
-  }
 }
 
 export default CreateTeamStartButton;
