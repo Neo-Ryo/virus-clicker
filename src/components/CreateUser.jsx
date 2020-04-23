@@ -11,6 +11,7 @@ class CreateUser extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.getUsers = this.getUsers.bind(this);
   }
   handleChange(event) {
     this.setState({ pseudoTape: event.target.value }); 
