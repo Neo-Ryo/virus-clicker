@@ -11,6 +11,7 @@ class CreateTeamPage extends React.Component {
     this.state = {
       teams : {},
       teamTape : "",
+      logo : "",
     };
     this.getTeams = this.getTeams.bind(this);
     this.searchingTeam = this.searchingTeam.bind(this);
@@ -48,7 +49,7 @@ class CreateTeamPage extends React.Component {
         <CreateTeamTitles />
 
         <CreateTeamInput teamTape={this.state.teamTape} handleChange={this.handleChange} />
-        <CreateTeamLogo/>
+        <CreateTeamLogo logo={this.state.logo} getUrl={this.getUrl}/>
         <CreateTeamStartButton searchingTeam={this.searchingTeam}/>
       </>
     );

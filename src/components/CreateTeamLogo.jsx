@@ -8,11 +8,11 @@ import {
   Input,
 } from "semantic-ui-react";
 
-function CreateTeamLogo(props) {
+function CreateTeamLogo({logo, getUrl}) {
   return (<>
     <Grid>
       <GridRow columns={2}>
-        <Input label="http://" placeholder="Write your url image here"/>
+        <Input type="url" label="Url" placeholder="http://virus_clicker.com" value={logo} onChange={getUrl}/>
       </GridRow>
       <GridRow columns={3}>
         <GridColumn verticalAlign="middle">

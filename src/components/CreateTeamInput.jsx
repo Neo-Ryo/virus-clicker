@@ -15,7 +15,6 @@ function CreateTeamInput ({teamTape, handleChange}) {
                 value= {teamTape}
                 onChange={handleChange}
               />
-              <p>{teamTape}</p>
             </GridColumn>
             <GridColumn width={2}>
               <Icon size="small" name="checkmark" color="green" />
