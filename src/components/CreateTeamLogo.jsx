@@ -17,7 +17,7 @@ function CreateTeamLogo(props) {
           </Placeholder>
         </GridColumn>
       </GridRow>
-      <GridRow columns={3} centered>
+      <GridRow columns={2} centered>
         <GridColumn>
           <Button color="teal" icon="add" content="Add a logo" size="tiny"/>
         </GridColumn>
