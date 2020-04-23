@@ -1,6 +1,7 @@
 import React from "react";
 import Virus from "./virus.png";
 import Tada from "react-reveal/Tada";
+import Zoom from "react-reveal/Zoom";
 import styles from "./virusButton.module.css";
 import { Grid, Image } from "semantic-ui-react";
 
@@ -16,16 +17,18 @@ class VirusButton extends React.Component {
 
   render() {
     return (
-      <Grid.Row className={styles.virusLogoContainer}>
-        <Tada spy={this.state.counter}>
-          <Image
-            className={styles.virusLogo}
-            onClick={this.increment}
-            src={Virus}
-            alt="logo"
-          />
-        </Tada>
-      </Grid.Row>
+      <Zoom left>
+        <Grid.Row className={styles.virusLogoContainer}>
+          <Tada spy={this.state.counter}>
+            <Image
+              className={styles.virusLogo}
+              onClick={this.increment}
+              src={Virus}
+              alt="logo"
+            />
+          </Tada>
+        </Grid.Row>
+      </Zoom>
     );
   }
 }
