@@ -2,7 +2,7 @@ import React from "react";
 
 import { Container } from "semantic-ui-react";
 
-import styles from "./titleInGame.module.css";
+import styles from "./styles/titleInGame.module.css";
 
 function TitleInGame({ counter }) {
   return (

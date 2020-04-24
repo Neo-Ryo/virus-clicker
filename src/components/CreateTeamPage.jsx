@@ -4,6 +4,7 @@ import CreateTeamInput from "./CreateTeamInput";
 import CreateTeamLogo from "./CreateTeamLogo";
 import CreateTeamStartButton from "./CreateTeamStartButton";
 import axios from "axios";
+import CreateUser from "./CreateUser"
 
 class CreateTeamPage extends React.Component {
   constructor(props) {
@@ -47,7 +48,7 @@ class CreateTeamPage extends React.Component {
     return (
       <>
         <CreateTeamTitles />
-
+        <CreateUser/>
         <CreateTeamInput teamTape={this.state.teamTape} handleChange={this.handleChange} />
         <CreateTeamLogo logo={this.state.logo} getUrl={this.getUrl}/>
         <CreateTeamStartButton searchingTeam={this.searchingTeam}/>

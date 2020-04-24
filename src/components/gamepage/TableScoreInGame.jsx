@@ -1,36 +1,12 @@
 import React from "react";
 import { Header, Image, Table, Button, Container } from "semantic-ui-react";
-import styles from "./style/tableScore.module.css";
-
-const team = [
-  {
-    teamName: "Digimon",
-    imageTeam: "https://react.semantic-ui.com/images/avatar/small/lena.png",
-    pseudo: "Xena",
-    score: "1 000 000",
-    rank: 1,
-  },
-  {
-    teamName: "YuGiHo",
-    imageTeam: "https://react.semantic-ui.com/images/avatar/small/lena.png",
-    pseudo: "Seito Kaiba",
-    score: "19 000 000",
-    rank: 2,
-  },
-  {
-    teamName: "Heroes of The Storm",
-    imageTeam: "https://react.semantic-ui.com/images/avatar/small/lena.png",
-    pseudo: "Neo Ryo",
-    score: "7 944",
-    rank: 3,
-  },
-];
+import styles from "./styles/tableScore.module.css";
 
 function TableScoreInGame() {
   return (
-    <Container>
+    <Container className={styles.tableScore}>
       <Button size="mini" color="teal" onClick={() => ""} content="+"></Button>
-      <Table className={styles.tableScore} basic="very" celled collapsing>
+      <Table basic="very" celled collapsing>
         <Table.Body>
           {team
             .map((user) => (

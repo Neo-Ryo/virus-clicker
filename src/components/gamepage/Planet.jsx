@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "semantic-ui-react";
-import PLanetLogo from "./earth.png";
-import styles from "./planet.module.css";
+import PLanetLogo from "./images/earth.png";
+import styles from "./styles/planet.module.css";
 
 const total = 1000;
 const nbClick = 450; /* valeur a récuperer du total de click de l equipe*/
