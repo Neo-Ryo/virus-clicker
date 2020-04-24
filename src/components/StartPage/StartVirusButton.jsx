@@ -1,5 +1,5 @@
 import React from "react";
-import Virus from "../virus.png";
+import Virus from "../gamepage/images/virus.png";
 import styles from "./startVirusButton.module.css";
 import { Image, Grid, Button } from "semantic-ui-react";
 import Zoom from "react-reveal/Zoom";

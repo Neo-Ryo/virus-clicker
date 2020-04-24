@@ -2,16 +2,17 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import StartVirusButton from "./StartPage/StartVirusButton"
 
+import TeamMaker from "./TeamMaker";
 
 function Router() {
   return (
     <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={StartVirusButton}/>
-          <Route path="/createteam" />
-          <Route path="/jointeam"  />
-          <Route path="/game"  />
-        </Switch>
+      <Switch>
+        <Route exact path="/" component={StartVirusButton}/>
+        <Route path="/createteam" />
+        <Route path="/jointeam" component={TeamMaker} />
+        <Route path="/game" />
+      </Switch>
     </BrowserRouter>
   );
 }

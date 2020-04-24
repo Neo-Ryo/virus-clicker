@@ -1,9 +1,9 @@
 import React from "react";
-import Virus from "./virus.png";
+import Virus from "./images/virus.png";
 import Tada from "react-reveal/Tada";
 import Zoom from "react-reveal/Zoom";
-import styles from "./virusButton.module.css";
 import { Grid, Image } from "semantic-ui-react";
+import styles from "./styles/virusButton.module.css";
 
 class VirusButton extends React.Component {
   constructor(props) {
