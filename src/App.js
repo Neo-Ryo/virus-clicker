@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import Router from "./components/Router";
-import TeamMaker from "./components/TeamMaker";
 
 class App extends React.Component {
   constructor(props) {

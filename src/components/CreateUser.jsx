@@ -51,6 +51,7 @@ class CreateUser extends React.Component {
           label={{ color: "red", corner: "right", icon: "asterisk" }}
           value={this.state.pseudoTape}
           id="pseudo"
+          name="pseudo"
           onChange={this.handleChange}
         />
 
