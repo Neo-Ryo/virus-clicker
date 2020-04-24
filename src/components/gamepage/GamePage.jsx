@@ -10,6 +10,7 @@ class GamePage extends React.Component {
     super(props);
     this.state = {
       counter: 0,
+      total: 1000,
     };
     this.increment = this.increment.bind(this);
   }
@@ -32,7 +33,9 @@ class GamePage extends React.Component {
           </Grid.Row>
           <Grid.Row centered columns={3}>
             <Grid.Column width={6}>
-              <Planet />
+              <Planet
+                percentage={(100 * this.state.counter) / this.state.total}
+              />
             </Grid.Column>
           </Grid.Row>
           {/* <Grid.Row columns={1}>
