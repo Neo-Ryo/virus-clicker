@@ -1,17 +1,15 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import TeamMaker from "./TeamMaker";
 import Register from "./Register";
+import GamePage from "./gamepage/GamePage";
 
 function Router() {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/" />
-        <Route path="/createteam" />
-        <Route path="/jointeam" component={TeamMaker} />
         <Route path="/register" component={Register} />
-        <Route path="/game" />
+        <Route path="/game" component={GamePage} />
       </Switch>
     </BrowserRouter>
   );

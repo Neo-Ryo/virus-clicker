@@ -5,23 +5,15 @@ import styles from "./styles/virusButton.module.css";
 import { Container, Image } from "semantic-ui-react";
 
 class VirusButton extends React.Component {
-  constructor(props) {
-    super(props);
-    this.increment = this.increment.bind(this);
-    this.state = { counter: 0 };
-  }
-  increment() {
-    this.setState({ counter: this.state.counter + 1 });
-  }
-
   render() {
+    const { increment, counter } = this.props;
     return (
       <Container className={styles.virusLogoContainer}>
-        <Tada spy={this.state.counter}>
+        <Tada spy={counter}>
           <Image
             centered
             className={styles.virusLogo}
-            onClick={this.increment}
+            onClick={increment}
             src={Virus}
             alt="logo"
           />

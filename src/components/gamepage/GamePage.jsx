@@ -1,7 +1,6 @@
 import React from "react";
 import Planet from "./Planet";
 import VirusButton from "./VirusButton";
-import TableScoreInGame from "./TableScoreInGame";
 import TitleInGame from "./TitleInGame";
 import UserInfos from "./UserInfos";
 import { Grid } from "semantic-ui-react";
@@ -9,7 +8,13 @@ import { Grid } from "semantic-ui-react";
 class GamePage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { fdp: "ON" };
+    this.state = {
+      counter: 0,
+    };
+    this.increment = this.increment.bind(this);
+  }
+  increment() {
+    this.setState({ counter: this.state.counter + 1 });
   }
 
   render() {
@@ -21,7 +26,7 @@ class GamePage extends React.Component {
               <UserInfos />
             </Grid.Column>
             <Grid.Column width={8}>
-              <TitleInGame />
+              <TitleInGame counter={this.state.counter} />
             </Grid.Column>
             <Grid.Column width={4}></Grid.Column>
           </Grid.Row>
@@ -30,14 +35,17 @@ class GamePage extends React.Component {
               <Planet />
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row columns={1}>
+          {/* <Grid.Row columns={1}>
             <Grid.Column width={16}>
               <TableScoreInGame />
             </Grid.Column>
-          </Grid.Row>
+          </Grid.Row> */}
           <Grid.Row centered columns={2}>
             <Grid.Column>
-              <VirusButton />
+              <VirusButton
+                counter={this.state.counter}
+                increment={this.increment}
+              />
             </Grid.Column>
           </Grid.Row>
         </Grid>

@@ -1,6 +1,8 @@
 import React from "react";
+import TeamCards from "./TeamCards";
+import { CarouselProvider, Slider } from "pure-react-carousel";
 import axios from "axios";
-import { Input } from "semantic-ui-react";
+import { Input, Card } from "semantic-ui-react";
 
 class Register extends React.Component {
   constructor(props) {
@@ -23,6 +25,7 @@ class Register extends React.Component {
   componentDidMount() {
     axios.get("https://virusclicker.herokuapp.com/teams").then((res) => {
       this.setState({ teams: res.data });
+      console.log(this.state.teams);
     });
   }
 
@@ -36,7 +39,7 @@ class Register extends React.Component {
       if (
         !data.find(
           (user) =>
-            user.pseudo.toLowerCase() === this.state.pseudo.toLocaleLowerCase()
+            user.pseudo.toLowerCase() === this.state.pseudo.toLowerCase()
         ) &&
         this.state.TeamUuid
       ) {
@@ -74,6 +77,7 @@ class Register extends React.Component {
 
   chooseTeam(id) {
     this.setState({ TeamUuid: id });
+    console.log(id);
   }
 
   toggleCreationTeamPanel() {
@@ -90,16 +94,27 @@ class Register extends React.Component {
           name="pseudo"
           onChange={this.handleChange}
         />
-        {this.state.teams.map(({ uuid, logo, name }) => {
-          return (
-            <img
-              src={logo}
-              onClick={() => this.chooseTeam(uuid)}
-              alt={name}
-              key={uuid}
-            />
-          );
-        })}
+        <CarouselProvider
+          naturalSlideWidth={3}
+          naturalSlideHeight={1.25}
+          totalSlides={this.state.teams.length / 4} //import teams number
+          style={{ width: "80vw" }}
+        >
+          <Slider>
+            <Card.Group>
+              {this.state.teams.map(({ uuid, logo, name }) => {
+                return (
+                  <TeamCards
+                    key={uuid}
+                    image={logo}
+                    header={name}
+                    onClick={() => this.chooseTeam(uuid)}
+                  />
+                );
+              })}
+            </Card.Group>
+          </Slider>
+        </CarouselProvider>
         <button onClick={this.toggleCreationTeamPanel}>
           Create your team !
         </button>
