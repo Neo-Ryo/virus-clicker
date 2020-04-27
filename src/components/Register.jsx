@@ -2,7 +2,7 @@ import React from "react";
 import TeamCards from "./TeamCards";
 import { CarouselProvider, Slider } from "pure-react-carousel";
 import axios from "axios";
-import { Input, Card } from "semantic-ui-react";
+import { Input, Card, Header, Form, Button } from "semantic-ui-react";
 
 class Register extends React.Component {
   constructor(props) {
@@ -86,61 +86,75 @@ class Register extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <Input
-          placeholder="Pseudo"
-          label={{ color: "red", corner: "right", icon: "asterisk" }}
-          value={this.state.pseudo}
-          name="pseudo"
-          onChange={this.handleChange}
-        />
-        <CarouselProvider
-          naturalSlideWidth={3}
-          naturalSlideHeight={1.25}
-          totalSlides={this.state.teams.length / 4} //import teams number
-          style={{ width: "80vw" }}
-        >
-          <Slider>
-            <Card.Group>
-              {this.state.teams.map(({ uuid, logo, name }) => {
-                return (
-                  <TeamCards
-                    key={uuid}
-                    image={logo}
-                    header={name}
-                    onClick={() => this.chooseTeam(uuid)}
-                  />
-                );
-              })}
-            </Card.Group>
-          </Slider>
-        </CarouselProvider>
-        <button onClick={this.toggleCreationTeamPanel}>
-          Create your team !
-        </button>
-        {this.state.wantCreateATeam && (
-          <>
-            <Input
-              placeholder="Team name"
-              label={{ color: "red", corner: "right", icon: "asterisk" }}
-              value={this.state.teamName}
-              name="teamName"
-              onChange={this.handleChange}
-            />
-            <Input
-              placeholder="Team Logo URL"
-              label={{ color: "red", corner: "right", icon: "asterisk" }}
-              value={this.state.teamLogo}
-              name="teamLogo"
-              onChange={this.handleChange}
-            />
-          </>
-        )}
+      <>
+        <Header as="h1" textAlign="center">
+          Game Builder
+        </Header>
+        <Form onSubmit={this.handleSubmit}>
+          <Input
+            placeholder="Pseudo"
+            label={{ color: "red", corner: "right", icon: "asterisk" }}
+            value={this.state.pseudo}
+            name="pseudo"
+            onChange={this.handleChange}
+          />
+          <CarouselProvider
+            naturalSlideWidth={3}
+            naturalSlideHeight={1.25}
+            totalSlides={this.state.teams.length / 4} //import teams number
+            style={{ width: "80vw" }}
+          >
+            <Slider>
+              <Card.Group>
+                {this.state.teams.map(({ uuid, logo, name }) => {
+                  return (
+                    <TeamCards
+                      key={uuid}
+                      image={logo}
+                      header={name}
+                      onClick={() => this.chooseTeam(uuid)}
+                    />
+                  );
+                })}
+              </Card.Group>
+            </Slider>
+          </CarouselProvider>
 
-        <button type="submit" disabled={this.state.isLoading}>
-          {!this.state.isLoading ? "Send !" : "Loading..."}
-        </button>
-      </form>
+          {!this.state.wantCreateATeam && (
+            <Button color="teal" type="submit" disabled={this.state.isLoading}>
+              {!this.state.isLoading ? "Send !" : "Loading..."}
+            </Button>
+          )}
+          <Button color="purple" onClick={this.toggleCreationTeamPanel}>
+            Create your team !
+          </Button>
+          {this.state.wantCreateATeam && (
+            <>
+              <Input
+                placeholder="Team name"
+                label={{ color: "red", corner: "right", icon: "asterisk" }}
+                value={this.state.teamName}
+                name="teamName"
+                onChange={this.handleChange}
+              />
+              <Input
+                placeholder="Team Logo URL"
+                label={{ color: "red", corner: "right", icon: "asterisk" }}
+                value={this.state.teamLogo}
+                name="teamLogo"
+                onChange={this.handleChange}
+              />
+              <Button
+                color="teal"
+                type="submit"
+                disabled={this.state.isLoading}
+              >
+                {!this.state.isLoading ? "Send !" : "Loading..."}
+              </Button>
+            </>
+          )}
+        </Form>
+      </>
     );
   }
 }
