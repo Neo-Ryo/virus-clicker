@@ -10,7 +10,7 @@ class Register extends React.Component {
     this.state = {
       teams: [],
       pseudo: "",
-      TeamUuid: null,
+      teamUuid: null,
       wantCreateATeam: false,
       teamName: "",
       teamLogo: "",
@@ -43,11 +43,11 @@ class Register extends React.Component {
           (user) =>
             user.pseudo.toLowerCase() === this.state.pseudo.toLowerCase()
         ) &&
-        this.state.TeamUuid
+        this.state.teamUuid
       ) {
         await axios.post("https://virusclicker.herokuapp.com/users", {
           pseudo: this.state.pseudo,
-          team: this.state.TeamUuid,
+          team: this.state.teamUuid,
         });
         alert("Vous êtes bien enregistré !");
       } else {
@@ -67,6 +67,7 @@ class Register extends React.Component {
       const { data } = await axios.get(
         "https://virusclicker.herokuapp.com/teams"
       );
+      console.log(data.uuid)
       if (
         !data.find(
           (team) =>
@@ -78,9 +79,33 @@ class Register extends React.Component {
           name: this.state.teamName,
           logo: this.state.teamLogo,
         });
+        //alert("Vous êtes bien enregistré !");
+      } else if (
+        data.find(
+          (team) =>
+            team.name.toLowerCase() === this.state.teamName.toLowerCase()
+        ) &&
+        this.state.teamName
+      ) {
+        this.setState({ teamUuid: data.uuid });
+        console.log(this.state.teamUuid);
+
+        //} else {
+        // console.log("This team name is already taken or your image is unvalid");
+      } else if (
+        data.find(
+          (user) =>
+            user.pseudo.toLowerCase() === this.state.pseudo.toLowerCase()
+        ) &&
+        this.state.teamUuid
+      ) {
+        await axios.post("https://virusclicker.herokuapp.com/users", {
+          pseudo: this.state.pseudo,
+          team: this.state.teamUuid,
+        });
         alert("Vous êtes bien enregistré !");
       } else {
-        console.log("This team name is already taken or your image is unvalid");
+        console.log("This pseudo is already taken.");
       }
     } catch (error) {
       console.log(error);
@@ -107,8 +132,8 @@ class Register extends React.Component {
   };
 
   chooseTeam(id) {
-    this.setState({ TeamUuid: id });
-    console.log(id);
+    this.setState({ teamUuid: id });
+    // console.log(id);
   }
 
   toggleCreationTeamPanel() {
@@ -135,6 +160,7 @@ class Register extends React.Component {
                 name="pseudo"
                 onChange={this.handleChange}
               />
+
               <CarouselProvider
                 naturalSlideWidth={3}
                 naturalSlideHeight={1.25}
@@ -164,15 +190,21 @@ class Register extends React.Component {
               {!this.state.isLoading ? "Join the team !" : "Loading..."}
             </Button>
           )}
-          <Button color="purple" onClick={this.toggleCreationTeamPanel}>
-            {!this.state.wantCreateATeam
-              ? "Create your team !"
-              : "Join a team !"}
-          </Button>
         </Form>
+        <Button color="purple" onClick={this.toggleCreationTeamPanel}>
+          {!this.state.wantCreateATeam ? "Create your team !" : "Join a team !"}
+        </Button>
+
         {this.state.wantCreateATeam && (
           <>
             <Form onSubmit={this.submitCreateTeam}>
+              <Input
+                placeholder="Pseudo"
+                label={{ color: "red", corner: "right", icon: "asterisk" }}
+                value={this.state.pseudo}
+                name="pseudo"
+                onChange={this.handleChange}
+              />
               <Input
                 placeholder="Team name"
                 label={{ color: "red", corner: "right", icon: "asterisk" }}
@@ -187,7 +219,10 @@ class Register extends React.Component {
                 name="teamLogo"
                 onChange={this.handleChange}
               />
-              <Image></Image>
+              <Image
+                style={{ width: 180, height: 180 }}
+                src={this.state.teamLogo}
+              ></Image>
               <Button
                 color="teal"
                 type="submit"
@@ -195,26 +230,6 @@ class Register extends React.Component {
               >
                 {!this.state.isLoading ? "Save Team" : "Loading..."}
               </Button>
-            </Form>
-            <Form onSubmit={this.submitJoinTeam}>
-              {this.state.displayPseudoInput && (
-                <>
-                  <Input
-                    placeholder="Pseudo"
-                    label={{ color: "red", corner: "right", icon: "asterisk" }}
-                    value={this.state.pseudo}
-                    name="pseudo"
-                    onChange={this.handleChange}
-                  />
-                  <Button
-                    color="teal"
-                    type="submit"
-                    disabled={this.state.isLoading}
-                  >
-                    {!this.state.isLoading ? "Save Pseudo" : "Loading..."}
-                  </Button>
-                </>
-              )}
             </Form>
           </>
         )}
