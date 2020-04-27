@@ -8,7 +8,7 @@ function CreateTeamStartButton({searchingTeam}) {
         <GridRow columns={2} centered>
             <Button 
             color="teal"
-            onClick={() => {searchingTeam()}}
+            onClick={searchingTeam}
             >
               Start
             </Button>
