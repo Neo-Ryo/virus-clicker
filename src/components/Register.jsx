@@ -2,7 +2,7 @@ import React from "react";
 import TeamCards from "./TeamCards";
 import { CarouselProvider, Slider } from "pure-react-carousel";
 import axios from "axios";
-import { Input, Card, Header, Form, Button } from "semantic-ui-react";
+import { Input, Card, Header, Form, Button, Image } from "semantic-ui-react";
 
 class Register extends React.Component {
   constructor(props) {
@@ -15,11 +15,13 @@ class Register extends React.Component {
       teamName: "",
       teamLogo: "",
       isLoading: false,
+      displayPseudoInput: false,
     };
     this.toggleCreationTeamPanel = this.toggleCreationTeamPanel.bind(this);
     this.chooseTeam = this.chooseTeam.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.submitJoinTeam = this.submitJoinTeam.bind(this);
+    this.submitCreateTeam = this.submitCreateTeam.bind(this);
   }
 
   componentDidMount() {
@@ -29,7 +31,7 @@ class Register extends React.Component {
     });
   }
 
-  async handleSubmit(e) {
+  async submitJoinTeam(e) {
     e.preventDefault(); // prevent page reload
     this.setState({ isLoading: true });
     try {
@@ -50,6 +52,35 @@ class Register extends React.Component {
         alert("Vous êtes bien enregistré !");
       } else {
         console.log("This pseudo is already taken.");
+      }
+    } catch (error) {
+      console.log(error);
+      this.setState({ error: error.response.data.error });
+    }
+    this.setState({ isLoading: false });
+  }
+
+  async submitCreateTeam(event) {
+    event.preventDefault();
+    this.setState({ isLoading: true });
+    try {
+      const { data } = await axios.get(
+        "https://virusclicker.herokuapp.com/teams"
+      );
+      if (
+        !data.find(
+          (team) =>
+            team.name.toLowerCase() === this.state.teamName.toLowerCase()
+        ) &&
+        this.state.teamName
+      ) {
+        await axios.post("https://virusclicker.herokuapp.com/teams", {
+          name: this.state.teamName,
+          logo: this.state.teamLogo,
+        });
+        alert("Vous êtes bien enregistré !");
+      } else {
+        console.log("This team name is already taken or your image is unvalid");
       }
     } catch (error) {
       console.log(error);
@@ -83,6 +114,9 @@ class Register extends React.Component {
   toggleCreationTeamPanel() {
     this.setState({ wantCreateATeam: !this.state.wantCreateATeam });
   }
+  showPseudoInput() {
+    this.setState({ displayPseudoInput: true });
+  }
 
   render() {
     return (
@@ -90,46 +124,55 @@ class Register extends React.Component {
         <Header as="h1" textAlign="center">
           Game Builder
         </Header>
-        <Form onSubmit={this.handleSubmit}>
-          <Input
-            placeholder="Pseudo"
-            label={{ color: "red", corner: "right", icon: "asterisk" }}
-            value={this.state.pseudo}
-            name="pseudo"
-            onChange={this.handleChange}
-          />
-          <CarouselProvider
-            naturalSlideWidth={3}
-            naturalSlideHeight={1.25}
-            totalSlides={this.state.teams.length / 4} //import teams number
-            style={{ width: "80vw" }}
-          >
-            <Slider>
-              <Card.Group>
-                {this.state.teams.map(({ uuid, logo, name }) => {
-                  return (
-                    <TeamCards
-                      key={uuid}
-                      image={logo}
-                      header={name}
-                      onClick={() => this.chooseTeam(uuid)}
-                    />
-                  );
-                })}
-              </Card.Group>
-            </Slider>
-          </CarouselProvider>
+
+        <Form onSubmit={this.submitJoinTeam}>
+          {!this.state.wantCreateATeam && (
+            <>
+              <Input
+                placeholder="Pseudo"
+                label={{ color: "red", corner: "right", icon: "asterisk" }}
+                value={this.state.pseudo}
+                name="pseudo"
+                onChange={this.handleChange}
+              />
+              <CarouselProvider
+                naturalSlideWidth={3}
+                naturalSlideHeight={1.25}
+                totalSlides={this.state.teams.length / 4} //import teams number
+                style={{ width: "80vw" }}
+              >
+                <Slider>
+                  <Card.Group>
+                    {this.state.teams.map(({ uuid, logo, name }) => {
+                      return (
+                        <TeamCards
+                          key={uuid}
+                          image={logo}
+                          header={name}
+                          onClick={() => this.chooseTeam(uuid)}
+                        />
+                      );
+                    })}
+                  </Card.Group>
+                </Slider>
+              </CarouselProvider>
+            </>
+          )}
 
           {!this.state.wantCreateATeam && (
             <Button color="teal" type="submit" disabled={this.state.isLoading}>
-              {!this.state.isLoading ? "Send !" : "Loading..."}
+              {!this.state.isLoading ? "Join the team !" : "Loading..."}
             </Button>
           )}
           <Button color="purple" onClick={this.toggleCreationTeamPanel}>
-            Create your team !
+            {!this.state.wantCreateATeam
+              ? "Create your team !"
+              : "Join a team !"}
           </Button>
-          {this.state.wantCreateATeam && (
-            <>
+        </Form>
+        {this.state.wantCreateATeam && (
+          <>
+            <Form onSubmit={this.submitCreateTeam}>
               <Input
                 placeholder="Team name"
                 label={{ color: "red", corner: "right", icon: "asterisk" }}
@@ -144,16 +187,37 @@ class Register extends React.Component {
                 name="teamLogo"
                 onChange={this.handleChange}
               />
+              <Image></Image>
               <Button
                 color="teal"
                 type="submit"
                 disabled={this.state.isLoading}
               >
-                {!this.state.isLoading ? "Send !" : "Loading..."}
+                {!this.state.isLoading ? "Save Team" : "Loading..."}
               </Button>
-            </>
-          )}
-        </Form>
+            </Form>
+            <Form onSubmit={this.submitJoinTeam}>
+              {this.state.displayPseudoInput && (
+                <>
+                  <Input
+                    placeholder="Pseudo"
+                    label={{ color: "red", corner: "right", icon: "asterisk" }}
+                    value={this.state.pseudo}
+                    name="pseudo"
+                    onChange={this.handleChange}
+                  />
+                  <Button
+                    color="teal"
+                    type="submit"
+                    disabled={this.state.isLoading}
+                  >
+                    {!this.state.isLoading ? "Save Pseudo" : "Loading..."}
+                  </Button>
+                </>
+              )}
+            </Form>
+          </>
+        )}
       </>
     );
   }
