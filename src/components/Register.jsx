@@ -2,15 +2,26 @@ import React from "react";
 import TeamCards from "./TeamCards";
 import { CarouselProvider, Slider } from "pure-react-carousel";
 import axios from "axios";
-import { Input, Card, Header, Form, Button, Image } from "semantic-ui-react";
+import {
+  Input,
+  Card,
+  Header,
+  Form,
+  Button,
+  Image,
+  Grid,
+  Container,
+} from "semantic-ui-react";
 
 class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       teams: [],
+      users: [],
       pseudo: "",
       teamUuid: null,
+      getuuid: "",
       wantCreateATeam: false,
       teamName: "",
       teamLogo: "",
@@ -28,6 +39,10 @@ class Register extends React.Component {
     axios.get("https://virusclicker.herokuapp.com/teams").then((res) => {
       this.setState({ teams: res.data });
       console.log(this.state.teams);
+    });
+    axios.get("https://virusclicker.herokuapp.com/users").then((res) => {
+      this.setState({ users: res.data });
+      console.log(this.state.users);
     });
   }
 
@@ -60,59 +75,45 @@ class Register extends React.Component {
     this.setState({ isLoading: false });
   }
 
+  
+
   async submitCreateTeam(event) {
     event.preventDefault();
     this.setState({ isLoading: true });
-    try {
-      const { data } = await axios.get(
-        "https://virusclicker.herokuapp.com/teams"
-      );
-      console.log(data.uuid)
-      if (
-        !data.find(
-          (team) =>
-            team.name.toLowerCase() === this.state.teamName.toLowerCase()
-        ) &&
-        this.state.teamName
-      ) {
-        await axios.post("https://virusclicker.herokuapp.com/teams", {
-          name: this.state.teamName,
-          logo: this.state.teamLogo,
-        });
-        //alert("Vous êtes bien enregistré !");
-      } else if (
-        data.find(
-          (team) =>
-            team.name.toLowerCase() === this.state.teamName.toLowerCase()
-        ) &&
-        this.state.teamName
-      ) {
-        this.setState({ teamUuid: data.uuid });
-        console.log(this.state.teamUuid);
 
-        //} else {
-        // console.log("This team name is already taken or your image is unvalid");
-      } else if (
-        data.find(
+    try {
+      if (
+        !this.state.teams.find(
+          (team) =>
+            team.name.toLowerCase() === this.state.teamName.toLowerCase()
+        ) &&
+        this.state.teamName &&
+        this.state.teamLogo &&
+        this.state.pseudo &&
+        !this.state.users.find(
           (user) =>
             user.pseudo.toLowerCase() === this.state.pseudo.toLowerCase()
-        ) &&
-        this.state.teamUuid
+        )
       ) {
+        await axios
+          .post("https:virusclicker.herokuapp.com/teams", {
+            name: this.state.teamName,
+            logo: this.state.teamLogo,
+          })
+          .then((res) => this.setState({ getuuid: res }));
+
         await axios.post("https://virusclicker.herokuapp.com/users", {
           pseudo: this.state.pseudo,
-          team: this.state.teamUuid,
+          team: this.state.getuuid.data.uuid,
         });
-        alert("Vous êtes bien enregistré !");
-      } else {
-        console.log("This pseudo is already taken.");
-      }
+      } else console.log("nope");
     } catch (error) {
-      console.log(error);
-      this.setState({ error: error.response.data.error });
+      console.log("error");
     }
     this.setState({ isLoading: false });
   }
+
+ 
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
@@ -139,20 +140,36 @@ class Register extends React.Component {
   toggleCreationTeamPanel() {
     this.setState({ wantCreateATeam: !this.state.wantCreateATeam });
   }
-  showPseudoInput() {
-    this.setState({ displayPseudoInput: true });
-  }
+  
 
   render() {
     return (
-      <>
+      <Container>
         <Header as="h1" textAlign="center">
           Game Builder
         </Header>
+        <Grid divided="vertically">
+          <Grid.Row columns={4}>
+            <Grid.Column width={3}>
+              <h3>
+                {!this.state.wantCreateATeam
+                  ? "Join a team !"
+                  : "Create your team !"}
+              </h3>
+            </Grid.Column>
+            <Grid.Column>
+              <Button color="purple" onClick={this.toggleCreationTeamPanel}>
+                {!this.state.wantCreateATeam
+                  ? "Or Create your team !"
+                  : "Back to join a team !"}
+              </Button>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
 
-        <Form onSubmit={this.submitJoinTeam}>
-          {!this.state.wantCreateATeam && (
-            <>
+        {!this.state.wantCreateATeam && (
+          <>
+            <Form onSubmit={this.submitJoinTeam}>
               <Input
                 placeholder="Pseudo"
                 label={{ color: "red", corner: "right", icon: "asterisk" }}
@@ -182,18 +199,18 @@ class Register extends React.Component {
                   </Card.Group>
                 </Slider>
               </CarouselProvider>
-            </>
-          )}
-
-          {!this.state.wantCreateATeam && (
-            <Button color="teal" type="submit" disabled={this.state.isLoading}>
-              {!this.state.isLoading ? "Join the team !" : "Loading..."}
-            </Button>
-          )}
-        </Form>
-        <Button color="purple" onClick={this.toggleCreationTeamPanel}>
-          {!this.state.wantCreateATeam ? "Create your team !" : "Join a team !"}
-        </Button>
+              {!this.state.wantCreateATeam && (
+                <Button
+                  color="teal"
+                  type="submit"
+                  disabled={this.state.isLoading}
+                >
+                  {!this.state.isLoading ? "Join the team !" : "Loading..."}
+                </Button>
+              )}
+            </Form>
+          </>
+        )}
 
         {this.state.wantCreateATeam && (
           <>
@@ -233,7 +250,7 @@ class Register extends React.Component {
             </Form>
           </>
         )}
-      </>
+      </Container>
     );
   }
 }
