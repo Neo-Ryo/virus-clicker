@@ -9,8 +9,7 @@ function Router() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={StartVirusButton}/>
-        <Route path="/createteam" />
-        <Route path="/jointeam" component={TeamMaker} />
+        <Route path="/register" component={TeamMaker} />
         <Route path="/game" />
       </Switch>
     </BrowserRouter>
