@@ -4,6 +4,7 @@ import VirusButton from "./VirusButton";
 import TitleInGame from "./TitleInGame";
 import UserInfos from "./UserInfos";
 import { Grid } from "semantic-ui-react";
+import Axios from "axios";
 
 class GamePage extends React.Component {
   constructor(props) {
@@ -15,6 +16,8 @@ class GamePage extends React.Component {
     this.increment = this.increment.bind(this);
   }
   increment() {
+    // const {uuid} = this.props
+    Axios.put(`https://virusclicker.herokuapp.com/users/${uuid}/click`)
     this.setState({ counter: this.state.counter + 1 });
   }
 
