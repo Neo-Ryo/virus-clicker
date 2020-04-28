@@ -11,7 +11,6 @@ class StartVirusButton extends React.Component {
     super(props);
     this.state = {
       show: false,
-      goGamePage: "",
       uuid: ""
     };
     this.showButtons = this.showButtons.bind(this);
@@ -19,7 +18,7 @@ class StartVirusButton extends React.Component {
   showButtons() {
     if (window.localStorage.getItem('uuid')) {
       
-      this.setState({goGamePage: "/game", uuid: window.localStorage.getItem('uuid')} )
+      this.setState({uuid: window.localStorage.getItem('uuid')} )
       
     } else {
       this.setState({ show: !this.state.show });
