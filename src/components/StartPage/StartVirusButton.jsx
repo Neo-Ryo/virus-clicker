@@ -9,11 +9,22 @@ import { Link } from "react-router-dom";
 class StartVirusButton extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { show: false };
+    this.state = {
+      show: false,
+      goGamePage: "",
+      uuid: ""
+    };
     this.showButtons = this.showButtons.bind(this);
   }
   showButtons() {
-    this.setState({ show: !this.state.show });
+    if (window.localStorage.getItem('uuid')) {
+      
+      this.setState({goGamePage: "/game", uuid: window.localStorage.getItem('uuid')} )
+      
+    } else {
+      this.setState({ show: !this.state.show });
+      
+    }
   }
   render() {
     return (
@@ -33,12 +44,14 @@ class StartVirusButton extends React.Component {
           </Grid.Row>
           <Grid.Row>
             <Fade bottom when={this.state.show}>
-              <Link to="/createteam">
-                <Button className="ui purple button">Create a team</Button>
-              </Link>
-              <Link to="/jointeam">
-                <Button className="ui purple button">Join a team</Button>
-              </Link>
+              {this.state.uuid?
+              <Link to={`/game/${this.state.uuid}`}>
+                <Button color="teal">Go!</Button>
+              </Link>:
+
+                <Link to="/register">
+                <Button className="ui purple button">Register</Button>
+              </Link>}
             </Fade>
           </Grid.Row>
         </Grid>

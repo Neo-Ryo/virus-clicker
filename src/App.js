@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import Router from "./components/Router";
 import TeamMaker from "./components/TeamMaker";
+import StartVirusButton from "./components/StartPage/StartVirusButton";
 
 class App extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Router />
+    
       </div>
     );
   }
