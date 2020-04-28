@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import StartVirusButton from "./StartPage/StartVirusButton"
 
 import TeamMaker from "./TeamMaker";
-import CreateTeamPage from "./CreateTeamPage"
+
 
 function Router() {
   return (
