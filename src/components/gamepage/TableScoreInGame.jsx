@@ -1,18 +1,19 @@
-import React from "react";
-import { Header, Image, Table, Button, Container } from "semantic-ui-react";
-import styles from "./styles/tableScore.module.css";
+import React from 'react';
+import { Table, Button, Container } from 'semantic-ui-react';
+import styles from './styles/tableScore.module.css';
 
 function TableScoreInGame() {
   return (
     <Container className={styles.tableScore}>
-      <Button size="mini" color="teal" onClick={() => ""} content="+"></Button>
+      <Button size="mini" color="teal" onClick={() => ''} content="+" />
       <Table basic="very" celled collapsing>
-        <Table.Body>
+        <p>Scores</p>
+        {/* <Table.Body>
           {team
             .map((user) => (
               <>
                 <Table.Row>
-                  <Table.Cell>#{user.rank}</Table.Cell>
+                  <Table.Cell>{user.rank}</Table.Cell>
                   <Table.Cell>
                     <Header as="h4" image>
                       <Image src={user.imageTeam} rounded size="mini" />
@@ -27,7 +28,7 @@ function TableScoreInGame() {
               </>
             ))
             .sort()}
-        </Table.Body>
+        </Table.Body> */}
       </Table>
     </Container>
   );

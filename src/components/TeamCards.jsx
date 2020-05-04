@@ -1,5 +1,6 @@
-import React from "react";
-import { Card, Image, Header } from "semantic-ui-react";
+import React from 'react';
+import { Card, Image, Header } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
 function CardsGroup({ image, key, header, onClick }) {
   return (
@@ -11,12 +12,19 @@ function CardsGroup({ image, key, header, onClick }) {
       >
         <Image
           src={image}
-          style={{ margin: 0, width: "100%", height: "70%" }}
+          style={{ margin: 0, width: '100%', height: '70%' }}
         />
         <Header textAlign="center">{header}</Header>
       </Card>
     </>
   );
 }
+
+CardsGroup.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  image: PropTypes.string.isRequired,
+  key: PropTypes.string.isRequired,
+  header: PropTypes.string.isRequired,
+};
 
 export default CardsGroup;

@@ -1,64 +1,68 @@
-import React from "react";
-import { Input } from "semantic-ui-react";
-import axios from "axios";
+// import React from 'react';
+// import { Input } from 'semantic-ui-react';
+// import axios from 'axios';
 
-class CreateUser extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      pseudoTape: "",
-      users: {},
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.getUsers = this.getUsers.bind(this);
-  }
-  handleChange(event) {
-    this.setState({ pseudoTape: event.target.value });
-  }
+// class CreateUser extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       pseudoTape: '',
+//       users: {},
+//     };
+//     this.handleChange = this.handleChange.bind(this);
+//     this.handleSubmit = this.handleSubmit.bind(this);
+//     this.getUsers = this.getUsers.bind(this);
+//   }
 
-  getUsers() {
-    axios.get(`https://virusclicker.herokuapp.com/users`).then((res) => {
-      this.setState({ users: res.data });
-    });
-  }
-  handleSubmit() {
-    const pseudos = this.state.users.map((user) => user.pseudo);
-    if (
-      pseudos.find(
-        (pseudo) =>
-          pseudo.toLowerCase() === this.state.pseudoTape.toLocaleLowerCase()
-      )
-    ) {
-      alert("This pseudo is already taken.");
-    } else {
-      console.log("ok");
-      {
-        /*await POST method to API */
-      }
-    }
-  }
+//   getUsers() {
+//     axios.get(`https://virusclicker.herokuapp.com/users`).then((res) => {
+//       this.setState({ users: res.data });
+//     });
+//   }
 
-  componentDidMount() {
-    this.getUsers();
-  }
+//   handleChange(event) {
+//     this.setState({ pseudoTape: event.target.value });
+//   }
 
-  render() {
-    return (
-      <>
-        <Input
-          placeholder="Pseudo"
-          label={{ color: "red", corner: "right", icon: "asterisk" }}
-          value={this.state.pseudoTape}
-          id="pseudo"
-          name="pseudo"
-          onChange={this.handleChange}
-        />
+//   handleSubmit() {
+//     const { users, pseudoTape } = this.state;
+//     const pseudos = users.map((user) => user.pseudo);
+//     if (
+//       pseudos.find(
+//         (pseudo) => pseudo.toLowerCase() === pseudoTape.toLocaleLowerCase()
+//       )
+//     ) {
+//       alert('This pseudo is already taken.');
+//     } else {
+//       console.log('ok');
 
-        <button onClick={this.handleSubmit}>Submit</button>
-      </>
-    );
-  }
-}
+//       {
+//         /*await POST method to API */
+//       }
 
-export default CreateUser;
+//     }
+//   }
+
+//   componentDidMount() {
+//     this.getUsers();
+//   }
+
+//   render() {
+//     return (
+//       <>
+//         <Input
+//           placeholder="Pseudo"
+//           label={{ color: 'red', corner: 'right', icon: 'asterisk' }}
+//           value={this.state.pseudoTape}
+//           id="pseudo"
+//           name="pseudo"
+//           onChange={this.handleChange}
+//         />
+
+//         <button onClick={this.handleSubmit}>Submit</button>
+//       </>
+//     );
+//   }
+// }
+
+// export default CreateUser;
