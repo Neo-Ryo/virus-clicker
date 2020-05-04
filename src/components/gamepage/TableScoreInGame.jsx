@@ -2,7 +2,17 @@ import React from "react";
 import { Header, Image, Table, Button, Container } from "semantic-ui-react";
 import styles from "./styles/tableScore.module.css";
 
-function TableScoreInGame() {
+class TableScoreInGame extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      userScore: ""
+    }
+  }
+  async getScore() {
+  
+  }
+  render(){
   return (
     <Container className={styles.tableScore}>
       <Button size="mini" color="teal" onClick={() => ""} content="+"></Button>
@@ -30,7 +40,7 @@ function TableScoreInGame() {
         </Table.Body>
       </Table>
     </Container>
-  );
+  )}
 }
 
 export default TableScoreInGame;

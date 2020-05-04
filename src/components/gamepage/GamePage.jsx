@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import Planet from "./Planet";
 import VirusButton from "./VirusButton";
 import TableScoreInGame from "./TableScoreInGame";
