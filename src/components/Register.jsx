@@ -12,6 +12,7 @@ import {
   Grid,
   Container,
 } from "semantic-ui-react";
+import { Redirect } from "react-router-dom";
 
 class Register extends React.Component {
   constructor(props) {
@@ -27,6 +28,9 @@ class Register extends React.Component {
       teamLogo: "",
       isLoading: false,
       displayPseudoInput: false,
+      canPlayGame: false,
+      usersAfterSubmit: [],
+      getUserUuid: "",
     };
     this.toggleCreationTeamPanel = this.toggleCreationTeamPanel.bind(this);
     this.chooseTeam = this.chooseTeam.bind(this);
@@ -38,11 +42,9 @@ class Register extends React.Component {
   componentDidMount() {
     axios.get("https://virusclicker.herokuapp.com/teams").then((res) => {
       this.setState({ teams: res.data });
-      console.log(this.state.teams);
     });
     axios.get("https://virusclicker.herokuapp.com/users").then((res) => {
       this.setState({ users: res.data });
-      console.log(this.state.users);
     });
   }
 
@@ -53,29 +55,33 @@ class Register extends React.Component {
       const { data } = await axios.get(
         "https://virusclicker.herokuapp.com/users"
       );
+
       if (
         !data.find(
           (user) =>
             user.pseudo.toLowerCase() === this.state.pseudo.toLowerCase()
         ) &&
-        this.state.teamUuid
+        this.state.teamUuid &&
+        this.state.pseudo
       ) {
-        await axios.post("https://virusclicker.herokuapp.com/users", {
-          pseudo: this.state.pseudo,
-          team: this.state.teamUuid,
-        });
+        axios
+          .post("https://virusclicker.herokuapp.com/users", {
+            pseudo: this.state.pseudo,
+            team: this.state.teamUuid,
+          })
+          .then((res) => this.setState({ getUserUuid: res }))
+          .then(console.log(this.state.getUserUuid))
+          .then(window.localStorage.setItem("uuid", this.state.getUserUuid))
+          .then(this.setState({ canPlayGame: true }));
         alert("Vous êtes bien enregistré !");
       } else {
         console.log("This pseudo is already taken.");
       }
     } catch (error) {
-      console.log(error);
-      this.setState({ error: error.response.data.error });
+      console.log("error");
     }
     this.setState({ isLoading: false });
   }
-
-  
 
   async submitCreateTeam(event) {
     event.preventDefault();
@@ -102,18 +108,18 @@ class Register extends React.Component {
           })
           .then((res) => this.setState({ getuuid: res }));
 
-        await axios.post("https://virusclicker.herokuapp.com/users", {
-          pseudo: this.state.pseudo,
-          team: this.state.getuuid.data.uuid,
-        });
+        await axios
+          .post("https://virusclicker.herokuapp.com/users", {
+            pseudo: this.state.pseudo,
+            team: this.state.getuuid.data.uuid,
+          })
+          .then(this.setState({ canPlayGame: true }));
       } else console.log("nope");
     } catch (error) {
       console.log("error");
     }
     this.setState({ isLoading: false });
   }
-
- 
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
@@ -134,15 +140,17 @@ class Register extends React.Component {
 
   chooseTeam(id) {
     this.setState({ teamUuid: id });
-    // console.log(id);
   }
 
   toggleCreationTeamPanel() {
     this.setState({ wantCreateATeam: !this.state.wantCreateATeam });
   }
-  
 
   render() {
+    const { canPlayGame } = this.state;
+    if (canPlayGame) {
+      return <Redirect to="/game" />;
+    }
     return (
       <Container>
         <Header as="h1" textAlign="center">
@@ -200,13 +208,17 @@ class Register extends React.Component {
                 </Slider>
               </CarouselProvider>
               {!this.state.wantCreateATeam && (
+                //              <Link to={this.state.canPlayGame ? "/game/:uuid": "/game"}>
                 <Button
                   color="teal"
                   type="submit"
+                  value=""
                   disabled={this.state.isLoading}
+                  onClick={this.state.changePage}
                 >
                   {!this.state.isLoading ? "Join the team !" : "Loading..."}
                 </Button>
+                // </Link>
               )}
             </Form>
           </>
@@ -240,6 +252,7 @@ class Register extends React.Component {
                 style={{ width: 180, height: 180 }}
                 src={this.state.teamLogo}
               ></Image>
+              {/* <Link to={this.state.canPlayGame ? `/game` : ""}> */}
               <Button
                 color="teal"
                 type="submit"
@@ -247,6 +260,7 @@ class Register extends React.Component {
               >
                 {!this.state.isLoading ? "Save Team" : "Loading..."}
               </Button>
+              {/* </Link> */}
             </Form>
           </>
         )}
