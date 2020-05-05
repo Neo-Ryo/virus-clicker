@@ -217,6 +217,7 @@ class Register extends React.Component {
                   value={pseudoUser}
                   name="pseudoUser"
                   onChange={this.handleChange}
+                  label={{ color: 'red', corner: 'right', icon: 'asterisk' }}
                 />
               </Form.Field>
               <CarouselProvider
@@ -240,16 +241,23 @@ class Register extends React.Component {
                   </Card.Group>
                 </Slider>
               </CarouselProvider>
-              {!wantCreateATeam && (
-                <Button
-                  color="teal"
-                  type="submit"
-                  value=""
-                  disabled={isLoading}
-                >
-                  {!isLoading ? 'Join the team !' : 'Loading...'}
-                </Button>
-              )}
+              <Grid>
+                <Grid.Row textAlign="center" columns={1}>
+                  <Grid.Column width={16}>
+                    {!wantCreateATeam && (
+                      <Button
+                        color="teal"
+                        type="submit"
+                        value=""
+                        disabled={isLoading}
+                        size="large"
+                      >
+                        {!isLoading ? 'Start' : 'Loading...'}
+                      </Button>
+                    )}
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
             </Form>
           </>
         )}
@@ -257,31 +265,53 @@ class Register extends React.Component {
         {wantCreateATeam && (
           <>
             <Form onSubmit={this.submitCreateTeam}>
-              <Input
-                placeholder="Pseudo"
-                label={{ color: 'red', corner: 'right', icon: 'asterisk' }}
-                value={pseudoUser}
-                name="pseudoUser"
-                onChange={this.handleChange}
-              />
-              <Input
-                placeholder="Team name"
-                label={{ color: 'red', corner: 'right', icon: 'asterisk' }}
-                value={teamName}
-                name="teamName"
-                onChange={this.handleChange}
-              />
-              <Input
-                placeholder="Team Logo URL"
-                label={{ color: 'red', corner: 'right', icon: 'asterisk' }}
-                value={teamLogo}
-                name="teamLogo"
-                onChange={this.handleChange}
-              />
-              <Image style={{ width: 180, height: 180 }} src={teamLogo} />
-              <Button color="teal" type="submit" disabled={isLoading}>
-                {!isLoading ? 'Save Team' : 'Loading...'}
-              </Button>
+              <Form.Field style={{ margin: '15px' }}>
+                <Input
+                  placeholder="Pseudo"
+                  label={{ color: 'red', corner: 'right', icon: 'asterisk' }}
+                  value={pseudoUser}
+                  name="pseudoUser"
+                  onChange={this.handleChange}
+                />
+              </Form.Field>
+              <Form.Field style={{ margin: '15px' }}>
+                <Input
+                  placeholder="Team name"
+                  label={{ color: 'red', corner: 'right', icon: 'asterisk' }}
+                  value={teamName}
+                  name="teamName"
+                  onChange={this.handleChange}
+                />
+              </Form.Field>
+              <Form.Field style={{ margin: '15px' }}>
+                <Input
+                  placeholder="Team Logo URL"
+                  label={{ color: 'red', corner: 'right', icon: 'asterisk' }}
+                  value={teamLogo}
+                  name="teamLogo"
+                  onChange={this.handleChange}
+                />
+              </Form.Field>
+
+              <Grid>
+                <Grid.Row textAlign="center" columns={3}>
+                  <Grid.Column width={10}>
+                    <Image style={{ width: 180, height: 180 }} src={teamLogo} />
+                  </Grid.Column>
+                </Grid.Row>
+                <Grid.Row textAlign="center" columns={1}>
+                  <Grid.Column width={16}>
+                    <Button
+                      color="teal"
+                      type="submit"
+                      disabled={isLoading}
+                      size="large"
+                    >
+                      {!isLoading ? 'Start' : 'Loading...'}
+                    </Button>
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
             </Form>
           </>
         )}
