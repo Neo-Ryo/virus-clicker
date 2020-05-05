@@ -1,7 +1,7 @@
-import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Register from "./Register";
-import GamePage from "./gamepage/GamePage";
+import React from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Register from './Register';
+import GamePage from './gamepage/GamePage';
 
 function Router() {
   return (
