@@ -210,9 +210,10 @@ class Register extends React.Component {
 
         {!wantCreateATeam && (
           <>
-            <Form onSubmit={this.submitJoinTeam}>
+            <Form size="large" onSubmit={this.submitJoinTeam}>
               <Form.Field style={{ margin: '15px' }}>
                 <Input
+                  required
                   placeholder="Pseudo"
                   value={pseudoUser}
                   name="pseudoUser"
@@ -228,12 +229,14 @@ class Register extends React.Component {
               >
                 <Slider>
                   <Card.Group>
-                    {teams.map(({ uuid, logo, name }) => {
+                    {teams.map(({ uuid, logo, name, createdAt, users }) => {
                       return (
                         <TeamCards
                           key={uuid}
                           image={logo}
                           header={name}
+                          date={createdAt}
+                          usersNumber={users.length}
                           onClick={() => this.chooseTeam(uuid)}
                         />
                       );
@@ -264,7 +267,7 @@ class Register extends React.Component {
 
         {wantCreateATeam && (
           <>
-            <Form onSubmit={this.submitCreateTeam}>
+            <Form size="large" onSubmit={this.submitCreateTeam}>
               <Form.Field style={{ margin: '15px' }}>
                 <Input
                   placeholder="Pseudo"
