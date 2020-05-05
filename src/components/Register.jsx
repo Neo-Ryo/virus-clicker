@@ -166,22 +166,44 @@ class Register extends React.Component {
     }
     return (
       <Container>
-        <Header as="h1" textAlign="center">
+        <Header as="h1" textAlign="center" style={{ marginTop: '15px' }}>
           Game Builder
         </Header>
         <Grid divided="vertically">
-          <Grid.Row columns={4}>
-            <Grid.Column width={3}>
-              <h3>
-                {!wantCreateATeam ? 'Join a team !' : 'Create your team !'}
-              </h3>
+          <Grid.Row textAlign="center" columns={2}>
+            <Grid.Column width={8}>
+              {wantCreateATeam ? (
+                <Button
+                  style={{ margin: 0 }}
+                  basic
+                  color="purple"
+                  size="large"
+                  onClick={this.toggleCreationTeamPanel}
+                >
+                  Join a team
+                </Button>
+              ) : (
+                <Button style={{ margin: 0 }} color="purple" size="large">
+                  Join a team
+                </Button>
+              )}
             </Grid.Column>
-            <Grid.Column>
-              <Button color="purple" onClick={this.toggleCreationTeamPanel}>
-                {!wantCreateATeam
-                  ? 'Or Create your team !'
-                  : 'Back to join a team !'}
-              </Button>
+            <Grid.Column width={8}>
+              {!wantCreateATeam ? (
+                <Button
+                  style={{ margin: 0 }}
+                  basic
+                  color="purple"
+                  size="large"
+                  onClick={this.toggleCreationTeamPanel}
+                >
+                  Create a team
+                </Button>
+              ) : (
+                <Button style={{ margin: 0 }} color="purple" size="large">
+                  Create a team
+                </Button>
+              )}
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -189,14 +211,14 @@ class Register extends React.Component {
         {!wantCreateATeam && (
           <>
             <Form onSubmit={this.submitJoinTeam}>
-              <Input
-                placeholder="Pseudo"
-                label={{ color: 'red', corner: 'right', icon: 'asterisk' }}
-                value={pseudoUser}
-                name="pseudo"
-                onChange={this.handleChange}
-              />
-
+              <Form.Field style={{ margin: '15px' }}>
+                <Input
+                  placeholder="Pseudo"
+                  value={pseudoUser}
+                  name="pseudoUser"
+                  onChange={this.handleChange}
+                />
+              </Form.Field>
               <CarouselProvider
                 naturalSlideWidth={3}
                 naturalSlideHeight={1.25}
@@ -219,7 +241,6 @@ class Register extends React.Component {
                 </Slider>
               </CarouselProvider>
               {!wantCreateATeam && (
-                //              <Link to={canPlayGame ? "/game/:uuid": "/game"}>
                 <Button
                   color="teal"
                   type="submit"
@@ -228,7 +249,6 @@ class Register extends React.Component {
                 >
                   {!isLoading ? 'Join the team !' : 'Loading...'}
                 </Button>
-                // </Link>
               )}
             </Form>
           </>
@@ -241,7 +261,7 @@ class Register extends React.Component {
                 placeholder="Pseudo"
                 label={{ color: 'red', corner: 'right', icon: 'asterisk' }}
                 value={pseudoUser}
-                name="pseudo"
+                name="pseudoUser"
                 onChange={this.handleChange}
               />
               <Input
