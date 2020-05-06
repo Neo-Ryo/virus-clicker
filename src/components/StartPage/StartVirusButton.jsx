@@ -29,12 +29,12 @@ class StartVirusButton extends React.Component {
     const { show, uuid } = this.state;
     return (
       <div
-        style={{ height: '160vW', margin: '0px !important' }}
+        style={{ minHeight: '102vh', margin: '0px !important' }}
         className={styles.backgrd}
       >
         <Zoom left>
           <Grid centered>
-            <Grid.Row style={{ height: '60vw' }}>
+            <Grid.Row style={{ height: '80vw' }}>
               <Header className={styles.title} as="h1">
                 Virus Clicker
               </Header>
