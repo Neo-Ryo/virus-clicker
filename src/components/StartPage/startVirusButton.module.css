@@ -1,0 +1,23 @@
+.startButton {
+  width: 45%;
+  height: 100%;
+  margin: 0 !important;
+  cursor: pointer;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.virusButtonNotActive {
+  animation: spin 5s infinite linear;
+  transition: width 1s;
+}
+.virusButtonActive {
+  animation: spin 5s infinite linear;
+  width: 25%;
+  transition: width 1s;
+}

@@ -1,35 +1,35 @@
-import React from "react";
-import { Card, Container } from "semantic-ui-react";
-import { CarouselProvider, Slider } from "pure-react-carousel";
-import data from "./teamTest.json";
+import React from 'react';
+import { Card, Image, Icon } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
-const test = data.teams;
-function CardsGroup() {
-  const lengthT = Math.round(test.length / 3);
+function CardsGroup({ image, key, header, onClick, date, usersNumber }) {
   return (
-    <Container>
-      <CarouselProvider
-        naturalSlideWidth={3}
-        naturalSlideHeight={1.25}
-        totalSlides={lengthT}
-        style={{ width: "80vw" }}
-      >
-        <Slider>
-          <Card.Group>
-            {test.map((team, i) => (
-              <Card
-                key={i}
-                image={team.teamlogo}
-                header={team.teamname}
-                extra={team.members}
-                style={{ width: 150, height: 250, marginTop: 20 }}
-              />
-            ))}
-          </Card.Group>
-        </Slider>
-      </CarouselProvider>
-    </Container>
+    <>
+      <Card key={key} onClick={onClick} style={{ width: 220, height: 270 }}>
+        <Image
+          src={image}
+          style={{ margin: 0, width: '100%', height: '70%' }}
+        />
+        <Card.Content extra>
+          <Card.Header>{header}</Card.Header>
+          <Card.Meta>
+            <span className="date">{`Create in ${date.substring(0, 10)}`}</span>
+          </Card.Meta>
+          <Icon text-align="right" name="user" />
+          {`${usersNumber} friends`}
+        </Card.Content>
+      </Card>
+    </>
   );
 }
+
+CardsGroup.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  image: PropTypes.string.isRequired,
+  key: PropTypes.string.isRequired,
+  header: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  usersNumber: PropTypes.string.isRequired,
+};
 
 export default CardsGroup;
