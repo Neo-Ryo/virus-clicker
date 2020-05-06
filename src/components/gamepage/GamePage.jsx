@@ -96,13 +96,11 @@ class GamePage extends React.Component {
             <Grid.Column width={4} />
           </Grid.Row>
           <Grid.Row centered columns={3}>
+            <Grid.Column width={10}>
+              <TableScoreInGame teamsData={teamsData} />
+            </Grid.Column>
             <Grid.Column width={6}>
               <Planet percentage={(100 * counter) / total} />
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row columns={1}>
-            <Grid.Column width={16}>
-              <TableScoreInGame teamsData={teamsData} />
             </Grid.Column>
           </Grid.Row>
           <Grid.Row centered columns={2}>
