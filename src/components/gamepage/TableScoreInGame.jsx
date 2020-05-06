@@ -7,10 +7,19 @@ import styles from './styles/tableScore.module.css';
 function TableScoreInGame({ teamsData }) {
   return (
     <Container className={styles.tableScore}>
-      <Button size="mini" color="teal" onClick={() => ''} content="+" />
-      <Table basic="very" celled collapsing>
+      <Table basic="very" celled collapsing unstackable>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>Teams</Table.HeaderCell>
+            <Table.HeaderCell>Scores</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+
         <Table.Body>
           {teamsData
+            .sort((a, b) => {
+              return b.score - a.score;
+            })
             .filter(
               (team) => team.logo && team.logo.length > 40 && team.score > 0
             )
@@ -19,7 +28,7 @@ function TableScoreInGame({ teamsData }) {
                 <Table.Row>
                   <Table.Cell>
                     <Header as="h4" image>
-                      <Image src={team.logo} rounded size="mini" />
+                      <Image src={team.logo} rounded size="massive" />
                       <Header.Content>
                         {team.name}
                         <Header.Subheader>
@@ -36,6 +45,7 @@ function TableScoreInGame({ teamsData }) {
             .sort()}
         </Table.Body>
       </Table>
+      <Button size="mini" color="teal" onClick={() => ''} content="+" />
     </Container>
   );
 }
