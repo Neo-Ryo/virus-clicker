@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import React from 'react';
 import axios from 'axios';
 import {
@@ -90,33 +91,34 @@ class TableScore extends React.Component {
                       <Table.Cell>{team.score}</Table.Cell>
                       <Table.Cell>{team.users.length}</Table.Cell>
                       <Table.Cell>
+                        // eslint-disable-next-line consistent-return
                         {(() => {
-                          switch (team) {
-                            case team.score === 0:
-                              return (
-                                <Rating
-                                  maxRating={5}
-                                  defaultRating={0}
-                                  icon="star"
-                                />
-                              );
-                            case team.score > 500:
-                              return (
-                                <Rating
-                                  maxRating={5}
-                                  defaultRating={3}
-                                  icon="star"
-                                />
-                              );
-
-                            default:
-                              return (
-                                <Rating
-                                  maxRating={5}
-                                  defaultRating={1}
-                                  icon="star"
-                                />
-                              );
+                          if (team.score === 0) {
+                            return (
+                              <Rating
+                                maxRating={5}
+                                defaultRating={0}
+                                icon="star"
+                              />
+                            );
+                          }
+                          if (team.score > 500) {
+                            return (
+                              <Rating
+                                maxRating={5}
+                                defaultRating={3}
+                                icon="star"
+                              />
+                            );
+                          }
+                          if (team.score < 500 && team.score > 0) {
+                            return (
+                              <Rating
+                                maxRating={5}
+                                defaultRating={1}
+                                icon="star"
+                              />
+                            );
                           }
                         })()}
                       </Table.Cell>
