@@ -1,46 +1,38 @@
 import React from 'react';
-import { Table, Button, Container } from 'semantic-ui-react';
+import { Table, Button, Container, Header, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 import styles from './styles/tableScore.module.css';
 
-class TableScoreInGame extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <Container className={styles.tableScore}>
-        <Button size="mini" color="teal" onClick={() => ''} content="+" />
-        <Table basic="very" celled collapsing>
-          <p>Scores</p>
-          {/* <Table.Body>
-          {team
-            .map((user) => (
+function TableScoreInGame({ teamsData }) {
+  return (
+    <Container className={styles.tableScore}>
+      <Button size="mini" color="teal" onClick={() => ''} content="+" />
+      <Table basic="very" celled collapsing>
+        <Table.Body>
+          {teamsData
+            .filter(team => team.logo && team.logo.length > 40 && team.score > 0 )
+            .map((team) => (
               <>
                 <Table.Row>
-                  <Table.Cell>{user.rank}</Table.Cell>
                   <Table.Cell>
                     <Header as="h4" image>
-                      <Image src={user.imageTeam} rounded size="mini" />
+                      <Image src={team.logo} rounded size="mini" />
                       <Header.Content>
-                        {user.pseudo}
-                        <Header.Subheader>{user.teamName}</Header.Subheader>
+                        {team.name}
+                        <Header.Subheader>{team.users.length} Team players</Header.Subheader>
                       </Header.Content>
                     </Header>
                   </Table.Cell>
-                  <Table.Cell>{user.score}</Table.Cell>
+                  <Table.Cell>{team.score}</Table.Cell>
                 </Table.Row>
               </>
             ))
             .sort()}
-        </Table.Body> */}
-        </Table>
-      </Container>
-    );
-  }
+        </Table.Body>
+      </Table>
+    </Container>
+  );
 }
 
 TableScoreInGame.protoTypes = {

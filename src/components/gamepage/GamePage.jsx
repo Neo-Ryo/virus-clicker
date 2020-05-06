@@ -14,14 +14,14 @@ class GamePage extends React.Component {
       counter: 0,
       total: 1000,
       teamsData: [],
+      isLoading: true,
     };
 
     this.increment = this.increment.bind(this);
-    // this.getSumTeams = this.getSumTeams.bind(this);
   }
 
   componentDidMount() {
-    const uuid = 'b53e9d0c-62f8-4607-b7c8-25dbbb964310'; // window.localStorage.getItem('uuid'); placeholder
+    const uuid = '06b14f4a-8e7e-44a3-aba8-ab84ae799bd0'; // window.localStorage.getItem('uuid'); placeholder
     axios
       .get(`https://virusclicker.herokuapp.com/users/${uuid}`)
       .then((res) => res.data)
@@ -43,18 +43,22 @@ class GamePage extends React.Component {
             }, 0);
           return team.score;
         });
-      });
+      })
+      .then(() => this.setState({ isLoading: false }));
   }
 
   increment() {
-    const uuid = 'b53e9d0c-62f8-4607-b7c8-25dbbb964310'; // window.localStorage.getItem('uuid'); placeholder
+    const uuid = '06b14f4a-8e7e-44a3-aba8-ab84ae799bd0'; // window.localStorage.getItem('uuid'); placeholder
     const { counter } = this.state;
     axios.put(`https://virusclicker.herokuapp.com/users/${uuid}/click`);
     this.setState({ counter: counter + 1 });
   }
 
   render() {
-    const { counter, total, teamsData } = this.state;
+    const { counter, total, teamsData, isLoading } = this.state;
+    if (isLoading) {
+      return <p>loading... </p>;
+    }
     return (
       <>
         <Grid>
