@@ -1,3 +1,13 @@
+.backgrd {
+  background: center / cover url('../gamepage/images/virus-2-bckgrd.jpg');
+  height: 100%;
+}
+
+.title {
+  margin-top: 10vw !important;
+  font-family: 'Stalinist One', cursive !important;
+  color: aliceblue !important;
+}
 .startButton {
   width: 45%;
   height: 100%;
