@@ -18,9 +18,21 @@ class GamePage extends React.Component {
     };
 
     this.increment = this.increment.bind(this);
+    this.getOk = this.getOk.bind(this);
   }
 
   componentDidMount() {
+    this.getOk();
+  }
+
+  componentDidUpdate(_prevProps, prevState) {
+    const { counter } = this.state;
+    if (prevState.counter !== counter) {
+      this.getOk();
+    }
+  }
+
+  getOk() {
     const uuid = '06b14f4a-8e7e-44a3-aba8-ab84ae799bd0'; // window.localStorage.getItem('uuid'); placeholder
     axios
       .get(`https://virusclicker.herokuapp.com/users/${uuid}`)
