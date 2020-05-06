@@ -34,15 +34,27 @@ class GamePage extends React.Component {
           });
       })
       .then(() => {
-        const { teamsData } = this.state;
-        teamsData.map((team) => {
-          team.score = team.users
-            .map((user) => user.score)
-            .reduce((somme, score) => {
-              return somme + score;
-            }, 0);
-          return team.score;
-        });
+        // const { teamsData } = this.state;
+        // const teamsWithScore = teamsData.map((team) => {
+        //   return {
+        //     ...team,
+        //     score: team.users
+        //       .map((user) => user.score)
+        //       .reduce((somme, score) => somme + score, 0),
+        //   };
+        // });
+
+        this.setState((prevState) => ({
+          ...prevState,
+          teamsData: prevState.teamsData.map((team) => {
+            return {
+              ...team,
+              score: team.users
+                .map((user) => user.score)
+                .reduce((somme, score) => somme + score, 0),
+            };
+          }),
+        }));
       })
       .then(() => this.setState({ isLoading: false }));
   }

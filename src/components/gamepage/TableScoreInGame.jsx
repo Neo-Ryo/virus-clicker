@@ -11,7 +11,9 @@ function TableScoreInGame({ teamsData }) {
       <Table basic="very" celled collapsing>
         <Table.Body>
           {teamsData
-            .filter(team => team.logo && team.logo.length > 40 && team.score > 0 )
+            .filter(
+              (team) => team.logo && team.logo.length > 40 && team.score > 0
+            )
             .map((team) => (
               <>
                 <Table.Row>
@@ -20,7 +22,10 @@ function TableScoreInGame({ teamsData }) {
                       <Image src={team.logo} rounded size="mini" />
                       <Header.Content>
                         {team.name}
-                        <Header.Subheader>{team.users.length} Team players</Header.Subheader>
+                        <Header.Subheader>
+                          {team.users.length}
+                          Team players
+                        </Header.Subheader>
                       </Header.Content>
                     </Header>
                   </Table.Cell>
@@ -35,8 +40,24 @@ function TableScoreInGame({ teamsData }) {
   );
 }
 
-TableScoreInGame.protoTypes = {
-  teamsData: PropTypes.array.isRequired,
+TableScoreInGame.propTypes = {
+  teamsData: PropTypes.arrayOf(
+    PropTypes.shape({
+      uuid: PropTypes.string,
+      name: PropTypes.string,
+      logo: PropTypes.string,
+      createdAt: PropTypes.string,
+      updatedAt: PropTypes.string,
+      users: PropTypes.shape({
+        uuid: PropTypes.string,
+        pseudo: PropTypes.string,
+        score: PropTypes.number,
+        createdAt: PropTypes.string,
+        updatedAt: PropTypes.string,
+        Teamuuid: PropTypes.string,
+      }),
+    })
+  ).isRequired,
 };
 
 export default TableScoreInGame;
