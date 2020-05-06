@@ -13,7 +13,7 @@ function CardsGroup({ image, key, header, onClick, date, usersNumber }) {
         <Card.Content extra>
           <Card.Header>{header}</Card.Header>
           <Card.Meta>
-            <span className="date">{`Joined in ${date.substring(0, 10)}`}</span>
+            <span className="date">{`Create in ${date.substring(0, 10)}`}</span>
           </Card.Meta>
           <Icon text-align="right" name="user" />
           {`${usersNumber} friends`}
