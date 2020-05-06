@@ -91,7 +91,6 @@ class TableScore extends React.Component {
                       <Table.Cell>{team.score}</Table.Cell>
                       <Table.Cell>{team.users.length}</Table.Cell>
                       <Table.Cell>
-                        // eslint-disable-next-line consistent-return
                         {(() => {
                           if (team.score === 0) {
                             return (
