@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, Button, Container, Header, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-
+import { Link } from 'react-router-dom';
 import styles from './styles/tableScore.module.css';
 
 function TableScoreInGame({ teamsData }) {
@@ -45,7 +45,9 @@ function TableScoreInGame({ teamsData }) {
             .sort()}
         </Table.Body>
       </Table>
-      <Button size="mini" color="teal" onClick={() => ''} content="+" />
+      <Link to="/tableScore">
+        <Button size="mini" color="teal" onClick={() => ''} content="+" />
+      </Link>
     </Container>
   );
 }
