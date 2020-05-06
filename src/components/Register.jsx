@@ -10,10 +10,10 @@ import {
   Button,
   Image,
   Grid,
-  Container,
 } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import TeamCards from './TeamCards';
+import styles from './Register.module.css';
 
 class Register extends React.Component {
   constructor(props) {
@@ -165,8 +165,8 @@ class Register extends React.Component {
       return <Redirect to="/game" />;
     }
     return (
-      <Container>
-        <Header as="h1" textAlign="center" style={{ marginTop: '15px' }}>
+      <div className={styles.backgrd}>
+        <Header as="h1" className={styles.title}>
           Game Builder
         </Header>
         <Grid divided="vertically">
@@ -318,7 +318,7 @@ class Register extends React.Component {
             </Form>
           </>
         )}
-      </Container>
+      </div>
     );
   }
 }
