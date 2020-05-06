@@ -1,6 +1,6 @@
-import React from "react";
-import axios from "axios";
-import styles from "./styles/userInfos.module.css";
+import React from 'react';
+import axios from 'axios';
+import styles from './styles/userInfos.module.css';
 
 class User extends React.Component {
   constructor(props) {
@@ -12,9 +12,10 @@ class User extends React.Component {
     };
     this.getUser = this.getUser.bind(this);
   }
+
   getUser() {
     axios
-      .get("https://virusclicker.herokuapp.com/docs/#/user/getUsers")
+      .get('https://virusclicker.herokuapp.com/docs/#/user/getUsers')
       .then((response) => response.data)
       .then((data) => {
         this.setState({
@@ -24,21 +25,14 @@ class User extends React.Component {
         });
       });
   }
+
   render() {
+    const { id, logo, team } = this.state;
     return (
       <div className={styles.userBlock}>
-        <p className={styles.pseudoName}>
-          {this.state.id ? this.state.id : "Loading..."}
-        </p>
-        <img
-          src={
-            this.state.logo ? this.state.id : "https://via.placeholder.com/70"
-          }
-          alt={this.state.team}
-        />
-        <p className={styles.teamName}>
-          {this.state.team ? this.state.team : "Loading..."}
-        </p>
+        <p className={styles.pseudoName}>{id || 'Loading...'}</p>
+        <img src={logo ? id : 'https://via.placeholder.com/70'} alt={team} />
+        <p className={styles.teamName}>{team || 'Loading...'}</p>
       </div>
     );
   }
