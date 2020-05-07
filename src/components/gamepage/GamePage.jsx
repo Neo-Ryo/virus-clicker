@@ -33,7 +33,7 @@ class GamePage extends React.Component {
   }
 
   getOk() {
-    const uuid = '06b14f4a-8e7e-44a3-aba8-ab84ae799bd0'; // window.localStorage.getItem('uuid'); placeholder
+    const uuid = 'd41b5f47-ecaf-4a58-9222-f5cd77486e2b'; // window.localStorage.getItem('uuid'); placeholder
     axios
       .get(`https://virusclicker.herokuapp.com/users/${uuid}`)
       .then((res) => res.data)
@@ -72,7 +72,7 @@ class GamePage extends React.Component {
   }
 
   increment() {
-    const uuid = '06b14f4a-8e7e-44a3-aba8-ab84ae799bd0'; // window.localStorage.getItem('uuid'); placeholder
+    const uuid = 'd41b5f47-ecaf-4a58-9222-f5cd77486e2b'; // window.localStorage.getItem('uuid'); placeholder
     const { counter } = this.state;
     axios.put(`https://virusclicker.herokuapp.com/users/${uuid}/click`);
     this.setState({ counter: counter + 1 });
