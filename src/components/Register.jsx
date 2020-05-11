@@ -29,7 +29,6 @@ class Register extends React.Component {
       teamLogo: '',
       isLoading: false,
       canPlayGame: false,
-      getUserUuid: '',
       error: false,
     };
     this.toggleCreationTeamPanel = this.toggleCreationTeamPanel.bind(this);
@@ -74,7 +73,6 @@ class Register extends React.Component {
       pseudoUser,
       users,
       getuuid,
-      getUserUuid,
     } = this.state;
     event.preventDefault();
     this.setState({ isLoading: true });
@@ -102,7 +100,7 @@ class Register extends React.Component {
             pseudo: pseudoUser,
             team: getuuid.data.uuid,
           })
-          .then(window.localStorage.setItem('uuid', getUserUuid))
+          .then((res) => window.localStorage.setItem('uuid', res.data.uuid))
           .then(this.setState({ canPlayGame: true }));
       } else {
         // eslint-disable-next-line no-console
@@ -116,7 +114,7 @@ class Register extends React.Component {
   }
 
   async submitJoinTeam(e) {
-    const { teamUuid, getUserUuid, pseudoUser } = this.state;
+    const { teamUuid, pseudoUser } = this.state;
     e.preventDefault(); // prevent page reload
     this.setState({ isLoading: true });
     try {
@@ -135,19 +133,17 @@ class Register extends React.Component {
             pseudo: pseudoUser,
             team: teamUuid,
           })
-          .then((res) => this.setState({ getUserUuid: res }))
-          // eslint-disable-next-line no-console
-          .then(console.log(getUserUuid))
-          .then(this.setState({ canPlayGame: true }))
-          .then(window.localStorage.setItem('uuid', getUserUuid));
+          .then((res) => window.localStorage.setItem('uuid', res.data.uuid))
+          .then(this.setState({ canPlayGame: true }));
       } else {
         // eslint-disable-next-line no-console
         console.log('This pseudo is already taken.');
       }
     } catch (err) {
-      this.setState({ error: true });
+      this.setState({ error: err });
+    } finally {
+      this.setState({ isLoading: false });
     }
-    this.setState({ isLoading: false });
   }
 
   chooseTeam(id) {

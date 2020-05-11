@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
 import axios from 'axios';
@@ -24,6 +25,7 @@ class GamePage extends React.Component {
 
   componentDidMount() {
     this.getOk();
+    console.log(window.localStorage.getItem('uuid'));
   }
 
   componentDidUpdate(_prevProps, prevState) {
@@ -31,10 +33,11 @@ class GamePage extends React.Component {
     if (prevState.counter !== counter) {
       this.getOk();
     }
+    console.log(localStorage.getItem('uuid'));
   }
 
   getOk() {
-    const uuid = 'd44a7346-1167-4e1c-9fa5-21453ffaac9d'; // window.localStorage.getItem('uuid'); placeholder
+    const uuid = window.localStorage.getItem('uuid');
     axios
       .get(`https://virusclicker.herokuapp.com/users/${uuid}`)
       .then((res) => res.data)
@@ -73,7 +76,7 @@ class GamePage extends React.Component {
   }
 
   increment() {
-    const uuid = 'd44a7346-1167-4e1c-9fa5-21453ffaac9d'; // window.localStorage.getItem('uuid'); placeholder
+    const uuid = window.localStorage.getItem('uuid');
     const { counter } = this.state;
     axios.put(`https://virusclicker.herokuapp.com/users/${uuid}/click`);
     this.setState({ counter: counter + 1 });
