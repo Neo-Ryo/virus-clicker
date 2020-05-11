@@ -1,9 +1,14 @@
+.main{
+  color: rgb(251, 4, 169) ;
+  font-family: 'Quicksand', sans-serif;
+}
+
 .titleInGame {
   font-family: "Stalinist One", cursive;
-  font-size: small;
+  font-size: medium;
   padding-top: 10px;
-  color: rgba(73, 71, 71, 0.95);
 }
 .scoreCount {
-  font-size: smaller;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
 }
