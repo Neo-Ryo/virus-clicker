@@ -8,7 +8,7 @@ export default function Planet({ percentage }) {
   return (
     <Container textAlign="center">
       <img className={styles.logoplanet} src={PLanetLogo} alt="Planet logo" />
-      <Statistic size="small">
+      <Statistic size="tiny">
         <Statistic.Value>{`${percentage} %`}</Statistic.Value>
       </Statistic>
       <Progress progress percent={percentage} indicating />
