@@ -6,10 +6,10 @@ import styles from './styles/titleInGame.module.css';
 
 function TitleInGame({ counter }) {
   return (
-    <Container textAlign="center">
+    <Container textAlign="center" className={styles.main}>
       <h1 className={styles.titleInGame}>Virus clicker</h1>
-      <p>{`score: ${counter}`}</p>
-      <p>Help us!</p>
+      <p className={styles.scoreCount}>{`score: ${counter}`}</p>
+      <p className={styles.scoreCount}>Help us!</p>
     </Container>
   );
 }

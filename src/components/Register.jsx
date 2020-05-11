@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-import React from 'react';
+import { React } from 'react';
 import { CarouselProvider, Slider } from 'pure-react-carousel';
 import axios from 'axios';
 import {
@@ -10,10 +9,11 @@ import {
   Button,
   Image,
   Grid,
-  Container,
+  Loader,
 } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import TeamCards from './TeamCards';
+import styles from './Register.module.css';
 
 class Register extends React.Component {
   constructor(props) {
@@ -30,6 +30,7 @@ class Register extends React.Component {
       isLoading: false,
       canPlayGame: false,
       getUserUuid: '',
+      error: false,
     };
     this.toggleCreationTeamPanel = this.toggleCreationTeamPanel.bind(this);
     this.chooseTeam = this.chooseTeam.bind(this);
@@ -56,6 +57,7 @@ class Register extends React.Component {
         teams: data,
       });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.log(err);
     }
   }
@@ -102,8 +104,12 @@ class Register extends React.Component {
           })
           .then(window.localStorage.setItem('uuid', getUserUuid))
           .then(this.setState({ canPlayGame: true }));
-      } else console.log('nope');
+      } else {
+        // eslint-disable-next-line no-console
+        console.log('nope');
+      }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log('error');
     }
     this.setState({ isLoading: false });
@@ -130,14 +136,16 @@ class Register extends React.Component {
             team: teamUuid,
           })
           .then((res) => this.setState({ getUserUuid: res }))
+          // eslint-disable-next-line no-console
           .then(console.log(getUserUuid))
           .then(this.setState({ canPlayGame: true }))
           .then(window.localStorage.setItem('uuid', getUserUuid));
       } else {
+        // eslint-disable-next-line no-console
         console.log('This pseudo is already taken.');
       }
-    } catch (error) {
-      console.log('error');
+    } catch (err) {
+      this.setState({ error: true });
     }
     this.setState({ isLoading: false });
   }
@@ -160,13 +168,20 @@ class Register extends React.Component {
       teamName,
       teamLogo,
       isLoading,
+      error,
     } = this.state;
+    if (isLoading) {
+      return <Loader />;
+    }
+    if (error) {
+      return <p>There has been an error, please reload !</p>;
+    }
     if (canPlayGame) {
       return <Redirect to="/game" />;
     }
     return (
-      <Container>
-        <Header as="h1" textAlign="center" style={{ marginTop: '15px' }}>
+      <div className={styles.backgrd}>
+        <Header as="h1" className={styles.title}>
           Game Builder
         </Header>
         <Grid divided="vertically">
@@ -229,18 +244,20 @@ class Register extends React.Component {
               >
                 <Slider>
                   <Card.Group>
-                    {teams.map(({ uuid, logo, name, createdAt, users }) => {
-                      return (
-                        <TeamCards
-                          key={uuid}
-                          image={logo}
-                          header={name}
-                          date={createdAt}
-                          usersNumber={users.length}
-                          onClick={() => this.chooseTeam(uuid)}
-                        />
-                      );
-                    })}
+                    {teams
+                      .filter((team) => team.logo && team.logo.length > 40)
+                      .map(({ uuid, logo, name, createdAt, users }) => {
+                        return (
+                          <TeamCards
+                            key={uuid}
+                            image={logo}
+                            header={name}
+                            date={createdAt}
+                            usersNumber={users.length}
+                            onClick={() => this.chooseTeam(uuid)}
+                          />
+                        );
+                      })}
                   </Card.Group>
                 </Slider>
               </CarouselProvider>
@@ -318,7 +335,7 @@ class Register extends React.Component {
             </Form>
           </>
         )}
-      </Container>
+      </div>
     );
   }
 }
