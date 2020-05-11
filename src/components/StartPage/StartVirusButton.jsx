@@ -20,6 +20,7 @@ class StartVirusButton extends React.Component {
     const { show } = this.state;
     if (window.localStorage.getItem('uuid')) {
       this.setState({ uuid: window.localStorage.getItem('uuid') });
+      this.setState({ show: !show });
     } else {
       this.setState({ show: !show });
     }
