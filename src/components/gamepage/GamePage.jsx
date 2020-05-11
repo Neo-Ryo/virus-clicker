@@ -13,7 +13,7 @@ class GamePage extends React.Component {
     super(props);
     this.state = {
       counter: 0,
-      total: 1000,
+      total: 10000,
       teamsData: [],
       isLoading: true,
     };
@@ -33,8 +33,10 @@ class GamePage extends React.Component {
     }
   }
 
+  // 'd44a7346-1167-4e1c-9fa5-21453ffaac9d';
+
   getOk() {
-    const uuid = 'd44a7346-1167-4e1c-9fa5-21453ffaac9d'; // window.localStorage.getItem('uuid'); placeholder
+    const uuid = window.localStorage.getItem('uuid');
     axios
       .get(`https://virusclicker.herokuapp.com/users/${uuid}`)
       .then((res) => res.data)
@@ -73,7 +75,8 @@ class GamePage extends React.Component {
   }
 
   increment() {
-    const uuid = 'd44a7346-1167-4e1c-9fa5-21453ffaac9d'; // window.localStorage.getItem('uuid'); placeholder
+    const uuid = window.localStorage.getItem('uuid');
+    // console.log(uuid);
     const { counter } = this.state;
     axios.put(`https://virusclicker.herokuapp.com/users/${uuid}/click`);
     this.setState({ counter: counter + 1 });

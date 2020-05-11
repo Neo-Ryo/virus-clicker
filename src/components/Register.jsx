@@ -239,7 +239,7 @@ class Register extends React.Component {
               <CarouselProvider
                 naturalSlideWidth={3}
                 naturalSlideHeight={1.25}
-                totalSlides={teams.length / 4} // import teams number
+                totalSlides={teams.length / 7} // import teams number
                 style={{ width: '80vw' }}
               >
                 <Slider>
