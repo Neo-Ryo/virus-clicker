@@ -265,7 +265,7 @@ class Register extends React.Component {
                         color="teal"
                         type="submit"
                         value=""
-                        disabled={isLoading}
+                        disabled={!isLoading}
                         size="large"
                       >
                         {!isLoading ? 'Start' : 'Loading...'}
@@ -320,7 +320,7 @@ class Register extends React.Component {
                     <Button
                       color="teal"
                       type="submit"
-                      disabled={isLoading}
+                      disabled={!isLoading}
                       size="large"
                     >
                       {!isLoading ? 'Start' : 'Loading...'}
