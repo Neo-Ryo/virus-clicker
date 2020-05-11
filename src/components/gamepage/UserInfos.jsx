@@ -6,22 +6,29 @@ class User extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: null,
+      id: 'uuid',
       logo: null,
       team: null,
     };
     this.getUser = this.getUser.bind(this);
   }
 
+  componentDidMount() {
+    this.getUser();
+  }
+
   getUser() {
+    this.setState({ id: window.localStorage.getItem('uuid') });
     axios
-      .get('https://virusclicker.herokuapp.com/docs/#/user/getUsers')
+      .get(
+        'https://virusclicker.herokuapp.com/users/d44a7346-1167-4e1c-9fa5-21453ffaac9d'
+      )
       .then((response) => response.data)
       .then((data) => {
         this.setState({
           id: data.pseudo,
-          logo: data.logo,
-          team: data.team,
+          logo: data.Team.logo,
+          team: data.Team.name,
         });
       });
   }
@@ -31,7 +38,7 @@ class User extends React.Component {
     return (
       <div className={styles.userBlock}>
         <p className={styles.pseudoName}>{id || 'Loading...'}</p>
-        <img src={logo ? id : 'https://via.placeholder.com/70'} alt={team} />
+        <img src={logo || 'https://via.placeholder.com/70'} alt={team} />
         <p className={styles.teamName}>{team || 'Loading...'}</p>
       </div>
     );

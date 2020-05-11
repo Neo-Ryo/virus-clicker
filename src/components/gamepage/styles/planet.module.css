@@ -1,10 +1,10 @@
 .logoplanet {
-  width: 100px;
-  height: 100px;
+  width: 80%;
+  height: 80%;
 }
 
 .percentage {
-  font-size: xx-large;
+  font-size: xx-small;
   color: red;
   translate: 0px -77px;
 }

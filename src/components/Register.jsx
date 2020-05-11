@@ -1,4 +1,4 @@
-import { React } from 'react';
+import React from 'react';
 import { CarouselProvider, Slider } from 'pure-react-carousel';
 import axios from 'axios';
 import {
