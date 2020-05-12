@@ -240,7 +240,6 @@ class Register extends React.Component {
                 naturalSlideWidth={2}
                 naturalSlideHeight={1.25}
                 totalSlides={teams.length / 10} // import teams number
-                style={{ width: 'auto', height: '120vw' }}
               >
                 <Slider>
                   <Card.Group size="tiny">
