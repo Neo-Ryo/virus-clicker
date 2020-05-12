@@ -25,7 +25,7 @@ class User extends React.Component {
 
   async getUser() {
     // this.setState({ id: window.localStorage.getItem('uuid') });
-    const { uuid } = window.localStorage.getItem('uuid');
+    const uuid = window.localStorage.getItem('uuid');
     // const { userPseudo, logo, team } = this.state;
     try {
       const res = await axios.get(
