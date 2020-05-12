@@ -14,7 +14,7 @@ class GamePage extends React.Component {
     super(props);
     this.state = {
       counter: 0,
-      total: 1000,
+      total: 10000,
       teamsData: [],
       isLoading: true,
     };
@@ -35,6 +35,8 @@ class GamePage extends React.Component {
     }
     console.log(localStorage.getItem('uuid'));
   }
+
+  // 'd44a7346-1167-4e1c-9fa5-21453ffaac9d';
 
   getOk() {
     const uuid = window.localStorage.getItem('uuid');

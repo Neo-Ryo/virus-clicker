@@ -1,45 +1,61 @@
 import React from 'react';
 import axios from 'axios';
+import { Loader } from 'semantic-ui-react';
 import styles from './styles/userInfos.module.css';
 
 class User extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: 'uuid',
+      userPseudo: null,
       logo: null,
       team: null,
+      isLoading: true,
     };
     this.getUser = this.getUser.bind(this);
   }
 
   componentDidMount() {
+    // const { userPseudo, logo, team } = this.state;
+
     this.getUser();
+    // const { uuid } = window.localStorage.getItem('uuid');
+    // console.log(userPseudo, logo, team);
   }
 
-  getUser() {
-    this.setState({ id: window.localStorage.getItem('uuid') });
-    axios
-      .get(
-        'https://virusclicker.herokuapp.com/users/d44a7346-1167-4e1c-9fa5-21453ffaac9d'
-      )
-      .then((response) => response.data)
-      .then((data) => {
-        this.setState({
-          id: data.pseudo,
-          logo: data.Team.logo,
-          team: data.Team.name,
-        });
+  async getUser() {
+    // this.setState({ id: window.localStorage.getItem('uuid') });
+    const { uuid } = window.localStorage.getItem('uuid');
+    // const { userPseudo, logo, team } = this.state;
+    try {
+      const res = await axios.get(
+        `https://virusclicker.herokuapp.com/users/${uuid}`
+      );
+      this.setState({
+        userPseudo: res.data.pseudo,
+        logo: res.data.Team.logo,
+        team: res.data.Team.name,
       });
+    } catch (err) {
+      this.setState({ error: err });
+    } finally {
+      this.setState({ isLoading: false });
+    }
   }
 
   render() {
-    const { id, logo, team } = this.state;
+    const { userPseudo, logo, team, isLoading, error } = this.state;
+    if (isLoading) {
+      return <Loader />;
+    }
+    if (error) {
+      return <p>Error!</p>;
+    }
     return (
       <div className={styles.userBlock}>
-        <p className={styles.pseudoName}>{id || 'Loading...'}</p>
-        <img src={logo || 'https://via.placeholder.com/70'} alt={team} />
-        <p className={styles.teamName}>{team || 'Loading...'}</p>
+        <p className={styles.pseudoName}>{userPseudo}</p>
+        <img src={logo} alt={team} />
+        <p className={styles.teamName}>{team}</p>
       </div>
     );
   }
