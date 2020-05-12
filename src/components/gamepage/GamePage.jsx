@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
 import axios from 'axios';
@@ -24,6 +25,7 @@ class GamePage extends React.Component {
 
   componentDidMount() {
     this.getOk();
+    console.log(window.localStorage.getItem('uuid'));
   }
 
   componentDidUpdate(_prevProps, prevState) {
@@ -31,6 +33,7 @@ class GamePage extends React.Component {
     if (prevState.counter !== counter) {
       this.getOk();
     }
+    console.log(localStorage.getItem('uuid'));
   }
 
   // 'd44a7346-1167-4e1c-9fa5-21453ffaac9d';
@@ -39,26 +42,15 @@ class GamePage extends React.Component {
     const uuid = window.localStorage.getItem('uuid');
     axios
       .get(`https://virusclicker.herokuapp.com/users/${uuid}`)
-      .then((res) => res.data)
-      .then((data) => {
-        this.setState({ counter: data.score });
-        return axios
-          .get(`https://virusclicker.herokuapp.com/teams`)
-          .then((res) => {
-            this.setState({ teamsData: res.data });
-          });
+      .then((res) => {
+        this.setState({ counter: res.data.score });
+      });
+    return axios
+      .get(`https://virusclicker.herokuapp.com/teams`)
+      .then((res) => {
+        this.setState({ teamsData: res.data });
       })
       .then(() => {
-        // const { teamsData } = this.state;
-        // const teamsWithScore = teamsData.map((team) => {
-        //   return {
-        //     ...team,
-        //     score: team.users
-        //       .map((user) => user.score)
-        //       .reduce((somme, score) => somme + score, 0),
-        //   };
-        // });
-
         this.setState((prevState) => ({
           ...prevState,
           teamsData: prevState.teamsData.map((team) => {
@@ -76,7 +68,6 @@ class GamePage extends React.Component {
 
   increment() {
     const uuid = window.localStorage.getItem('uuid');
-    // console.log(uuid);
     const { counter } = this.state;
     axios.put(`https://virusclicker.herokuapp.com/users/${uuid}/click`);
     this.setState({ counter: counter + 1 });
