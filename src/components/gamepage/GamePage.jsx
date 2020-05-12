@@ -40,26 +40,15 @@ class GamePage extends React.Component {
     const uuid = window.localStorage.getItem('uuid');
     axios
       .get(`https://virusclicker.herokuapp.com/users/${uuid}`)
-      .then((res) => res.data)
-      .then((data) => {
-        this.setState({ counter: data.score });
-        return axios
-          .get(`https://virusclicker.herokuapp.com/teams`)
-          .then((res) => {
-            this.setState({ teamsData: res.data });
-          });
+      .then((res) => {
+        this.setState({ counter: res.data.score });
+      });
+    return axios
+      .get(`https://virusclicker.herokuapp.com/teams`)
+      .then((res) => {
+        this.setState({ teamsData: res.data });
       })
       .then(() => {
-        // const { teamsData } = this.state;
-        // const teamsWithScore = teamsData.map((team) => {
-        //   return {
-        //     ...team,
-        //     score: team.users
-        //       .map((user) => user.score)
-        //       .reduce((somme, score) => somme + score, 0),
-        //   };
-        // });
-
         this.setState((prevState) => ({
           ...prevState,
           teamsData: prevState.teamsData.map((team) => {
