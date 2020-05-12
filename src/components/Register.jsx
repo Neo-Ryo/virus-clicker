@@ -23,7 +23,6 @@ class Register extends React.Component {
       users: [],
       pseudoUser: '',
       teamUuid: null,
-      getuuid: '',
       wantCreateATeam: false,
       teamName: '',
       teamLogo: '',
@@ -66,14 +65,7 @@ class Register extends React.Component {
   }
 
   async submitCreateTeam(event) {
-    const {
-      teams,
-      teamName,
-      teamLogo,
-      pseudoUser,
-      users,
-      getuuid,
-    } = this.state;
+    const { teams, teamName, teamLogo, pseudoUser, users } = this.state;
     event.preventDefault();
     this.setState({ isLoading: true });
     try {
@@ -93,14 +85,16 @@ class Register extends React.Component {
             name: teamName,
             logo: teamLogo,
           })
-          .then((res) => this.setState({ getuuid: res }));
-
-        await axios
-          .post('https://virusclicker.herokuapp.com/users', {
-            pseudo: pseudoUser,
-            team: getuuid.data.uuid,
-          })
-          .then((res) => window.localStorage.setItem('uuid', res.data.uuid))
+          .then((res) =>
+            axios
+              .post('https://virusclicker.herokuapp.com/users', {
+                pseudo: pseudoUser,
+                team: res.data.uuid,
+              })
+              .then((resUser) =>
+                window.localStorage.setItem('uuid', resUser.data.uuid)
+              )
+          )
           .then(this.setState({ canPlayGame: true }));
       } else {
         // eslint-disable-next-line no-console
