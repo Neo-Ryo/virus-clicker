@@ -47,20 +47,6 @@ class Register extends React.Component {
     });
   }
 
-  async getTeams() {
-    try {
-      const { data } = await axios.get(
-        `https://virusclicker.herokuapp.com/teams`
-      );
-      this.setState({
-        teams: data,
-      });
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log(err);
-    }
-  }
-
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
@@ -93,12 +79,12 @@ class Register extends React.Component {
             name: teamName,
             logo: teamLogo,
           })
-          .then((res) => this.setState({ getuuid: res }));
+          .then((res) => this.setState({ getuuid: res.data.uuid }));
 
         await axios
           .post('https://virusclicker.herokuapp.com/users', {
             pseudo: pseudoUser,
-            team: getuuid.data.uuid,
+            team: getuuid,
           })
           .then((res) => window.localStorage.setItem('uuid', res.data.uuid))
           .then(this.setState({ canPlayGame: true }));
@@ -106,11 +92,13 @@ class Register extends React.Component {
         // eslint-disable-next-line no-console
         console.log('nope');
       }
-    } catch (error) {
+    } catch (err) {
+      this.setState({ error: err });
       // eslint-disable-next-line no-console
       console.log('error');
+    } finally {
+      this.setState({ isLoading: false });
     }
-    this.setState({ isLoading: false });
   }
 
   async submitJoinTeam(e) {
