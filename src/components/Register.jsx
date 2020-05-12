@@ -46,20 +46,6 @@ class Register extends React.Component {
     });
   }
 
-  async getTeams() {
-    try {
-      const { data } = await axios.get(
-        `https://virusclicker.herokuapp.com/teams`
-      );
-      this.setState({
-        teams: data,
-      });
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log(err);
-    }
-  }
-
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
@@ -100,11 +86,13 @@ class Register extends React.Component {
         // eslint-disable-next-line no-console
         console.log('nope');
       }
-    } catch (error) {
+    } catch (err) {
+      this.setState({ error: err });
       // eslint-disable-next-line no-console
       console.log('error');
+    } finally {
+      this.setState({ isLoading: false });
     }
-    this.setState({ isLoading: false });
   }
 
   async submitJoinTeam(e) {
