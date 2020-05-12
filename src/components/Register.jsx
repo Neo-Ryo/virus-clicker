@@ -110,21 +110,20 @@ class Register extends React.Component {
         teamUuid &&
         pseudoUser
       ) {
-        axios
+        await axios
           .post('https://virusclicker.herokuapp.com/users', {
             pseudo: pseudoUser,
             team: teamUuid,
           })
-          .then((res) => window.localStorage.setItem('uuid', res.data.uuid))
-          .then(this.setState({ canPlayGame: true }));
-      } else {
-        // eslint-disable-next-line no-console
-        console.log('This pseudo is already taken.');
+          .then((res) => window.localStorage.setItem('uuid', res.data.uuid));
+        // .then(this.setState({ canPlayGame: true }));
       }
+      // eslint-disable-next-line no-console
+      console.log('This pseudo is already taken.');
     } catch (err) {
       this.setState({ error: err });
     } finally {
-      this.setState({ isLoading: false });
+      this.setState({ isLoading: false, canPlayGame: true });
     }
   }
 
