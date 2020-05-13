@@ -27,7 +27,7 @@ class TableScore extends React.Component {
   }
 
   getOk() {
-    const uuid = '06b14f4a-8e7e-44a3-aba8-ab84ae799bd0'; // window.localStorage.getItem('uuid'); placeholder
+    const uuid = window.localStorage.getItem('uuid');
     axios
       .get(`https://virusclicker.herokuapp.com/users/${uuid}`)
       .then((res) => res.data)

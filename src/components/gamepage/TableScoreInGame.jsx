@@ -68,13 +68,26 @@ class TableScoreInGame extends React.Component {
     const arrayFiltered = [];
     for (let i = 0; i < arrayInOrder.length; i += 1) {
       if (arrayInOrder[i].uuid === uuid) {
-        arrayFiltered.push(
-          arrayInOrder[i - 1],
-          arrayInOrder[i],
-          arrayInOrder[i + 1]
-        );
+        if (arrayInOrder[i - 1] && arrayInOrder[i + 1]) {
+          arrayFiltered.push(
+            arrayInOrder[i - 1],
+            arrayInOrder[i],
+            arrayInOrder[i + 1]
+          );
+        } else if (!arrayInOrder[i - 1]) {
+          arrayFiltered.push(
+            arrayInOrder[i],
+            arrayInOrder[i + 1],
+            arrayInOrder[i + 2]
+          );
+        } else {
+          arrayFiltered.push(
+            arrayInOrder[i],
+            arrayInOrder[i - 1],
+            arrayInOrder[i - 2]
+          );
+        }
       }
-
       this.setState({ arrayOk: arrayFiltered });
     }
   }

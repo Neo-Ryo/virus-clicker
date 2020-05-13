@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Loader } from 'semantic-ui-react';
+import { Loader, Image } from 'semantic-ui-react';
 import styles from './styles/userInfos.module.css';
 
 class User extends React.Component {
@@ -54,7 +54,7 @@ class User extends React.Component {
     return (
       <div className={styles.userBlock}>
         <p className={styles.pseudoName}>{userPseudo}</p>
-        <img src={logo} alt={team} />
+        <Image src={logo} alt={team} circular size="large" />
         <p className={styles.teamName}>{team}</p>
       </div>
     );
