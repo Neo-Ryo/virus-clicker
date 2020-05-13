@@ -95,7 +95,7 @@ class GamePage extends React.Component {
             </Grid.Column>
           </Grid.Row>
           <Grid.Row centered columns={2}>
-            <Grid.Column>
+            <Grid.Column width={11}>
               <VirusButton counter={counter} increment={this.increment} />
             </Grid.Column>
           </Grid.Row>
