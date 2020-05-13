@@ -23,13 +23,11 @@ class Register extends React.Component {
       users: [],
       pseudoUser: '',
       teamUuid: null,
-      getuuid: '',
       wantCreateATeam: false,
       teamName: '',
       teamLogo: '',
       isLoading: false,
       canPlayGame: false,
-      getUserUuid: '',
       error: false,
     };
     this.toggleCreationTeamPanel = this.toggleCreationTeamPanel.bind(this);
@@ -48,34 +46,12 @@ class Register extends React.Component {
     });
   }
 
-  async getTeams() {
-    try {
-      const { data } = await axios.get(
-        `https://virusclicker.herokuapp.com/teams`
-      );
-      this.setState({
-        teams: data,
-      });
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log(err);
-    }
-  }
-
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
 
   async submitCreateTeam(event) {
-    const {
-      teams,
-      teamName,
-      teamLogo,
-      pseudoUser,
-      users,
-      getuuid,
-      getUserUuid,
-    } = this.state;
+    const { teams, teamName, teamLogo, pseudoUser, users } = this.state;
     event.preventDefault();
     this.setState({ isLoading: true });
     try {
@@ -95,28 +71,32 @@ class Register extends React.Component {
             name: teamName,
             logo: teamLogo,
           })
-          .then((res) => this.setState({ getuuid: res }));
-
-        await axios
-          .post('https://virusclicker.herokuapp.com/users', {
-            pseudo: pseudoUser,
-            team: getuuid.data.uuid,
-          })
-          .then(window.localStorage.setItem('uuid', getUserUuid))
+          .then((res) =>
+            axios
+              .post('https://virusclicker.herokuapp.com/users', {
+                pseudo: pseudoUser,
+                team: res.data.uuid,
+              })
+              .then((resUser) =>
+                window.localStorage.setItem('uuid', resUser.data.uuid)
+              )
+          )
           .then(this.setState({ canPlayGame: true }));
       } else {
         // eslint-disable-next-line no-console
         console.log('nope');
       }
-    } catch (error) {
+    } catch (err) {
+      this.setState({ error: err });
       // eslint-disable-next-line no-console
       console.log('error');
+    } finally {
+      this.setState({ isLoading: false });
     }
-    this.setState({ isLoading: false });
   }
 
   async submitJoinTeam(e) {
-    const { teamUuid, getUserUuid, pseudoUser } = this.state;
+    const { teamUuid, pseudoUser } = this.state;
     e.preventDefault(); // prevent page reload
     this.setState({ isLoading: true });
     try {
@@ -130,24 +110,21 @@ class Register extends React.Component {
         teamUuid &&
         pseudoUser
       ) {
-        axios
+        await axios
           .post('https://virusclicker.herokuapp.com/users', {
             pseudo: pseudoUser,
             team: teamUuid,
           })
-          .then((res) => this.setState({ getUserUuid: res }))
-          // eslint-disable-next-line no-console
-          .then(console.log(getUserUuid))
-          .then(this.setState({ canPlayGame: true }))
-          .then(window.localStorage.setItem('uuid', getUserUuid));
-      } else {
-        // eslint-disable-next-line no-console
-        console.log('This pseudo is already taken.');
+          .then((res) => window.localStorage.setItem('uuid', res.data.uuid));
+        // .then(this.setState({ canPlayGame: true }));
       }
+      // eslint-disable-next-line no-console
+      console.log('This pseudo is already taken.');
     } catch (err) {
-      this.setState({ error: true });
+      this.setState({ error: err });
+    } finally {
+      this.setState({ isLoading: false, canPlayGame: true });
     }
-    this.setState({ isLoading: false });
   }
 
   chooseTeam(id) {
