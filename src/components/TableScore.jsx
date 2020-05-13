@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 import React from 'react';
+import Zoom from 'react-reveal/Zoom';
 import axios from 'axios';
 import {
   Table,
@@ -70,81 +71,83 @@ class TableScore extends React.Component {
     return (
       <>
         <Container>
-          <Table basic="very" celled collapsing unstackable>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>Logos</Table.HeaderCell>
-                <Table.HeaderCell>Teams</Table.HeaderCell>
-                <Table.HeaderCell>Scores</Table.HeaderCell>
-                <Table.HeaderCell>Players</Table.HeaderCell>
-                <Table.HeaderCell>Rating</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
+          <Zoom left>
+            <Table basic="very" celled collapsing unstackable>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell>Logos</Table.HeaderCell>
+                  <Table.HeaderCell>Teams</Table.HeaderCell>
+                  <Table.HeaderCell>Scores</Table.HeaderCell>
+                  <Table.HeaderCell>Players</Table.HeaderCell>
+                  <Table.HeaderCell>Rating</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
 
-            <Table.Body>
-              {teamsData
-                .sort((a, b) => {
-                  return b.score - a.score;
-                })
-                .filter((team) => team.logo && team.logo.length > 40)
-                .map((team) => (
-                  <>
-                    <Table.Row>
-                      <Table.Cell>
-                        <Image src={team.logo} rounded size="mini" />
-                      </Table.Cell>
-                      <Table.Cell>
-                        <Header as="h4" image>
-                          <Header.Content>{team.name}</Header.Content>
-                        </Header>
-                      </Table.Cell>
-                      <Table.Cell>{team.score}</Table.Cell>
-                      <Table.Cell>{team.users.length}</Table.Cell>
-                      <Table.Cell>
-                        {(() => {
-                          if (team.score === 0) {
-                            return (
-                              <Rating
-                                maxRating={5}
-                                defaultRating={0}
-                                icon="star"
-                              />
-                            );
-                          }
-                          if (team.score > 500) {
-                            return (
-                              <Rating
-                                maxRating={5}
-                                defaultRating={3}
-                                icon="star"
-                              />
-                            );
-                          }
-                          if (team.score < 500 && team.score > 0) {
-                            return (
-                              <Rating
-                                maxRating={5}
-                                defaultRating={1}
-                                icon="star"
-                              />
-                            );
-                          }
-                        })()}
-                      </Table.Cell>
-                    </Table.Row>
-                  </>
-                ))
-                .sort()}
-            </Table.Body>
-          </Table>
-          <Link to="/game">
-            <Button
-              size="mini"
-              color="teal"
-              onClick={() => ''}
-              content="Back"
-            />
-          </Link>
+              <Table.Body>
+                {teamsData
+                  .sort((a, b) => {
+                    return b.score - a.score;
+                  })
+                  .filter((team) => team.logo && team.logo.length > 40)
+                  .map((team) => (
+                    <>
+                      <Table.Row>
+                        <Table.Cell>
+                          <Image src={team.logo} rounded size="mini" />
+                        </Table.Cell>
+                        <Table.Cell>
+                          <Header as="h4" image>
+                            <Header.Content>{team.name}</Header.Content>
+                          </Header>
+                        </Table.Cell>
+                        <Table.Cell>{team.score}</Table.Cell>
+                        <Table.Cell>{team.users.length}</Table.Cell>
+                        <Table.Cell>
+                          {(() => {
+                            if (team.score === 0) {
+                              return (
+                                <Rating
+                                  maxRating={5}
+                                  defaultRating={0}
+                                  icon="star"
+                                />
+                              );
+                            }
+                            if (team.score > 500) {
+                              return (
+                                <Rating
+                                  maxRating={5}
+                                  defaultRating={3}
+                                  icon="star"
+                                />
+                              );
+                            }
+                            if (team.score < 500 && team.score > 0) {
+                              return (
+                                <Rating
+                                  maxRating={5}
+                                  defaultRating={1}
+                                  icon="star"
+                                />
+                              );
+                            }
+                          })()}
+                        </Table.Cell>
+                      </Table.Row>
+                    </>
+                  ))
+                  .sort()}
+              </Table.Body>
+            </Table>
+            <Link to="/game">
+              <Button
+                size="mini"
+                color="teal"
+                onClick={() => ''}
+                content="Back"
+              />
+            </Link>
+          </Zoom>
         </Container>
       </>
     );

@@ -10,6 +10,7 @@ import {
   Image,
   Grid,
   Loader,
+  Container,
 } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import TeamCards from './TeamCards';
@@ -26,7 +27,7 @@ class Register extends React.Component {
       wantCreateATeam: false,
       teamName: '',
       teamLogo: '',
-      isLoading: false,
+      isLoading: true,
       canPlayGame: false,
       error: false,
     };
@@ -37,13 +38,21 @@ class Register extends React.Component {
     this.submitCreateTeam = this.submitCreateTeam.bind(this);
   }
 
-  componentDidMount() {
-    axios.get('https://virusclicker.herokuapp.com/teams').then((res) => {
-      this.setState({ teams: res.data });
-    });
-    axios.get('https://virusclicker.herokuapp.com/users').then((res) => {
-      this.setState({ users: res.data });
-    });
+  async componentDidMount() {
+    try {
+      await axios
+        .get('https://virusclicker.herokuapp.com/teams')
+        .then((res) => {
+          this.setState({ teams: res.data });
+        });
+      await axios
+        .get('https://virusclicker.herokuapp.com/users')
+        .then((res) => {
+          this.setState({ users: res.data });
+        });
+    } finally {
+      this.setState({ isLoading: false });
+    }
   }
 
   handleChange(event) {
@@ -53,7 +62,7 @@ class Register extends React.Component {
   async submitCreateTeam(event) {
     const { teams, teamName, teamLogo, pseudoUser, users } = this.state;
     event.preventDefault();
-    this.setState({ isLoading: true });
+
     try {
       if (
         !teams.find(
@@ -98,7 +107,7 @@ class Register extends React.Component {
   async submitJoinTeam(e) {
     const { teamUuid, pseudoUser } = this.state;
     e.preventDefault(); // prevent page reload
-    this.setState({ isLoading: true });
+
     try {
       const { data } = await axios.get(
         'https://virusclicker.herokuapp.com/users'
@@ -148,7 +157,13 @@ class Register extends React.Component {
       error,
     } = this.state;
     if (isLoading) {
-      return <Loader />;
+      return (
+        <Container style={{ paddingTop: '300px' }}>
+          <Loader active inline="centered" size="huge">
+            Loading
+          </Loader>
+        </Container>
+      );
     }
     if (error) {
       return <p>There has been an error, please reload !</p>;
