@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 import React from 'react';
 import Zoom from 'react-reveal/Zoom';
 import axios from 'axios';
@@ -12,6 +11,7 @@ import {
   Loader,
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import styles from './gamepage/styles/GamePage.module.css';
 
 class TableScore extends React.Component {
   constructor(props) {
@@ -69,7 +69,7 @@ class TableScore extends React.Component {
       );
     }
     return (
-      <>
+      <div className={styles.main}>
         <Container>
           <Zoom left>
             <Table basic="very" celled collapsing unstackable>
@@ -103,6 +103,7 @@ class TableScore extends React.Component {
                         <Table.Cell>{team.score}</Table.Cell>
                         <Table.Cell>{team.users.length}</Table.Cell>
                         <Table.Cell>
+                          {/* eslint-disable-next-line consistent-return */}
                           {(() => {
                             if (team.score === 0) {
                               return (
@@ -149,7 +150,7 @@ class TableScore extends React.Component {
             </Link>
           </Zoom>
         </Container>
-      </>
+      </div>
     );
   }
 }

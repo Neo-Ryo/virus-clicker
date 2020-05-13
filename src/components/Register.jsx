@@ -159,6 +159,7 @@ class Register extends React.Component {
       isLoading,
       error,
       errorPseudo,
+      teamUuid,
     } = this.state;
     if (isLoading) {
       return (
@@ -255,6 +256,8 @@ class Register extends React.Component {
                             date={createdAt}
                             usersNumber={users.length}
                             onClick={() => this.chooseTeam(uuid)}
+                            teamUuid={teamUuid}
+                            uuid={uuid}
                           />
                         );
                       })}

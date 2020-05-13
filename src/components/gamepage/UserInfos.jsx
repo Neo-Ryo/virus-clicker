@@ -54,8 +54,8 @@ class User extends React.Component {
     return (
       <div className={styles.userBlock}>
         <p className={styles.pseudoName}>{userPseudo}</p>
-        <Image src={logo} alt={team} circular size="large" />
         <p className={styles.teamName}>{team}</p>
+        <Image src={logo} alt={team} circular size="large" />
       </div>
     );
   }
