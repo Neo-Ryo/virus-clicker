@@ -1,5 +1,5 @@
 import React from 'react';
-import { CarouselProvider, Slider } from 'pure-react-carousel';
+import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
 import axios from 'axios';
 import {
   Card,
@@ -75,22 +75,25 @@ class Register extends React.Component {
           (user) => user.pseudo.toLowerCase() === pseudoUser.toLowerCase()
         )
       ) {
-        await axios
-          .post('https:virusclicker.herokuapp.com/teams', {
+        const resTeam = await axios.post(
+          'https://virusclicker.herokuapp.com/teams',
+          {
             name: teamName,
             logo: teamLogo,
-          })
-          .then((res) =>
-            axios
-              .post('https://virusclicker.herokuapp.com/users', {
-                pseudo: pseudoUser,
-                team: res.data.uuid,
-              })
-              .then((resUser) =>
-                window.localStorage.setItem('uuid', resUser.data.uuid)
-              )
-          )
-          .then(this.setState({ canPlayGame: true }));
+          }
+        );
+
+        const resUser = await axios.post(
+          'https://virusclicker.herokuapp.com/users',
+          {
+            pseudo: pseudoUser,
+            team: resTeam.data.uuid,
+          }
+        );
+
+        localStorage.setItem('uuid', resUser.data.uuid);
+
+        this.setState({ canPlayGame: true });
       } else {
         // eslint-disable-next-line no-console
         this.setState({ errorPseudo: true });
@@ -117,13 +120,15 @@ class Register extends React.Component {
         teamUuid &&
         pseudoUser
       ) {
-        await axios
-          .post('https://virusclicker.herokuapp.com/users', {
+        const res = await axios.post(
+          'https://virusclicker.herokuapp.com/users',
+          {
             pseudo: pseudoUser,
             team: teamUuid,
-          })
-          .then((res) => window.localStorage.setItem('uuid', res.data.uuid))
-          .then(this.setState({ canPlayGame: true }));
+          }
+        );
+        window.localStorage.setItem('uuid', res.data.uuid);
+        this.setState({ canPlayGame: true });
       } else {
         this.setState({ errorPseudo: true });
       }
@@ -241,16 +246,18 @@ class Register extends React.Component {
                   <Card.Group size="tiny">
                     {teams
                       .filter((team) => team.logo && team.logo.length > 40)
-                      .map(({ uuid, logo, name, createdAt, users }) => {
+                      .map(({ uuid, logo, name, createdAt, users }, i) => {
                         return (
-                          <TeamCards
-                            key={uuid}
-                            image={logo}
-                            header={name}
-                            date={createdAt}
-                            usersNumber={users.length}
-                            onClick={() => this.chooseTeam(uuid)}
-                          />
+                          <Slide index={i}>
+                            <TeamCards
+                              key={uuid}
+                              image={logo}
+                              header={name}
+                              date={createdAt}
+                              usersNumber={users.length}
+                              onClick={() => this.chooseTeam(uuid)}
+                            />
+                          </Slide>
                         );
                       })}
                   </Card.Group>
