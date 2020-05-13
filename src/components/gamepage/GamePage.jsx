@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import Zoom from 'react-reveal/Zoom';
-import { Grid, Loader } from 'semantic-ui-react';
+import { Grid, Loader, Container } from 'semantic-ui-react';
 import axios from 'axios';
 import Planet from './Planet';
 import VirusButton from './VirusButton';
@@ -74,9 +74,11 @@ class GamePage extends React.Component {
     const { counter, total, teamsData, isLoading } = this.state;
     if (isLoading) {
       return (
-        <Loader active inline="centered" size="huge">
-          Loading
-        </Loader>
+        <Container style={{ paddingTop: '300px' }}>
+          <Loader active inline="centered" size="huge">
+            Loading
+          </Loader>
+        </Container>
       );
     }
     return (

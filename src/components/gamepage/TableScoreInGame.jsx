@@ -128,7 +128,7 @@ class TableScoreInGame extends React.Component {
                           {team.name}
                           <Header.Subheader>
                             {` ${team.users.length}
-                            Team players`}
+                            Players`}
                           </Header.Subheader>
                         </Header.Content>
                       </Header>

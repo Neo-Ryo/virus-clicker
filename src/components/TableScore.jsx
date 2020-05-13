@@ -60,9 +60,11 @@ class TableScore extends React.Component {
     const { teamsData, isLoading } = this.state;
     if (isLoading) {
       return (
-        <Loader active inline="centered" size="huge">
-          Loading
-        </Loader>
+        <Container style={{ paddingTop: '300px' }}>
+          <Loader active inline="centered" size="huge">
+            Loading
+          </Loader>
+        </Container>
       );
     }
     return (
