@@ -66,6 +66,7 @@ class TableScore extends React.Component {
           <Table basic="very" celled collapsing unstackable>
             <Table.Header>
               <Table.Row>
+                <Table.HeaderCell>Logos</Table.HeaderCell>
                 <Table.HeaderCell>Teams</Table.HeaderCell>
                 <Table.HeaderCell>Scores</Table.HeaderCell>
                 <Table.HeaderCell>Players</Table.HeaderCell>
@@ -83,8 +84,10 @@ class TableScore extends React.Component {
                   <>
                     <Table.Row>
                       <Table.Cell>
+                        <Image src={team.logo} rounded size="mini" />
+                      </Table.Cell>
+                      <Table.Cell>
                         <Header as="h4" image>
-                          <Image src={team.logo} rounded size="massive" />
                           <Header.Content>{team.name}</Header.Content>
                         </Header>
                       </Table.Cell>
