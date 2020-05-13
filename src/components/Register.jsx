@@ -2,7 +2,6 @@ import React from 'react';
 import { CarouselProvider, Slider } from 'pure-react-carousel';
 import axios from 'axios';
 import {
-  Input,
   Card,
   Header,
   Form,
@@ -30,6 +29,7 @@ class Register extends React.Component {
       isLoading: true,
       canPlayGame: false,
       error: false,
+      errorPseudo: false,
     };
     this.toggleCreationTeamPanel = this.toggleCreationTeamPanel.bind(this);
     this.chooseTeam = this.chooseTeam.bind(this);
@@ -93,12 +93,10 @@ class Register extends React.Component {
           .then(this.setState({ canPlayGame: true }));
       } else {
         // eslint-disable-next-line no-console
-        console.log('nope');
+        this.setState({ errorPseudo: true });
       }
     } catch (err) {
       this.setState({ error: err });
-      // eslint-disable-next-line no-console
-      console.log('error');
     } finally {
       this.setState({ isLoading: false });
     }
@@ -124,15 +122,15 @@ class Register extends React.Component {
             pseudo: pseudoUser,
             team: teamUuid,
           })
-          .then((res) => window.localStorage.setItem('uuid', res.data.uuid));
-        // .then(this.setState({ canPlayGame: true }));
+          .then((res) => window.localStorage.setItem('uuid', res.data.uuid))
+          .then(this.setState({ canPlayGame: true }));
+      } else {
+        this.setState({ errorPseudo: true });
       }
-      // eslint-disable-next-line no-console
-      console.log('This pseudo is already taken.');
     } catch (err) {
       this.setState({ error: err });
     } finally {
-      this.setState({ isLoading: false, canPlayGame: true });
+      this.setState({ isLoading: false });
     }
   }
 
@@ -155,6 +153,7 @@ class Register extends React.Component {
       teamLogo,
       isLoading,
       error,
+      errorPseudo,
     } = this.state;
     if (isLoading) {
       return (
@@ -218,14 +217,19 @@ class Register extends React.Component {
         {!wantCreateATeam && (
           <>
             <Form size="large" onSubmit={this.submitJoinTeam}>
-              <Form.Field style={{ margin: '15px' }}>
-                <Input
+              <Form.Field style={{ margin: '10px' }}>
+                <Form.Input
                   required
                   placeholder="Pseudo"
                   value={pseudoUser}
                   name="pseudoUser"
                   onChange={this.handleChange}
-                  label={{ color: 'red', corner: 'right', icon: 'asterisk' }}
+                  error={
+                    errorPseudo && {
+                      content: 'This pseudo is already taken',
+                      pointing: 'below',
+                    }
+                  }
                 />
               </Form.Field>
               <CarouselProvider
@@ -276,43 +280,73 @@ class Register extends React.Component {
         {wantCreateATeam && (
           <>
             <Form size="large" onSubmit={this.submitCreateTeam}>
-              <Form.Field style={{ margin: '15px' }}>
-                <Input
+              <Form.Field style={{ margin: '10px' }}>
+                <Form.Input
+                  required
                   placeholder="Pseudo"
-                  label={{ color: 'red', corner: 'right', icon: 'asterisk' }}
                   value={pseudoUser}
                   name="pseudoUser"
                   onChange={this.handleChange}
+                  error={
+                    errorPseudo && {
+                      content: 'This pseudo is already taken',
+                      pointing: 'below',
+                    }
+                  }
                 />
               </Form.Field>
-              <Form.Field style={{ margin: '15px' }}>
-                <Input
+              <Form.Field style={{ margin: '10px' }}>
+                <Form.Input
+                  required
                   placeholder="Team name"
-                  label={{ color: 'red', corner: 'right', icon: 'asterisk' }}
                   value={teamName}
                   name="teamName"
                   onChange={this.handleChange}
+                  error={
+                    errorPseudo && {
+                      content: "This team's name is already taken",
+                      pointing: 'below',
+                    }
+                  }
                 />
               </Form.Field>
-              <Form.Field style={{ margin: '15px' }}>
-                <Input
-                  placeholder="Team Logo URL"
-                  label={{ color: 'red', corner: 'right', icon: 'asterisk' }}
+              <Form.Field style={{ margin: '10px' }}>
+                <Form.Input
+                  required
+                  placeholder="https://image.png ou https://image.jpg"
                   value={teamLogo}
                   name="teamLogo"
                   onChange={this.handleChange}
+                  error={
+                    errorPseudo && {
+                      content: 'This URL is not valid',
+                      pointing: 'below',
+                    }
+                  }
                 />
               </Form.Field>
 
-              <Grid>
-                <Grid.Row textAlign="center" columns={3}>
-                  <Grid.Column width={10}>
-                    <Image style={{ width: 180, height: 180 }} src={teamLogo} />
+              <Grid column={2} centered>
+                <Grid.Row textAlign="center">
+                  <Grid.Column width={8}>
+                    <Image
+                      textAlign="center"
+                      style={{
+                        width: '180px',
+                        height: '180px',
+                        borderRadius: 10,
+                        margin: '0',
+                      }}
+                      src={teamLogo}
+                    />
                   </Grid.Column>
                 </Grid.Row>
+              </Grid>
+              <Grid>
                 <Grid.Row textAlign="center" columns={1}>
                   <Grid.Column width={16}>
                     <Button
+                      textAlign="center"
                       color="teal"
                       type="submit"
                       disabled={isLoading}

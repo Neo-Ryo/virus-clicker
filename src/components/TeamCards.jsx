@@ -5,7 +5,11 @@ import PropTypes from 'prop-types';
 function CardsGroup({ image, key, header, onClick, date, usersNumber }) {
   return (
     <>
-      <Card key={key} onClick={onClick} style={{ width: 220, height: 220 }}>
+      <Card
+        key={key}
+        onClick={onClick}
+        style={{ width: 220, height: 220, border: 'solid purple' }}
+      >
         <Image
           src={image}
           style={{ margin: 0, width: '100%', height: '50%' }}
