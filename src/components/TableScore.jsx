@@ -8,6 +8,7 @@ import {
   Header,
   Image,
   Rating,
+  Loader,
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
@@ -58,7 +59,11 @@ class TableScore extends React.Component {
   render() {
     const { teamsData, isLoading } = this.state;
     if (isLoading) {
-      return <p>loading... </p>;
+      return (
+        <Loader active inline="centered" size="huge">
+          Loading
+        </Loader>
+      );
     }
     return (
       <>
