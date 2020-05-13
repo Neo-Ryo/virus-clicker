@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import Axios from 'axios';
-import Tada from 'react-reveal/Tada';
+import Flash from 'react-reveal/Flash';
 import styles from './styles/tableScore.module.css';
 
 class TableScoreInGame extends React.Component {
@@ -84,17 +84,6 @@ class TableScoreInGame extends React.Component {
     if (isLoading) {
       return <Loader active inline="centered" />;
     }
-    // const arrayFiltered = teamsData
-    //   .sort((a, b) => {
-    //     return b.score - a.score;
-    //   })
-    //   .filter(
-    //     (team) =>
-    //       team.logo &&
-    //       team.logo.length > 40 &&
-    //       team.score > 0 &&
-    //       team.uuid === uuid
-    //   );
 
     return (
       <Container className={styles.tableScore}>
@@ -113,7 +102,12 @@ class TableScoreInGame extends React.Component {
                   <Table.Row>
                     <Table.Cell>
                       <Header as="h4" image>
-                        <Image src={team.logo} rounded size="massive" />
+                        <Image
+                          src={team.logo}
+                          rounded
+                          size="massive"
+                          alt="teamLogo"
+                        />
                         <Header.Content>
                           {team.name}
                           <Header.Subheader>
@@ -125,9 +119,9 @@ class TableScoreInGame extends React.Component {
                     </Table.Cell>
                     <Table.Cell>
                       {team.uuid === uuid ? (
-                        <Tada>
+                        <Flash>
                           <h3>{team.score}</h3>
-                        </Tada>
+                        </Flash>
                       ) : (
                         <>{team.score}</>
                       )}
