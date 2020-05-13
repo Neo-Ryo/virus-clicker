@@ -15,7 +15,7 @@ class GamePage extends React.Component {
     super(props);
     this.state = {
       counter: 0,
-      total: 10000000,
+      total: 1000,
       teamsData: [],
       isLoading: true,
     };

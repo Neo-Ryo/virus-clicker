@@ -1,5 +1,5 @@
 import React from 'react';
-import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
+import { CarouselProvider, Slider } from 'pure-react-carousel';
 import axios from 'axios';
 import {
   Card,
@@ -246,18 +246,16 @@ class Register extends React.Component {
                   <Card.Group size="tiny">
                     {teams
                       .filter((team) => team.logo && team.logo.length > 40)
-                      .map(({ uuid, logo, name, createdAt, users }, i) => {
+                      .map(({ uuid, logo, name, createdAt, users }) => {
                         return (
-                          <Slide index={i}>
-                            <TeamCards
-                              key={uuid}
-                              image={logo}
-                              header={name}
-                              date={createdAt}
-                              usersNumber={users.length}
-                              onClick={() => this.chooseTeam(uuid)}
-                            />
-                          </Slide>
+                          <TeamCards
+                            key={uuid}
+                            image={logo}
+                            header={name}
+                            date={createdAt}
+                            usersNumber={users.length}
+                            onClick={() => this.chooseTeam(uuid)}
+                          />
                         );
                       })}
                   </Card.Group>
