@@ -229,9 +229,9 @@ class Register extends React.Component {
                 />
               </Form.Field>
               <CarouselProvider
-                naturalSlideWidth={2}
-                naturalSlideHeight={1.25}
-                totalSlides={teams.length / 10} // import teams number
+                naturalSlideWidth={100}
+                naturalSlideHeight={100}
+                totalSlides={teams.length}
               >
                 <Slider>
                   <Card.Group size="tiny">
