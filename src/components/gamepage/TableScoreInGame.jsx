@@ -100,7 +100,7 @@ class TableScoreInGame extends React.Component {
 
     return (
       <Container className={styles.tableScore}>
-        <Table basic="very" celled collapsing unstackable>
+        <Table basic="very" collapsing unstackable>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Logo</Table.HeaderCell>

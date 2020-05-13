@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import React from 'react';
+import Zoom from 'react-reveal/Zoom';
 import { Grid } from 'semantic-ui-react';
 import axios from 'axios';
 import Planet from './Planet';
@@ -76,30 +77,32 @@ class GamePage extends React.Component {
     }
     return (
       <div className={styles.main}>
-        <Grid>
-          <Grid.Row columns={3}>
-            <Grid.Column width={4}>
-              <UserInfos />
-            </Grid.Column>
-            <Grid.Column width={8}>
-              <TitleInGame counter={counter} />
-            </Grid.Column>
-            <Grid.Column width={4} />
-          </Grid.Row>
-          <Grid.Row centered columns={3}>
-            <Grid.Column width={10}>
-              <TableScoreInGame teamsData={teamsData} counter={counter} />
-            </Grid.Column>
-            <Grid.Column width={6}>
-              <Planet percentage={(100 * counter) / total} />
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row centered columns={2}>
-            <Grid.Column width={11}>
-              <VirusButton counter={counter} increment={this.increment} />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+        <Zoom left>
+          <Grid>
+            <Grid.Row columns={3}>
+              <Grid.Column width={4}>
+                <UserInfos />
+              </Grid.Column>
+              <Grid.Column width={8}>
+                <TitleInGame counter={counter} />
+              </Grid.Column>
+              <Grid.Column width={4} />
+            </Grid.Row>
+            <Grid.Row centered columns={3}>
+              <Grid.Column width={10}>
+                <TableScoreInGame teamsData={teamsData} counter={counter} />
+              </Grid.Column>
+              <Grid.Column width={6}>
+                <Planet percentage={(100 * counter) / total} />
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row centered columns={2}>
+              <Grid.Column width={11}>
+                <VirusButton counter={counter} increment={this.increment} />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Zoom>
       </div>
     );
   }
