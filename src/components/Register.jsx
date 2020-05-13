@@ -214,13 +214,12 @@ class Register extends React.Component {
                 />
               </Form.Field>
               <CarouselProvider
-                naturalSlideWidth={3}
+                naturalSlideWidth={2}
                 naturalSlideHeight={1.25}
-                totalSlides={teams.length / 7} // import teams number
-                style={{ width: '80vw' }}
+                totalSlides={teams.length / 10} // import teams number
               >
                 <Slider>
-                  <Card.Group>
+                  <Card.Group size="tiny">
                     {teams
                       .filter((team) => team.logo && team.logo.length > 40)
                       .map(({ uuid, logo, name, createdAt, users }) => {

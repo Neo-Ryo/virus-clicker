@@ -1,21 +1,21 @@
 import React from 'react';
-import { Card, Image, Icon } from 'semantic-ui-react';
+import { Card, Image, Icon, Header } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 function CardsGroup({ image, key, header, onClick, date, usersNumber }) {
   return (
     <>
-      <Card key={key} onClick={onClick} style={{ width: 220, height: 270 }}>
+      <Card key={key} onClick={onClick} style={{ width: 220, height: 220 }}>
         <Image
           src={image}
-          style={{ margin: 0, width: '100%', height: '70%' }}
+          style={{ margin: 0, width: '100%', height: '50%' }}
         />
         <Card.Content extra>
-          <Card.Header>{header}</Card.Header>
+          <Header as="h3">{header}</Header>
           <Card.Meta>
             <span className="date">{`Create in ${date.substring(0, 10)}`}</span>
           </Card.Meta>
-          <Icon text-align="right" name="user" />
+          <Icon color="teal" text-align="right" name="user" />
           {`${usersNumber} friends`}
         </Card.Content>
       </Card>
