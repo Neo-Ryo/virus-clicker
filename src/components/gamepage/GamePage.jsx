@@ -25,7 +25,6 @@ class GamePage extends React.Component {
 
   componentDidMount() {
     this.getOk();
-    console.log(window.localStorage.getItem('uuid'));
   }
 
   componentDidUpdate(_prevProps, prevState) {
@@ -33,10 +32,7 @@ class GamePage extends React.Component {
     if (prevState.counter !== counter) {
       this.getOk();
     }
-    console.log(localStorage.getItem('uuid'));
   }
-
-  // 'd44a7346-1167-4e1c-9fa5-21453ffaac9d';
 
   getOk() {
     const uuid = window.localStorage.getItem('uuid');
@@ -92,7 +88,7 @@ class GamePage extends React.Component {
           </Grid.Row>
           <Grid.Row centered columns={3}>
             <Grid.Column width={10}>
-              <TableScoreInGame teamsData={teamsData} />
+              <TableScoreInGame teamsData={teamsData} counter={counter} />
             </Grid.Column>
             <Grid.Column width={6}>
               <Planet percentage={(100 * counter) / total} />
