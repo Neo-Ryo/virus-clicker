@@ -26,7 +26,7 @@ function CardsGroup({
       >
         <Image
           src={image}
-          style={{ margin: 0, width: '100%', height: '100%' }}
+          style={{ margin: 0, width: '100%', height: '200px' }}
         />
         <Card.Content extra>
           <Header as="h3">{header}</Header>
