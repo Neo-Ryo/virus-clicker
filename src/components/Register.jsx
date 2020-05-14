@@ -1,9 +1,9 @@
 import React from 'react';
 import Zoom from 'react-reveal/Zoom';
-import { CarouselProvider, Slider } from 'pure-react-carousel';
+import Slider from 'infinite-react-carousel';
+import 'react-awesome-slider/dist/styles.css';
 import axios from 'axios';
 import {
-  Card,
   Header,
   Form,
   Button,
@@ -253,32 +253,24 @@ class Register extends React.Component {
                 />
               </Form.Field>
               <Zoom left>
-                <CarouselProvider
-                  naturalSlideWidth={100}
-                  naturalSlideHeight={100}
-                  totalSlides={teams.length}
-                >
-                  <Slider>
-                    <Card.Group size="tiny">
-                      {teams
-                        .filter((team) => team.logo && team.logo.length > 40)
-                        .map(({ uuid, logo, name, createdAt, users }) => {
-                          return (
-                            <TeamCards
-                              key={uuid}
-                              image={logo}
-                              header={name}
-                              date={createdAt}
-                              usersNumber={users.length}
-                              onClick={() => this.chooseTeam(uuid)}
-                              teamUuid={teamUuid}
-                              uuid={uuid}
-                            />
-                          );
-                        })}
-                    </Card.Group>
-                  </Slider>
-                </CarouselProvider>
+                <Slider>
+                  {teams
+                    .filter((team) => team.logo && team.logo.length > 40)
+                    .map(({ uuid, logo, name, createdAt, users }) => {
+                      return (
+                        <TeamCards
+                          key={uuid}
+                          image={logo}
+                          header={name}
+                          date={createdAt}
+                          usersNumber={users.length}
+                          onClick={() => this.chooseTeam(uuid)}
+                          teamUuid={teamUuid}
+                          uuid={uuid}
+                        />
+                      );
+                    })}
+                </Slider>
               </Zoom>
               <Grid>
                 <Grid.Row textAlign="center" columns={1}>
@@ -290,6 +282,7 @@ class Register extends React.Component {
                         value=""
                         disabled={isLoading}
                         size="large"
+                        style={{ margin: '50px' }}
                       >
                         {!isLoading ? 'Start' : 'Loading...'}
                       </Button>
