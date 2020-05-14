@@ -15,7 +15,7 @@ class GamePage extends React.Component {
     super(props);
     this.state = {
       counter: 0,
-      total: 500,
+      total: 1000,
       teamsData: [],
       isLoading: true,
       skinOne: true,
@@ -77,6 +77,20 @@ class GamePage extends React.Component {
     axios.put(`https://virusclicker.herokuapp.com/users/${uuid}/click`);
     this.setState({ counter: counter + 1 });
   }
+
+  // const skin =
+  // switch (skin) {
+  //   const {skinOne,
+  //     skinTwo,
+  //     skinThree,
+  //     skinWtf} = this.state
+  //   case skinOne:
+  //     this.setState({skinOne: true})
+  //     break;
+
+  //   default:
+  //     break;
+  // }
 
   changeToSkin1() {
     this.setState({

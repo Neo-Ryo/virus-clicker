@@ -17,7 +17,7 @@ function CardsGroup({
       <Card
         key={key}
         onClick={onClick}
-        style={teamUuid === uuid ? { border: 'solid purple 10px' } : {}}
+        style={teamUuid === uuid ? { border: 'solid purple 4px' } : {}}
       >
         <Image
           src={image}
