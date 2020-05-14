@@ -3,6 +3,7 @@ import React from 'react';
 import Zoom from 'react-reveal/Zoom';
 import { Grid, Loader, Container, Button, Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 import Planet from './Planet';
 import VirusButton from './VirusButton';
 import TitleInGame from './TitleInGame';
@@ -49,36 +50,31 @@ class GamePage extends React.Component {
   async getOk() {
     try {
       const uuid = window.localStorage.getItem('uuid');
-      const { teamsData, userTeamUuid } = this.state;
       const resUuidUser = await axios.get(
         `https://virusclicker.herokuapp.com/users/${uuid}`
       );
-      this.setState({
-        counter: resUuidUser.data.score,
-        userTeamUuid: resUuidUser.data.TeamUuid,
-      });
       const resTeam = await axios.get(
         `https://virusclicker.herokuapp.com/teams`
       );
-      this.setState({ teamsData: resTeam.data });
+
+      const teamsWithScores = resTeam.data.map((team) => {
+        return {
+          ...team,
+          score: team.users
+            .map((user) => user.score)
+            .reduce((somme, score) => somme + score, 0),
+        };
+      });
       this.setState((prevState) => ({
         ...prevState,
-        teamsData: prevState.teamsData.map((team) => {
-          return {
-            ...team,
-            score: team.users
-              .map((user) => user.score)
-              .reduce((somme, score) => somme + score, 0),
-          };
-        }),
+        counter: resUuidUser.data.score,
+        userTeamUuid: resUuidUser.data.TeamUuid,
+        teamsData: teamsWithScores,
+        teamScore: teamsWithScores.find(
+          (team) => team.uuid === resUuidUser.data.TeamUuid
+        ).score,
+        teamLoader: false,
       }));
-      teamsData.filter((team) => {
-        if (team.uuid === userTeamUuid) {
-          return this.setState({ teamScore: team.score });
-        }
-        return '';
-      });
-      this.setState({ teamLoader: false });
     } catch (err) {
       this.setState({ error: err });
     } finally {
@@ -151,7 +147,9 @@ class GamePage extends React.Component {
         </Container>
       );
     }
-
+    if (!window.localStorage.getItem('uuid')) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className={styles.main}>
         <Zoom left>

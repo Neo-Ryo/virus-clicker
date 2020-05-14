@@ -187,7 +187,7 @@ class Register extends React.Component {
       );
     }
 
-    if (canPlayGame) {
+    if (canPlayGame || window.localStorage.getItem('uuid')) {
       return <Redirect to="/game" />;
     }
     return (
