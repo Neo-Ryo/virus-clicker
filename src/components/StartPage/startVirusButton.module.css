@@ -6,7 +6,7 @@
 .title {
   padding-top: 40vw !important;
   font-family: 'Stalinist One', cursive !important;
-  color: aliceblue !important;
+  color: rgb(251, 4, 169) !important;
 }
 .startButton {
   width: 45%;
@@ -23,11 +23,11 @@
   }
 }
 .virusButtonNotActive {
-  animation: spin 5s infinite linear;
+  animation: spin 3s infinite linear;
   transition: width 1s;
 }
 .virusButtonActive {
-  animation: spin 5s infinite linear;
+  animation: spin 3s infinite linear;
   width: 25%;
   transition: width 1s;
 }

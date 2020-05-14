@@ -1,5 +1,5 @@
-/* eslint-disable consistent-return */
 import React from 'react';
+import Zoom from 'react-reveal/Zoom';
 import axios from 'axios';
 import {
   Table,
@@ -8,8 +8,10 @@ import {
   Header,
   Image,
   Rating,
+  Loader,
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import styles from './gamepage/styles/GamePage.module.css';
 
 class TableScore extends React.Component {
   constructor(props) {
@@ -27,7 +29,7 @@ class TableScore extends React.Component {
   }
 
   getOk() {
-    const uuid = '06b14f4a-8e7e-44a3-aba8-ab84ae799bd0'; // window.localStorage.getItem('uuid'); placeholder
+    const uuid = window.localStorage.getItem('uuid');
     axios
       .get(`https://virusclicker.herokuapp.com/users/${uuid}`)
       .then((res) => res.data)
@@ -58,85 +60,124 @@ class TableScore extends React.Component {
   render() {
     const { teamsData, isLoading } = this.state;
     if (isLoading) {
-      return <p>loading... </p>;
+      return (
+        <Container style={{ paddingTop: '300px' }}>
+          <Loader active inline="centered" size="huge">
+            Loading
+          </Loader>
+        </Container>
+      );
     }
     return (
-      <>
+      <div className={styles.main}>
         <Container>
-          <Table basic="very" celled collapsing unstackable>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>Teams</Table.HeaderCell>
-                <Table.HeaderCell>Scores</Table.HeaderCell>
-                <Table.HeaderCell>Players</Table.HeaderCell>
-                <Table.HeaderCell>Rating</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
+          <Zoom left>
+            <Table basic="very" celled collapsing unstackable>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell>Logos</Table.HeaderCell>
+                  <Table.HeaderCell>Teams</Table.HeaderCell>
+                  <Table.HeaderCell>Scores</Table.HeaderCell>
+                  <Table.HeaderCell>Players</Table.HeaderCell>
+                  <Table.HeaderCell>Rating</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
 
-            <Table.Body>
-              {teamsData
-                .sort((a, b) => {
-                  return b.score - a.score;
-                })
-                .filter((team) => team.logo && team.logo.length > 40)
-                .map((team) => (
-                  <>
-                    <Table.Row>
-                      <Table.Cell>
-                        <Header as="h4" image>
-                          <Image src={team.logo} rounded size="massive" />
-                          <Header.Content>{team.name}</Header.Content>
-                        </Header>
-                      </Table.Cell>
-                      <Table.Cell>{team.score}</Table.Cell>
-                      <Table.Cell>{team.users.length}</Table.Cell>
-                      <Table.Cell>
-                        {(() => {
-                          if (team.score === 0) {
-                            return (
-                              <Rating
-                                maxRating={5}
-                                defaultRating={0}
-                                icon="star"
-                              />
-                            );
-                          }
-                          if (team.score > 500) {
-                            return (
-                              <Rating
-                                maxRating={5}
-                                defaultRating={3}
-                                icon="star"
-                              />
-                            );
-                          }
-                          if (team.score < 500 && team.score > 0) {
-                            return (
-                              <Rating
-                                maxRating={5}
-                                defaultRating={1}
-                                icon="star"
-                              />
-                            );
-                          }
-                        })()}
-                      </Table.Cell>
-                    </Table.Row>
-                  </>
-                ))
-                .sort()}
-            </Table.Body>
-          </Table>
-          <Link to="/game">
-            <Button
-              size="mini"
-              color="teal"
-              onClick={() => ''}
-              content="Back"
-            />
-          </Link>
+              <Table.Body>
+                {teamsData
+                  .sort((a, b) => {
+                    return b.score - a.score;
+                  })
+                  .filter((team) => team.logo && team.logo.length > 40)
+                  .map((team) => (
+                    <>
+                      <Table.Row>
+                        <Table.Cell>
+                          <Image src={team.logo} rounded size="mini" />
+                        </Table.Cell>
+                        <Table.Cell>
+                          <Header as="h4" image>
+                            <Header.Content>{team.name}</Header.Content>
+                          </Header>
+                        </Table.Cell>
+                        <Table.Cell>{team.score}</Table.Cell>
+                        <Table.Cell>{team.users.length}</Table.Cell>
+                        <Table.Cell>
+                          {/* eslint-disable-next-line consistent-return */}
+                          {(() => {
+                            if (team.score === 0) {
+                              return (
+                                <Rating
+                                  maxRating={5}
+                                  defaultRating={0}
+                                  icon="star"
+                                />
+                              );
+                            }
+                            if (team.score < 100 && team.score > 0) {
+                              return (
+                                <Rating
+                                  maxRating={5}
+                                  defaultRating={1}
+                                  icon="star"
+                                />
+                              );
+                            }
+                            if (team.score < 500 && team.score >= 100) {
+                              return (
+                                <Rating
+                                  maxRating={5}
+                                  defaultRating={2}
+                                  icon="star"
+                                />
+                              );
+                            }
+                            if (team.score < 1000 && team.score >= 500) {
+                              return (
+                                <Rating
+                                  maxRating={5}
+                                  defaultRating={3}
+                                  icon="star"
+                                />
+                              );
+                            }
+                            if (team.score < 5000 && team.score >= 1000) {
+                              return (
+                                <Rating
+                                  maxRating={5}
+                                  defaultRating={4}
+                                  icon="star"
+                                />
+                              );
+                            }
+                            if (team.score >= 5000) {
+                              return (
+                                <Rating
+                                  maxRating={5}
+                                  defaultRating={5}
+                                  icon="star"
+                                />
+                              );
+                            }
+                          })()}
+                        </Table.Cell>
+                      </Table.Row>
+                    </>
+                  ))
+                  .sort()}
+              </Table.Body>
+            </Table>
+            <Link to="/game">
+              <Button
+                size="mini"
+                color="teal"
+                onClick={() => ''}
+                content="Back"
+              />
+            </Link>
+          </Zoom>
         </Container>
-      </>
+      </div>
     );
   }
 }

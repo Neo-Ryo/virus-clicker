@@ -2,10 +2,23 @@ import React from 'react';
 import { Card, Image, Icon, Header } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
-function CardsGroup({ image, key, header, onClick, date, usersNumber }) {
+function CardsGroup({
+  image,
+  key,
+  header,
+  onClick,
+  date,
+  usersNumber,
+  teamUuid,
+  uuid,
+}) {
   return (
     <>
-      <Card key={key} onClick={onClick} style={{ width: 220, height: 220 }}>
+      <Card
+        key={key}
+        onClick={onClick}
+        style={teamUuid === uuid ? { border: 'solid purple 4px' } : {}}
+      >
         <Image
           src={image}
           style={{ margin: 0, width: '100%', height: '50%' }}
@@ -30,6 +43,8 @@ CardsGroup.propTypes = {
   header: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   usersNumber: PropTypes.string.isRequired,
+  teamUuid: PropTypes.string.isRequired,
+  uuid: PropTypes.string.isRequired,
 };
 
 export default CardsGroup;

@@ -19,6 +19,7 @@ class TableScoreInGame extends React.Component {
     super(props);
     this.state = {
       isLoading: true,
+      arrayOk: [],
     };
     this.getUser = this.getUser.bind(this);
     this.filterData = this.filterData.bind(this);
@@ -68,13 +69,26 @@ class TableScoreInGame extends React.Component {
     const arrayFiltered = [];
     for (let i = 0; i < arrayInOrder.length; i += 1) {
       if (arrayInOrder[i].uuid === uuid) {
-        arrayFiltered.push(
-          arrayInOrder[i - 1],
-          arrayInOrder[i],
-          arrayInOrder[i + 1]
-        );
+        if (arrayInOrder[i - 1] && arrayInOrder[i + 1]) {
+          arrayFiltered.push(
+            arrayInOrder[i - 1],
+            arrayInOrder[i],
+            arrayInOrder[i + 1]
+          );
+        } else if (!arrayInOrder[i - 1]) {
+          arrayFiltered.push(
+            arrayInOrder[i],
+            arrayInOrder[i + 1],
+            arrayInOrder[i + 2]
+          );
+        } else {
+          arrayFiltered.push(
+            arrayInOrder[i - 2],
+            arrayInOrder[i - 1],
+            arrayInOrder[i]
+          );
+        }
       }
-
       this.setState({ arrayOk: arrayFiltered });
     }
   }
@@ -87,9 +101,10 @@ class TableScoreInGame extends React.Component {
 
     return (
       <Container className={styles.tableScore}>
-        <Table basic="very" celled collapsing unstackable>
+        <Table basic="very" collapsing unstackable>
           <Table.Header>
             <Table.Row>
+              <Table.HeaderCell>Logo</Table.HeaderCell>
               <Table.HeaderCell>Teams</Table.HeaderCell>
               <Table.HeaderCell>Scores</Table.HeaderCell>
             </Table.Row>
@@ -101,18 +116,20 @@ class TableScoreInGame extends React.Component {
                 <>
                   <Table.Row>
                     <Table.Cell>
+                      <Image
+                        src={team.logo}
+                        rounded
+                        size="mini"
+                        alt="teamLogo"
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
                       <Header as="h4" image>
-                        <Image
-                          src={team.logo}
-                          rounded
-                          size="massive"
-                          alt="teamLogo"
-                        />
                         <Header.Content>
                           {team.name}
                           <Header.Subheader>
-                            {team.users.length}
-                            Team players
+                            {` ${team.users.length}
+                            Players`}
                           </Header.Subheader>
                         </Header.Content>
                       </Header>

@@ -1,8 +1,8 @@
 import React from 'react';
-import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
+import Zoom from 'react-reveal/Zoom';
+import { CarouselProvider, Slider } from 'pure-react-carousel';
 import axios from 'axios';
 import {
-  Input,
   Card,
   Header,
   Form,
@@ -10,6 +10,8 @@ import {
   Image,
   Grid,
   Loader,
+  Container,
+  Message,
 } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import TeamCards from './TeamCards';
@@ -26,9 +28,13 @@ class Register extends React.Component {
       wantCreateATeam: false,
       teamName: '',
       teamLogo: '',
-      isLoading: false,
+      isLoading: true,
       canPlayGame: false,
       error: false,
+      errorUrl: false,
+      errorPseudoJoin: false,
+      errorPseudoCreate: false,
+      errorTeam: false,
     };
     this.toggleCreationTeamPanel = this.toggleCreationTeamPanel.bind(this);
     this.chooseTeam = this.chooseTeam.bind(this);
@@ -37,13 +43,21 @@ class Register extends React.Component {
     this.submitCreateTeam = this.submitCreateTeam.bind(this);
   }
 
-  componentDidMount() {
-    axios.get('https://virusclicker.herokuapp.com/teams').then((res) => {
-      this.setState({ teams: res.data });
-    });
-    axios.get('https://virusclicker.herokuapp.com/users').then((res) => {
-      this.setState({ users: res.data });
-    });
+  async componentDidMount() {
+    try {
+      await axios
+        .get('https://virusclicker.herokuapp.com/teams')
+        .then((res) => {
+          this.setState({ teams: res.data });
+        });
+      await axios
+        .get('https://virusclicker.herokuapp.com/users')
+        .then((res) => {
+          this.setState({ users: res.data });
+        });
+    } finally {
+      this.setState({ isLoading: false });
+    }
   }
 
   handleChange(event) {
@@ -53,7 +67,7 @@ class Register extends React.Component {
   async submitCreateTeam(event) {
     const { teams, teamName, teamLogo, pseudoUser, users } = this.state;
     event.preventDefault();
-    this.setState({ isLoading: true });
+
     try {
       if (
         !teams.find(
@@ -85,13 +99,20 @@ class Register extends React.Component {
         localStorage.setItem('uuid', resUser.data.uuid);
 
         this.setState({ canPlayGame: true });
-      } else {
-        console.log('nope');
+      } else if (
+        teams.find((team) => team.name.toLowerCase() === teamName.toLowerCase())
+      ) {
+        this.setState({ errorTeam: true });
+      } else if (
+        users.find(
+          (user) => user.pseudo.toLowerCase() === pseudoUser.toLowerCase()
+        )
+      ) {
+        this.setState({ errorPseudoCreate: true });
       }
     } catch (err) {
       this.setState({ error: err });
-
-      console.log('error');
+      this.setState({ errorUrl: true });
     } finally {
       this.setState({ isLoading: false });
     }
@@ -100,7 +121,7 @@ class Register extends React.Component {
   async submitJoinTeam(e) {
     const { teamUuid, pseudoUser } = this.state;
     e.preventDefault(); // prevent page reload
-    this.setState({ isLoading: true });
+
     try {
       const { data } = await axios.get(
         'https://virusclicker.herokuapp.com/users'
@@ -120,14 +141,14 @@ class Register extends React.Component {
           }
         );
         window.localStorage.setItem('uuid', res.data.uuid);
-        // .then(this.setState({ canPlayGame: true }));
+        this.setState({ canPlayGame: true });
+      } else {
+        this.setState({ errorPseudoJoin: true });
       }
-      // eslint-disable-next-line no-console
-      console.log('This pseudo is already taken.');
     } catch (err) {
       this.setState({ error: err });
     } finally {
-      this.setState({ isLoading: false, canPlayGame: true });
+      this.setState({ isLoading: false });
     }
   }
 
@@ -150,14 +171,23 @@ class Register extends React.Component {
       teamLogo,
       isLoading,
       error,
+      errorPseudoJoin,
+      errorTeam,
+      errorUrl,
+      errorPseudoCreate,
+      teamUuid,
     } = this.state;
     if (isLoading) {
-      return <Loader />;
+      return (
+        <Container style={{ paddingTop: '300px' }}>
+          <Loader active inline="centered" size="huge">
+            Loading
+          </Loader>
+        </Container>
+      );
     }
-    if (error) {
-      return <p>There has been an error, please reload !</p>;
-    }
-    if (canPlayGame) {
+
+    if (canPlayGame || window.localStorage.getItem('uuid')) {
       return <Redirect to="/game" />;
     }
     return (
@@ -207,28 +237,33 @@ class Register extends React.Component {
         {!wantCreateATeam && (
           <>
             <Form size="large" onSubmit={this.submitJoinTeam}>
-              <Form.Field style={{ margin: '15px' }}>
-                <Input
+              <Form.Field style={{ margin: '10px' }}>
+                <Form.Input
                   required
                   placeholder="Pseudo"
                   value={pseudoUser}
                   name="pseudoUser"
                   onChange={this.handleChange}
-                  label={{ color: 'red', corner: 'right', icon: 'asterisk' }}
+                  error={
+                    errorPseudoJoin && {
+                      content: 'This pseudo is already taken',
+                      pointing: 'below',
+                    }
+                  }
                 />
               </Form.Field>
-              <CarouselProvider
-                naturalSlideWidth={2}
-                naturalSlideHeight={1.25}
-                totalSlides={teams.length / 10} // import teams number
-              >
-                <Slider>
-                  <Card.Group size="tiny">
-                    {teams
-                      .filter((team) => team.logo && team.logo.length > 40)
-                      .map(({ uuid, logo, name, createdAt, users }, i) => {
-                        return (
-                          <Slide index={i}>
+              <Zoom left>
+                <CarouselProvider
+                  naturalSlideWidth={100}
+                  naturalSlideHeight={100}
+                  totalSlides={teams.length}
+                >
+                  <Slider>
+                    <Card.Group size="tiny">
+                      {teams
+                        .filter((team) => team.logo && team.logo.length > 40)
+                        .map(({ uuid, logo, name, createdAt, users }) => {
+                          return (
                             <TeamCards
                               key={uuid}
                               image={logo}
@@ -236,13 +271,15 @@ class Register extends React.Component {
                               date={createdAt}
                               usersNumber={users.length}
                               onClick={() => this.chooseTeam(uuid)}
+                              teamUuid={teamUuid}
+                              uuid={uuid}
                             />
-                          </Slide>
-                        );
-                      })}
-                  </Card.Group>
-                </Slider>
-              </CarouselProvider>
+                          );
+                        })}
+                    </Card.Group>
+                  </Slider>
+                </CarouselProvider>
+              </Zoom>
               <Grid>
                 <Grid.Row textAlign="center" columns={1}>
                   <Grid.Column width={16}>
@@ -267,43 +304,73 @@ class Register extends React.Component {
         {wantCreateATeam && (
           <>
             <Form size="large" onSubmit={this.submitCreateTeam}>
-              <Form.Field style={{ margin: '15px' }}>
-                <Input
+              <Form.Field style={{ margin: '10px' }}>
+                <Form.Input
+                  required
                   placeholder="Pseudo"
-                  label={{ color: 'red', corner: 'right', icon: 'asterisk' }}
                   value={pseudoUser}
                   name="pseudoUser"
                   onChange={this.handleChange}
+                  error={
+                    errorPseudoCreate && {
+                      content: 'This pseudo is already taken',
+                      pointing: 'below',
+                    }
+                  }
                 />
               </Form.Field>
-              <Form.Field style={{ margin: '15px' }}>
-                <Input
+              <Form.Field style={{ margin: '10px' }}>
+                <Form.Input
+                  required
                   placeholder="Team name"
-                  label={{ color: 'red', corner: 'right', icon: 'asterisk' }}
                   value={teamName}
                   name="teamName"
                   onChange={this.handleChange}
+                  error={
+                    errorTeam && {
+                      content: "This team's name is already taken",
+                      pointing: 'below',
+                    }
+                  }
                 />
               </Form.Field>
-              <Form.Field style={{ margin: '15px' }}>
-                <Input
-                  placeholder="Team Logo URL"
-                  label={{ color: 'red', corner: 'right', icon: 'asterisk' }}
+              <Form.Field style={{ margin: '10px' }}>
+                <Form.Input
+                  required
+                  placeholder="https://image.png ou https://image.jpg"
                   value={teamLogo}
                   name="teamLogo"
                   onChange={this.handleChange}
+                  error={
+                    errorUrl && {
+                      content: 'This URL is not valid',
+                      pointing: 'below',
+                    }
+                  }
                 />
               </Form.Field>
 
-              <Grid>
-                <Grid.Row textAlign="center" columns={3}>
-                  <Grid.Column width={10}>
-                    <Image style={{ width: 180, height: 180 }} src={teamLogo} />
+              <Grid column={2} centered>
+                <Grid.Row textAlign="center">
+                  <Grid.Column width={8}>
+                    <Image
+                      textAlign="center"
+                      style={{
+                        width: '180px',
+                        height: '180px',
+                        borderRadius: 10,
+                        margin: '0',
+                      }}
+                      src={teamLogo}
+                    />
                   </Grid.Column>
                 </Grid.Row>
+              </Grid>
+              <Grid>
                 <Grid.Row textAlign="center" columns={1}>
                   <Grid.Column width={16}>
                     <Button
+                      textAlign="center"
                       color="teal"
                       type="submit"
                       disabled={isLoading}
@@ -316,6 +383,17 @@ class Register extends React.Component {
               </Grid>
             </Form>
           </>
+        )}
+        {error ? (
+          <Message warning>
+            <Message.Header>Error</Message.Header>
+            <p>
+              Unexpected error has occurred. Please check if every fields are
+              completed.
+            </p>
+          </Message>
+        ) : (
+          <></>
         )}
       </div>
     );
