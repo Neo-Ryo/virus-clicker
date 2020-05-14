@@ -15,13 +15,13 @@ class GamePage extends React.Component {
     super(props);
     this.state = {
       counter: 0,
-      total: 1000,
+      total: 10000,
       teamsData: [],
       isLoading: true,
-      skinOne: true,
-      skinTwo: false,
-      skinThree: false,
-      skinWtf: false,
+      rhume: true,
+      lepre: false,
+      sida: false,
+      covid19: false,
     };
 
     this.increment = this.increment.bind(this);
@@ -78,53 +78,39 @@ class GamePage extends React.Component {
     this.setState({ counter: counter + 1 });
   }
 
-  // const skin =
-  // switch (skin) {
-  //   const {skinOne,
-  //     skinTwo,
-  //     skinThree,
-  //     skinWtf} = this.state
-  //   case skinOne:
-  //     this.setState({skinOne: true})
-  //     break;
-
-  //   default:
-  //     break;
-  // }
-
   changeToSkin1() {
     this.setState({
-      skinOne: true,
-      skinTwo: false,
-      skinThree: false,
-      skinWtf: false,
+      rhume: true,
+      lepre: false,
+      sida: false,
+      covid19: false,
     });
   }
 
   changeToSkin2() {
     this.setState({
-      skinOne: false,
-      skinTwo: true,
-      skinThree: false,
-      skinWtf: false,
+      rhume: false,
+      lepre: true,
+      sida: false,
+      covid19: false,
     });
   }
 
   changeToSkin3() {
     this.setState({
-      skinOne: false,
-      skinTwo: false,
-      skinThree: true,
-      skinWtf: false,
+      rhume: false,
+      lepre: false,
+      sida: true,
+      covid19: false,
     });
   }
 
   changeToSkinWtf() {
     this.setState({
-      skinOne: false,
-      skinTwo: false,
-      skinThree: false,
-      skinWtf: true,
+      rhume: false,
+      lepre: false,
+      sida: false,
+      covid19: true,
     });
   }
 
@@ -134,10 +120,10 @@ class GamePage extends React.Component {
       total,
       teamsData,
       isLoading,
-      skinOne,
-      skinTwo,
-      skinThree,
-      skinWtf,
+      rhume,
+      lepre,
+      sida,
+      covid19,
     } = this.state;
     if (isLoading) {
       return (
@@ -260,10 +246,10 @@ class GamePage extends React.Component {
                 <VirusButton
                   counter={counter}
                   increment={this.increment}
-                  skinOne={skinOne}
-                  skinTwo={skinTwo}
-                  skinThree={skinThree}
-                  skinWtf={skinWtf}
+                  rhume={rhume}
+                  lepre={lepre}
+                  sida={sida}
+                  covid19={covid19}
                 />
               </Grid.Column>
             </Grid.Row>

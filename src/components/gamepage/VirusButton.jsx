@@ -8,27 +8,22 @@ import VirusBlue from './images/virusBlue.png';
 import VirusWtf from './images/virusWtf.png';
 import styles from './styles/virusButton.module.css';
 
-function VirusButton({ increment, counter, rhume, lepre, sida, covid19 }) {
-  const imgSource = () => {
-    const virus1 = VirusRed;
-    const virus2 = Virus;
-    const virus3 = VirusBlue;
-    const virus4 = VirusWtf;
+function VirusButton({ increment, counter, lepre, sida, covid19 }) {
+  let sickness = Virus;
+  switch (true) {
+    case lepre:
+      sickness = VirusRed;
+      break;
+    case sida:
+      sickness = VirusBlue;
+      break;
+    case covid19:
+      sickness = VirusWtf;
+      break;
+    default:
+      sickness = Virus;
+  }
 
-    if (rhume) {
-      return virus1;
-    }
-    if (lepre) {
-      return virus2;
-    }
-    if (sida) {
-      return virus3;
-    }
-    if (covid19) {
-      return virus4;
-    }
-    return '';
-  };
   return (
     <Container className={styles.virusLogoContainer}>
       <Tada spy={counter}>
@@ -36,7 +31,7 @@ function VirusButton({ increment, counter, rhume, lepre, sida, covid19 }) {
           centered
           className={styles.virusLogo}
           onClick={increment}
-          src={imgSource}
+          src={sickness}
           alt="logo"
         />
       </Tada>
@@ -47,10 +42,9 @@ function VirusButton({ increment, counter, rhume, lepre, sida, covid19 }) {
 VirusButton.propTypes = {
   counter: PropTypes.number.isRequired,
   increment: PropTypes.func.isRequired,
-  rhume: PropTypes.func.isRequired,
-  lepre: PropTypes.func.isRequired,
-  sida: PropTypes.func.isRequired,
-  covid19: PropTypes.func.isRequired,
+  lepre: PropTypes.string.isRequired,
+  sida: PropTypes.string.isRequired,
+  covid19: PropTypes.string.isRequired,
 };
 
 export default VirusButton;
