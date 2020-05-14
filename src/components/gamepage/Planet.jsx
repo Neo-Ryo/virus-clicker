@@ -6,6 +6,7 @@ import styles from './styles/planet.module.css';
 
 export default function Planet({ percentage }) {
   let color = null;
+  const opaciti = percentage / 100;
   if (percentage <= 30) {
     color = 'red';
   } else if (percentage > 30 && percentage < 50) {
@@ -17,7 +18,12 @@ export default function Planet({ percentage }) {
   }
   return (
     <Container textAlign="center">
-      <Image className={styles.logoplanet} src={PLanetLogo} alt="Planet logo" />
+      <Image
+        className={styles.logoplanet}
+        src={PLanetLogo}
+        alt="Planet logo"
+        style={{ opacity: opaciti }}
+      />
       <Statistic size="tiny" color={color}>
         <Statistic.Value>{`${percentage} %`}</Statistic.Value>
       </Statistic>

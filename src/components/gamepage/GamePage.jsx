@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import Zoom from 'react-reveal/Zoom';
-import { Grid, Loader, Container } from 'semantic-ui-react';
+import { Grid, Loader, Container, Button, Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
 import Planet from './Planet';
 import VirusButton from './VirusButton';
@@ -15,13 +15,21 @@ class GamePage extends React.Component {
     super(props);
     this.state = {
       counter: 0,
-      total: 1000,
+      total: 500,
       teamsData: [],
       isLoading: true,
+      skinOne: true,
+      skinTwo: false,
+      skinThree: false,
+      skinWtf: false,
     };
 
     this.increment = this.increment.bind(this);
     this.getOk = this.getOk.bind(this);
+    this.changeToSkin1 = this.changeToSkin1.bind(this);
+    this.changeToSkin2 = this.changeToSkin2.bind(this);
+    this.changeToSkin3 = this.changeToSkin3.bind(this);
+    this.changeToSkinWtf = this.changeToSkinWtf.bind(this);
   }
 
   componentDidMount() {
@@ -70,8 +78,53 @@ class GamePage extends React.Component {
     this.setState({ counter: counter + 1 });
   }
 
+  changeToSkin1() {
+    this.setState({
+      skinOne: true,
+      skinTwo: false,
+      skinThree: false,
+      skinWtf: false,
+    });
+  }
+
+  changeToSkin2() {
+    this.setState({
+      skinOne: false,
+      skinTwo: true,
+      skinThree: false,
+      skinWtf: false,
+    });
+  }
+
+  changeToSkin3() {
+    this.setState({
+      skinOne: false,
+      skinTwo: false,
+      skinThree: true,
+      skinWtf: false,
+    });
+  }
+
+  changeToSkinWtf() {
+    this.setState({
+      skinOne: false,
+      skinTwo: false,
+      skinThree: false,
+      skinWtf: true,
+    });
+  }
+
   render() {
-    const { counter, total, teamsData, isLoading } = this.state;
+    const {
+      counter,
+      total,
+      teamsData,
+      isLoading,
+      skinOne,
+      skinTwo,
+      skinThree,
+      skinWtf,
+    } = this.state;
     if (isLoading) {
       return (
         <Container style={{ paddingTop: '300px' }}>
@@ -92,6 +145,92 @@ class GamePage extends React.Component {
               <Grid.Column width={8}>
                 <TitleInGame counter={counter} />
               </Grid.Column>
+              <Grid.Column width={4}>
+                <Dropdown
+                  text="Skins"
+                  floating
+                  button
+                  className="icon"
+                  direction="left"
+                  style={{
+                    marginTop: '20px',
+                    backgroundColor: '#00b5ad',
+                    color: 'white',
+                  }}
+                >
+                  <Dropdown.Menu>
+                    <Dropdown.Item>
+                      <Button
+                        size="mini"
+                        color="teal"
+                        onClick={this.changeToSkin1}
+                      >
+                        Skin 1
+                      </Button>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                      {counter > 20 ? (
+                        <Button
+                          size="mini"
+                          color="teal"
+                          onClick={this.changeToSkin2}
+                        >
+                          Skin 2
+                        </Button>
+                      ) : (
+                        <Button
+                          size="mini"
+                          color="teal"
+                          disabled
+                          onClick={this.changeToSkin2}
+                        >
+                          Skin 2
+                        </Button>
+                      )}
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                      {counter > 40 ? (
+                        <Button
+                          size="mini"
+                          color="teal"
+                          onClick={this.changeToSkin3}
+                        >
+                          Skin 3
+                        </Button>
+                      ) : (
+                        <Button
+                          size="mini"
+                          color="teal"
+                          disabled
+                          onClick={this.changeToSkin3}
+                        >
+                          Skin 3
+                        </Button>
+                      )}
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                      {counter > 60 ? (
+                        <Button
+                          size="mini"
+                          color="teal"
+                          onClick={this.changeToSkinWtf}
+                        >
+                          Skin ?
+                        </Button>
+                      ) : (
+                        <Button
+                          size="mini"
+                          color="teal"
+                          disabled
+                          onClick={this.changeToSkinWtf}
+                        >
+                          Skin ?
+                        </Button>
+                      )}
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Grid.Column>
               <Grid.Column width={4} />
             </Grid.Row>
             <Grid.Row centered columns={3}>
@@ -104,7 +243,14 @@ class GamePage extends React.Component {
             </Grid.Row>
             <Grid.Row centered columns={2}>
               <Grid.Column width={11}>
-                <VirusButton counter={counter} increment={this.increment} />
+                <VirusButton
+                  counter={counter}
+                  increment={this.increment}
+                  skinOne={skinOne}
+                  skinTwo={skinTwo}
+                  skinThree={skinThree}
+                  skinWtf={skinWtf}
+                />
               </Grid.Column>
             </Grid.Row>
           </Grid>
