@@ -17,7 +17,10 @@ class GamePage extends React.Component {
       counter: 0,
       total: 10000,
       teamsData: [],
+      userTeamUuid: '',
+      teamScore: '',
       isLoading: true,
+      teamLoader: true,
       rhume: true,
       lepre: false,
       sida: false,
@@ -43,32 +46,44 @@ class GamePage extends React.Component {
     }
   }
 
-  getOk() {
-    const uuid = window.localStorage.getItem('uuid');
-    axios
-      .get(`https://virusclicker.herokuapp.com/users/${uuid}`)
-      .then((res) => {
-        this.setState({ counter: res.data.score });
+  async getOk() {
+    try {
+      const uuid = window.localStorage.getItem('uuid');
+      const { teamsData, userTeamUuid } = this.state;
+      const resUuidUser = await axios.get(
+        `https://virusclicker.herokuapp.com/users/${uuid}`
+      );
+      this.setState({
+        counter: resUuidUser.data.score,
+        userTeamUuid: resUuidUser.data.TeamUuid,
       });
-    return axios
-      .get(`https://virusclicker.herokuapp.com/teams`)
-      .then((res) => {
-        this.setState({ teamsData: res.data });
-      })
-      .then(() => {
-        this.setState((prevState) => ({
-          ...prevState,
-          teamsData: prevState.teamsData.map((team) => {
-            return {
-              ...team,
-              score: team.users
-                .map((user) => user.score)
-                .reduce((somme, score) => somme + score, 0),
-            };
-          }),
-        }));
-      })
-      .then(() => this.setState({ isLoading: false }));
+      const resTeam = await axios.get(
+        `https://virusclicker.herokuapp.com/teams`
+      );
+      this.setState({ teamsData: resTeam.data });
+      this.setState((prevState) => ({
+        ...prevState,
+        teamsData: prevState.teamsData.map((team) => {
+          return {
+            ...team,
+            score: team.users
+              .map((user) => user.score)
+              .reduce((somme, score) => somme + score, 0),
+          };
+        }),
+      }));
+      teamsData.filter((team) => {
+        if (team.uuid === userTeamUuid) {
+          return this.setState({ teamScore: team.score });
+        }
+        return '';
+      });
+      this.setState({ teamLoader: false });
+    } catch (err) {
+      this.setState({ error: err });
+    } finally {
+      this.setState({ isLoading: false });
+    }
   }
 
   increment() {
@@ -124,6 +139,8 @@ class GamePage extends React.Component {
       lepre,
       sida,
       covid19,
+      teamScore,
+      teamLoader,
     } = this.state;
     if (isLoading) {
       return (
@@ -134,6 +151,7 @@ class GamePage extends React.Component {
         </Container>
       );
     }
+
     return (
       <div className={styles.main}>
         <Zoom left>
@@ -238,7 +256,11 @@ class GamePage extends React.Component {
                 <TableScoreInGame teamsData={teamsData} counter={counter} />
               </Grid.Column>
               <Grid.Column width={6}>
-                <Planet percentage={(100 * counter) / total} />
+                {teamLoader ? (
+                  'loading'
+                ) : (
+                  <Planet percentage={(100 * teamScore) / total} />
+                )}
               </Grid.Column>
             </Grid.Row>
             <Grid.Row centered columns={2}>

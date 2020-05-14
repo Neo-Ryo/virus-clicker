@@ -19,6 +19,7 @@ class TableScoreInGame extends React.Component {
     super(props);
     this.state = {
       isLoading: true,
+      arrayOk: [],
     };
     this.getUser = this.getUser.bind(this);
     this.filterData = this.filterData.bind(this);
