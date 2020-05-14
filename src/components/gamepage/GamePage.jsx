@@ -170,7 +170,8 @@ class GamePage extends React.Component {
                   className="icon"
                   direction="left"
                   style={{
-                    marginTop: '20px',
+                    marginTop: '50px',
+                    marginRight: '10px',
                     backgroundColor: '#00b5ad',
                     color: 'white',
                   }}

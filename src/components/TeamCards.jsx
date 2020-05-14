@@ -17,11 +17,16 @@ function CardsGroup({
       <Card
         key={key}
         onClick={onClick}
-        style={teamUuid === uuid ? { border: 'solid purple 4px' } : {}}
+        style={
+          teamUuid === uuid
+            ? { border: 'solid purple 4px', height: '100%' }
+            : {}
+        }
+        centered
       >
         <Image
           src={image}
-          style={{ margin: 0, width: '100%', height: '50%' }}
+          style={{ margin: 0, width: '100%', height: '200px' }}
         />
         <Card.Content extra>
           <Header as="h3">{header}</Header>

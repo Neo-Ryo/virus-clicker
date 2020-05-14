@@ -72,13 +72,12 @@ class TableScore extends React.Component {
       <div className={styles.main}>
         <Container>
           <Zoom left>
-            <Table basic="very" celled collapsing unstackable>
+            <Table basic="very" celled unstackable>
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell>Logos</Table.HeaderCell>
                   <Table.HeaderCell>Teams</Table.HeaderCell>
                   <Table.HeaderCell>Scores</Table.HeaderCell>
-                  <Table.HeaderCell>Players</Table.HeaderCell>
                   <Table.HeaderCell>Rating</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
@@ -101,7 +100,6 @@ class TableScore extends React.Component {
                           </Header>
                         </Table.Cell>
                         <Table.Cell>{team.score}</Table.Cell>
-                        <Table.Cell>{team.users.length}</Table.Cell>
                         <Table.Cell>
                           {/* eslint-disable-next-line consistent-return */}
                           {(() => {
@@ -114,7 +112,7 @@ class TableScore extends React.Component {
                                 />
                               );
                             }
-                            if (team.score < 100 && team.score > 0) {
+                            if (team.score < 1000 && team.score > 0) {
                               return (
                                 <Rating
                                   maxRating={5}
@@ -123,7 +121,7 @@ class TableScore extends React.Component {
                                 />
                               );
                             }
-                            if (team.score < 500 && team.score >= 100) {
+                            if (team.score < 2500 && team.score >= 1000) {
                               return (
                                 <Rating
                                   maxRating={5}
@@ -132,7 +130,7 @@ class TableScore extends React.Component {
                                 />
                               );
                             }
-                            if (team.score < 1000 && team.score >= 500) {
+                            if (team.score < 10000 && team.score >= 2500) {
                               return (
                                 <Rating
                                   maxRating={5}
@@ -141,7 +139,7 @@ class TableScore extends React.Component {
                                 />
                               );
                             }
-                            if (team.score < 5000 && team.score >= 1000) {
+                            if (team.score < 50000 && team.score >= 10000) {
                               return (
                                 <Rating
                                   maxRating={5}
@@ -150,7 +148,7 @@ class TableScore extends React.Component {
                                 />
                               );
                             }
-                            if (team.score >= 5000) {
+                            if (team.score >= 50000) {
                               return (
                                 <Rating
                                   maxRating={5}

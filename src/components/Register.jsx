@@ -1,9 +1,9 @@
 import React from 'react';
 import Zoom from 'react-reveal/Zoom';
-import { CarouselProvider, Slider } from 'pure-react-carousel';
+import Slider from 'infinite-react-carousel';
+import 'react-awesome-slider/dist/styles.css';
 import axios from 'axios';
 import {
-  Card,
   Header,
   Form,
   Button,
@@ -16,6 +16,7 @@ import {
 import { Redirect } from 'react-router-dom';
 import TeamCards from './TeamCards';
 import styles from './Register.module.css';
+import Wilson from './gamepage/images/matthew.png';
 
 class Register extends React.Component {
   constructor(props) {
@@ -28,6 +29,7 @@ class Register extends React.Component {
       wantCreateATeam: false,
       teamName: '',
       teamLogo: '',
+      randomPic: '',
       isLoading: true,
       canPlayGame: false,
       error: false,
@@ -41,6 +43,7 @@ class Register extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.submitJoinTeam = this.submitJoinTeam.bind(this);
     this.submitCreateTeam = this.submitCreateTeam.bind(this);
+    this.getRandomPic = this.getRandomPic.bind(this);
   }
 
   async componentDidMount() {
@@ -60,8 +63,46 @@ class Register extends React.Component {
     }
   }
 
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+  async getRandomPic() {
+    const randomNumber = Math.floor(Math.random() * 900);
+    const res = await axios.get(
+      `https://pokeapi.co/api/v2/pokemon/${randomNumber}`
+    );
+    this.setState({ teamLogo: res.data.sprites.front_default });
+  }
+
+  async submitJoinTeam(e) {
+    const { teamUuid, pseudoUser } = this.state;
+    e.preventDefault(); // prevent page reload
+
+    try {
+      const { data } = await axios.get(
+        'https://virusclicker.herokuapp.com/users'
+      );
+      if (
+        !data.find(
+          (user) => user.pseudo.toLowerCase() === pseudoUser.toLowerCase()
+        ) &&
+        teamUuid &&
+        pseudoUser
+      ) {
+        const res = await axios.post(
+          'https://virusclicker.herokuapp.com/users',
+          {
+            pseudo: pseudoUser,
+            team: teamUuid,
+          }
+        );
+        window.localStorage.setItem('uuid', res.data.uuid);
+        this.setState({ canPlayGame: true });
+      } else {
+        this.setState({ errorPseudoJoin: true });
+      }
+    } catch (err) {
+      this.setState({ error: err });
+    } finally {
+      this.setState({ isLoading: false });
+    }
   }
 
   async submitCreateTeam(event) {
@@ -118,38 +159,8 @@ class Register extends React.Component {
     }
   }
 
-  async submitJoinTeam(e) {
-    const { teamUuid, pseudoUser } = this.state;
-    e.preventDefault(); // prevent page reload
-
-    try {
-      const { data } = await axios.get(
-        'https://virusclicker.herokuapp.com/users'
-      );
-      if (
-        !data.find(
-          (user) => user.pseudo.toLowerCase() === pseudoUser.toLowerCase()
-        ) &&
-        teamUuid &&
-        pseudoUser
-      ) {
-        const res = await axios.post(
-          'https://virusclicker.herokuapp.com/users',
-          {
-            pseudo: pseudoUser,
-            team: teamUuid,
-          }
-        );
-        window.localStorage.setItem('uuid', res.data.uuid);
-        this.setState({ canPlayGame: true });
-      } else {
-        this.setState({ errorPseudoJoin: true });
-      }
-    } catch (err) {
-      this.setState({ error: err });
-    } finally {
-      this.setState({ isLoading: false });
-    }
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   chooseTeam(id) {
@@ -176,6 +187,7 @@ class Register extends React.Component {
       errorUrl,
       errorPseudoCreate,
       teamUuid,
+      randomPic,
     } = this.state;
     if (isLoading) {
       return (
@@ -253,32 +265,24 @@ class Register extends React.Component {
                 />
               </Form.Field>
               <Zoom left>
-                <CarouselProvider
-                  naturalSlideWidth={100}
-                  naturalSlideHeight={100}
-                  totalSlides={teams.length}
-                >
-                  <Slider>
-                    <Card.Group size="tiny">
-                      {teams
-                        .filter((team) => team.logo && team.logo.length > 40)
-                        .map(({ uuid, logo, name, createdAt, users }) => {
-                          return (
-                            <TeamCards
-                              key={uuid}
-                              image={logo}
-                              header={name}
-                              date={createdAt}
-                              usersNumber={users.length}
-                              onClick={() => this.chooseTeam(uuid)}
-                              teamUuid={teamUuid}
-                              uuid={uuid}
-                            />
-                          );
-                        })}
-                    </Card.Group>
-                  </Slider>
-                </CarouselProvider>
+                <Slider>
+                  {teams
+                    .filter((team) => team.logo && team.logo.length > 40)
+                    .map(({ uuid, logo, name, createdAt, users }) => {
+                      return (
+                        <TeamCards
+                          key={uuid}
+                          image={logo}
+                          header={name}
+                          date={createdAt}
+                          usersNumber={users.length}
+                          onClick={() => this.chooseTeam(uuid)}
+                          teamUuid={teamUuid}
+                          uuid={uuid}
+                        />
+                      );
+                    })}
+                </Slider>
               </Zoom>
               <Grid>
                 <Grid.Row textAlign="center" columns={1}>
@@ -290,6 +294,7 @@ class Register extends React.Component {
                         value=""
                         disabled={isLoading}
                         size="large"
+                        style={{ margin: '50px' }}
                       >
                         {!isLoading ? 'Start' : 'Loading...'}
                       </Button>
@@ -361,7 +366,7 @@ class Register extends React.Component {
                         borderRadius: 10,
                         margin: '0',
                       }}
-                      src={teamLogo}
+                      src={teamLogo || randomPic || Wilson}
                     />
                   </Grid.Column>
                 </Grid.Row>
@@ -372,6 +377,20 @@ class Register extends React.Component {
                     <Button
                       textAlign="center"
                       color="teal"
+                      type="button"
+                      onClick={this.getRandomPic}
+                      disabled={isLoading}
+                      size="large"
+                    >
+                      Random picture
+                    </Button>
+                  </Grid.Column>
+                </Grid.Row>
+                <Grid.Row textAlign="center" columns={1}>
+                  <Grid.Column width={16}>
+                    <Button
+                      textAlign="center"
+                      color="purple"
                       type="submit"
                       disabled={isLoading}
                       size="large"
