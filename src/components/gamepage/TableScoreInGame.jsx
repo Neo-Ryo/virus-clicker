@@ -83,9 +83,9 @@ class TableScoreInGame extends React.Component {
           );
         } else {
           arrayFiltered.push(
-            arrayInOrder[i],
+            arrayInOrder[i - 2],
             arrayInOrder[i - 1],
-            arrayInOrder[i - 2]
+            arrayInOrder[i]
           );
         }
       }

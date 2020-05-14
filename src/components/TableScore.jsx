@@ -114,7 +114,25 @@ class TableScore extends React.Component {
                                 />
                               );
                             }
-                            if (team.score > 500) {
+                            if (team.score < 100 && team.score > 0) {
+                              return (
+                                <Rating
+                                  maxRating={5}
+                                  defaultRating={1}
+                                  icon="star"
+                                />
+                              );
+                            }
+                            if (team.score < 500 && team.score >= 100) {
+                              return (
+                                <Rating
+                                  maxRating={5}
+                                  defaultRating={2}
+                                  icon="star"
+                                />
+                              );
+                            }
+                            if (team.score < 1000 && team.score >= 500) {
                               return (
                                 <Rating
                                   maxRating={5}
@@ -123,11 +141,20 @@ class TableScore extends React.Component {
                                 />
                               );
                             }
-                            if (team.score < 500 && team.score > 0) {
+                            if (team.score < 5000 && team.score >= 1000) {
                               return (
                                 <Rating
                                   maxRating={5}
-                                  defaultRating={1}
+                                  defaultRating={4}
+                                  icon="star"
+                                />
+                              );
+                            }
+                            if (team.score >= 5000) {
+                              return (
+                                <Rating
+                                  maxRating={5}
+                                  defaultRating={5}
                                   icon="star"
                                 />
                               );

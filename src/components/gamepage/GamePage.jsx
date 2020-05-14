@@ -150,6 +150,7 @@ class GamePage extends React.Component {
     if (!window.localStorage.getItem('uuid')) {
       return <Redirect to="/" />;
     }
+
     return (
       <div className={styles.main}>
         <Zoom left>
