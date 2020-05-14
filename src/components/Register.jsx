@@ -11,6 +11,7 @@ import {
   Grid,
   Loader,
   Container,
+  Message,
 } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import TeamCards from './TeamCards';
@@ -30,7 +31,10 @@ class Register extends React.Component {
       isLoading: true,
       canPlayGame: false,
       error: false,
-      errorPseudo: false,
+      errorUrl: false,
+      errorPseudoJoin: false,
+      errorPseudoCreate: false,
+      errorTeam: false,
     };
     this.toggleCreationTeamPanel = this.toggleCreationTeamPanel.bind(this);
     this.chooseTeam = this.chooseTeam.bind(this);
@@ -95,12 +99,20 @@ class Register extends React.Component {
         localStorage.setItem('uuid', resUser.data.uuid);
 
         this.setState({ canPlayGame: true });
-      } else {
-        // eslint-disable-next-line no-console
-        this.setState({ errorPseudo: true });
+      } else if (
+        teams.find((team) => team.name.toLowerCase() === teamName.toLowerCase())
+      ) {
+        this.setState({ errorTeam: true });
+      } else if (
+        users.find(
+          (user) => user.pseudo.toLowerCase() === pseudoUser.toLowerCase()
+        )
+      ) {
+        this.setState({ errorPseudoCreate: true });
       }
     } catch (err) {
       this.setState({ error: err });
+      this.setState({ errorUrl: true });
     } finally {
       this.setState({ isLoading: false });
     }
@@ -131,7 +143,7 @@ class Register extends React.Component {
         window.localStorage.setItem('uuid', res.data.uuid);
         this.setState({ canPlayGame: true });
       } else {
-        this.setState({ errorPseudo: true });
+        this.setState({ errorPseudoJoin: true });
       }
     } catch (err) {
       this.setState({ error: err });
@@ -159,7 +171,10 @@ class Register extends React.Component {
       teamLogo,
       isLoading,
       error,
-      errorPseudo,
+      errorPseudoJoin,
+      errorTeam,
+      errorUrl,
+      errorPseudoCreate,
       teamUuid,
     } = this.state;
     if (isLoading) {
@@ -171,9 +186,7 @@ class Register extends React.Component {
         </Container>
       );
     }
-    if (error) {
-      return <p>There has been an error, please reload !</p>;
-    }
+
     if (canPlayGame) {
       return <Redirect to="/game" />;
     }
@@ -232,7 +245,7 @@ class Register extends React.Component {
                   name="pseudoUser"
                   onChange={this.handleChange}
                   error={
-                    errorPseudo && {
+                    errorPseudoJoin && {
                       content: 'This pseudo is already taken',
                       pointing: 'below',
                     }
@@ -299,7 +312,7 @@ class Register extends React.Component {
                   name="pseudoUser"
                   onChange={this.handleChange}
                   error={
-                    errorPseudo && {
+                    errorPseudoCreate && {
                       content: 'This pseudo is already taken',
                       pointing: 'below',
                     }
@@ -314,7 +327,7 @@ class Register extends React.Component {
                   name="teamName"
                   onChange={this.handleChange}
                   error={
-                    errorPseudo && {
+                    errorTeam && {
                       content: "This team's name is already taken",
                       pointing: 'below',
                     }
@@ -329,7 +342,7 @@ class Register extends React.Component {
                   name="teamLogo"
                   onChange={this.handleChange}
                   error={
-                    errorPseudo && {
+                    errorUrl && {
                       content: 'This URL is not valid',
                       pointing: 'below',
                     }
@@ -370,6 +383,17 @@ class Register extends React.Component {
               </Grid>
             </Form>
           </>
+        )}
+        {error ? (
+          <Message warning>
+            <Message.Header>Error</Message.Header>
+            <p>
+              Unexpected error has occurred. Please check if every fields are
+              completed.
+            </p>
+          </Message>
+        ) : (
+          <></>
         )}
       </div>
     );
