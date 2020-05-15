@@ -18,7 +18,7 @@ function TitleInGame({ counter }) {
       break;
     case counter > 70:
       skinMessage = (
-        <h3 className={styles.flashText}> Keep on smashing that VIRUS!</h3>
+        <h4 className={styles.flashText}>Keep on smashing that VIRUS!</h4>
       );
       break;
     default:
@@ -27,7 +27,7 @@ function TitleInGame({ counter }) {
   return (
     <Container textAlign="center" className={styles.main}>
       <h1 className={styles.titleInGame}>Virus clicker</h1>
-      <p className={styles.scoreCount}>{`score: ${counter}`}</p>
+      <h4 className={styles.scoreCount}>{`SCORE : ${counter}`}</h4>
       <Flash>{skinMessage}</Flash>
     </Container>
   );
