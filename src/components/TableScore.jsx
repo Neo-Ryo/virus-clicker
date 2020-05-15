@@ -89,78 +89,76 @@ class TableScore extends React.Component {
                   })
                   .filter((team) => team.logo && team.logo.length > 40)
                   .map((team) => (
-                    <>
-                      <Table.Row>
-                        <Table.Cell>
-                          <Image src={team.logo} rounded size="mini" />
-                        </Table.Cell>
-                        <Table.Cell>
-                          <Header as="h4" image>
-                            <Header.Content>{team.name}</Header.Content>
-                          </Header>
-                        </Table.Cell>
-                        <Table.Cell>{team.score}</Table.Cell>
-                        <Table.Cell>
-                          {/* eslint-disable-next-line consistent-return */}
-                          {(() => {
-                            if (team.score === 0) {
-                              return (
-                                <Rating
-                                  maxRating={5}
-                                  defaultRating={0}
-                                  icon="star"
-                                />
-                              );
-                            }
-                            if (team.score < 1000 && team.score > 0) {
-                              return (
-                                <Rating
-                                  maxRating={5}
-                                  defaultRating={1}
-                                  icon="star"
-                                />
-                              );
-                            }
-                            if (team.score < 2500 && team.score >= 1000) {
-                              return (
-                                <Rating
-                                  maxRating={5}
-                                  defaultRating={2}
-                                  icon="star"
-                                />
-                              );
-                            }
-                            if (team.score < 10000 && team.score >= 2500) {
-                              return (
-                                <Rating
-                                  maxRating={5}
-                                  defaultRating={3}
-                                  icon="star"
-                                />
-                              );
-                            }
-                            if (team.score < 50000 && team.score >= 10000) {
-                              return (
-                                <Rating
-                                  maxRating={5}
-                                  defaultRating={4}
-                                  icon="star"
-                                />
-                              );
-                            }
-                            if (team.score >= 50000) {
-                              return (
-                                <Rating
-                                  maxRating={5}
-                                  defaultRating={5}
-                                  icon="star"
-                                />
-                              );
-                            }
-                          })()}
-                        </Table.Cell>
-                      </Table.Row>
-                    </>
+                    <Table.Row key={team.name}>
+                      <Table.Cell>
+                        <Image src={team.logo} rounded size="mini" />
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Header as="h4" image>
+                          <Header.Content>{team.name}</Header.Content>
+                        </Header>
+                      </Table.Cell>
+                      <Table.Cell>{team.score}</Table.Cell>
+                      <Table.Cell>
+                        {/* eslint-disable-next-line consistent-return */}
+                        {(() => {
+                          if (team.score === 0) {
+                            return (
+                              <Rating
+                                maxRating={5}
+                                defaultRating={0}
+                                icon="star"
+                              />
+                            );
+                          }
+                          if (team.score < 1000 && team.score > 0) {
+                            return (
+                              <Rating
+                                maxRating={5}
+                                defaultRating={1}
+                                icon="star"
+                              />
+                            );
+                          }
+                          if (team.score < 2500 && team.score >= 1000) {
+                            return (
+                              <Rating
+                                maxRating={5}
+                                defaultRating={2}
+                                icon="star"
+                              />
+                            );
+                          }
+                          if (team.score < 10000 && team.score >= 2500) {
+                            return (
+                              <Rating
+                                maxRating={5}
+                                defaultRating={3}
+                                icon="star"
+                              />
+                            );
+                          }
+                          if (team.score < 50000 && team.score >= 10000) {
+                            return (
+                              <Rating
+                                maxRating={5}
+                                defaultRating={4}
+                                icon="star"
+                              />
+                            );
+                          }
+                          if (team.score >= 50000) {
+                            return (
+                              <Rating
+                                maxRating={5}
+                                defaultRating={5}
+                                icon="star"
+                              />
+                            );
+                          }
+                        })()}
+                      </Table.Cell>
+                    </Table.Row>
                   ))
                   .sort()}
               </Table.Body>

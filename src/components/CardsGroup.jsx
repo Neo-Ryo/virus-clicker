@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 function CardsGroup({
   image,
-  key,
   header,
   onClick,
   date,
@@ -15,7 +14,6 @@ function CardsGroup({
   return (
     <>
       <Card
-        key={key}
         onClick={onClick}
         style={
           teamUuid === uuid
@@ -44,10 +42,9 @@ function CardsGroup({
 CardsGroup.propTypes = {
   onClick: PropTypes.func.isRequired,
   image: PropTypes.string.isRequired,
-  key: PropTypes.string.isRequired,
   header: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
-  usersNumber: PropTypes.string.isRequired,
+  usersNumber: PropTypes.number.isRequired,
   teamUuid: PropTypes.string.isRequired,
   uuid: PropTypes.string.isRequired,
 };
