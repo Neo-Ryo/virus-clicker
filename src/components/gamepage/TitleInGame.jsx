@@ -8,13 +8,19 @@ function TitleInGame({ counter }) {
   let skinMessage;
   switch (true) {
     case counter > 20 && counter < 30:
-      skinMessage = 'You have unlock a new Skin !';
+      skinMessage = (
+        <h4 className={styles.flashText}>You have unlock a new Skin!</h4>
+      );
       break;
     case counter > 40 && counter < 50:
-      skinMessage = 'You have unlock a new Skin !';
+      skinMessage = (
+        <h4 className={styles.flashText}>You have unlock a new Skin!</h4>
+      );
       break;
     case counter > 60 && counter < 70:
-      skinMessage = 'You have unlock a new Skin !';
+      skinMessage = (
+        <h4 className={styles.flashText}>You have unlock a new Skin!</h4>
+      );
       break;
     case counter > 70:
       skinMessage = (
