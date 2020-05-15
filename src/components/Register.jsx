@@ -14,7 +14,7 @@ import {
   Message,
 } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
-import TeamCards from './TeamCards';
+import CardsGroup from './CardsGroup';
 import styles from './Register.module.css';
 import Wilson from './gamepage/images/matthew.png';
 
@@ -64,7 +64,7 @@ class Register extends React.Component {
   }
 
   async getRandomPic() {
-    const randomNumber = Math.floor(Math.random() * 900);
+    const randomNumber = Math.floor(Math.random() * 807);
     const res = await axios.get(
       `https://pokeapi.co/api/v2/pokemon/${randomNumber}`
     );
@@ -270,7 +270,7 @@ class Register extends React.Component {
                     .filter((team) => team.logo && team.logo.length > 40)
                     .map(({ uuid, logo, name, createdAt, users }) => {
                       return (
-                        <TeamCards
+                        <CardsGroup
                           key={uuid}
                           image={logo}
                           header={name}

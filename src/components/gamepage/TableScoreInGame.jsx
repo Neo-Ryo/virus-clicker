@@ -113,38 +113,31 @@ class TableScoreInGame extends React.Component {
           <Table.Body>
             {arrayOk
               .map((team) => (
-                <>
-                  <Table.Row>
-                    <Table.Cell>
-                      <Image
-                        src={team.logo}
-                        rounded
-                        size="mini"
-                        alt="teamLogo"
-                      />
-                    </Table.Cell>
-                    <Table.Cell>
-                      <Header as="h4" image>
-                        <Header.Content>
-                          {team.name}
-                          <Header.Subheader>
-                            {` ${team.users.length}
+                <Table.Row key={team.uuid}>
+                  <Table.Cell>
+                    <Image src={team.logo} rounded size="mini" alt="teamLogo" />
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Header as="h4" image>
+                      <Header.Content>
+                        {team.name}
+                        <Header.Subheader>
+                          {` ${team.users.length}
                             Players`}
-                          </Header.Subheader>
-                        </Header.Content>
-                      </Header>
-                    </Table.Cell>
-                    <Table.Cell>
-                      {team.uuid === uuid ? (
-                        <Flash>
-                          <h3>{team.score}</h3>
-                        </Flash>
-                      ) : (
-                        <>{team.score}</>
-                      )}
-                    </Table.Cell>
-                  </Table.Row>
-                </>
+                        </Header.Subheader>
+                      </Header.Content>
+                    </Header>
+                  </Table.Cell>
+                  <Table.Cell>
+                    {team.uuid === uuid ? (
+                      <Flash>
+                        <h3>{team.score}</h3>
+                      </Flash>
+                    ) : (
+                      <>{team.score}</>
+                    )}
+                  </Table.Cell>
+                </Table.Row>
               ))
               .sort()}
           </Table.Body>
