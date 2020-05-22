@@ -3,15 +3,12 @@
   height: 100%;
 }
 
-.title {
-  padding-top: 40vw !important;
+h1 {
   font-family: 'Stalinist One', cursive !important;
-  color: rgb(251, 4, 169) !important;
+  color: rgb(220, 53, 69) !important;
 }
 .startButton {
-  width: 45%;
-  height: 100%;
-  margin: 0 !important;
+  height: auto;
   cursor: pointer;
 }
 @keyframes spin {
@@ -23,11 +20,14 @@
   }
 }
 .virusButtonNotActive {
-  animation: spin 3s infinite linear;
+  animation: spin 7s infinite linear;
   transition: width 1s;
+  width: 90%;
 }
 .virusButtonActive {
-  animation: spin 3s infinite linear;
-  width: 25%;
+  animation: spin 7s infinite linear;
+  width: 70%;
   transition: width 1s;
 }
+
+
