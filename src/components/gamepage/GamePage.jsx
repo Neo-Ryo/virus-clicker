@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import Zoom from 'react-reveal/Zoom';
-import { Grid, Loader, Container, Button, Dropdown } from 'semantic-ui-react';
+import { Loader, Button, Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import Planet from './Planet';
@@ -9,7 +9,7 @@ import VirusButton from './VirusButton';
 import TitleInGame from './TitleInGame';
 import UserInfos from './UserInfos';
 import TableScoreInGame from './TableScoreInGame';
-import styles from './styles/GamePage.module.css';
+import { Row, Col, Container } from 'reactstrap';
 
 class GamePage extends React.Component {
   constructor(props) {
@@ -141,7 +141,7 @@ class GamePage extends React.Component {
     if (isLoading) {
       return (
         <Container style={{ paddingTop: '300px' }}>
-          <Loader active inline="centered" size="huge">
+          <Loader inverted active inline="centered" size="huge">
             Loading
           </Loader>
         </Container>
@@ -152,132 +152,165 @@ class GamePage extends React.Component {
     }
 
     return (
-      <div className={styles.main}>
-        <Zoom left>
-          <Grid>
-            <Grid.Row columns={3}>
-              <Grid.Column width={4}>
-                <UserInfos />
-              </Grid.Column>
-              <Grid.Column width={8}>
-                <TitleInGame counter={counter} />
-              </Grid.Column>
-              <Grid.Column width={4}>
-                <Dropdown
-                  text="Skins"
-                  floating
-                  button
-                  className="icon"
-                  direction="left"
-                  style={{
-                    marginTop: '50px',
-                    marginRight: '10px',
-                    backgroundColor: '#00b5ad',
-                    color: 'white',
-                  }}
+      <Zoom left>
+        <Container fluid>
+          <Row xs="12" sm="12" md="10" lg="7">
+            <Container fluid>
+              <Row style={{ background: '#212121', color: 'white' }}>
+                <Col
+                  style={{ textAlign: 'center' }}
+                  xs={{ size: '3', offset: 0 }}
+                  sm={{ size: '3', offset: 0 }}
+                  md={{ size: '3', offset: 0 }}
+                  lg={{ size: '3', offset: 0 }}
                 >
-                  <Dropdown.Menu>
-                    <Dropdown.Item>
-                      <Button
-                        size="mini"
-                        color="teal"
-                        onClick={this.changeToSkin1}
-                      >
-                        Skin 1
-                      </Button>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                      {counter > 20 ? (
+                  <UserInfos />
+                </Col>
+                <Col
+                  style={{ textAlign: 'center' }}
+                  xs={{ size: '6', offset: 0 }}
+                  sm={{ size: '6', offset: 0 }}
+                  md={{ size: '6', offset: 0 }}
+                  lg={{ size: '6', offset: 0 }}
+                >
+                  <TitleInGame counter={counter} />
+                </Col>
+                <Col
+                  style={{ textAlign: 'center' }}
+                  xs={{ size: '3', offset: 0 }}
+                  sm={{ size: '3', offset: 0 }}
+                  md={{ size: '3', offset: 0 }}
+                  lg={{ size: '3', offset: 0 }}
+                >
+                  <Dropdown
+                    text="Skins"
+                    floating
+                    button
+                    className="icon"
+                    direction="left"
+                    style={{
+                      marginTop: '50px',
+                      marginRight: '10px',
+                      backgroundColor: '#00b5ad',
+                      color: 'white',
+                    }}
+                  >
+                    <Dropdown.Menu>
+                      <Dropdown.Item>
                         <Button
                           size="mini"
                           color="teal"
-                          onClick={this.changeToSkin2}
+                          onClick={this.changeToSkin1}
                         >
-                          Skin 2
+                          Skin 1
                         </Button>
-                      ) : (
-                        <Button
-                          size="mini"
-                          color="teal"
-                          disabled
-                          onClick={this.changeToSkin2}
-                        >
-                          Skin 2
-                        </Button>
-                      )}
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                      {counter > 40 ? (
-                        <Button
-                          size="mini"
-                          color="teal"
-                          onClick={this.changeToSkin3}
-                        >
-                          Skin 3
-                        </Button>
-                      ) : (
-                        <Button
-                          size="mini"
-                          color="teal"
-                          disabled
-                          onClick={this.changeToSkin3}
-                        >
-                          Skin 3
-                        </Button>
-                      )}
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                      {counter > 60 ? (
-                        <Button
-                          size="mini"
-                          color="teal"
-                          onClick={this.changeToSkinWtf}
-                        >
-                          Skin ?
-                        </Button>
-                      ) : (
-                        <Button
-                          size="mini"
-                          color="teal"
-                          disabled
-                          onClick={this.changeToSkinWtf}
-                        >
-                          Skin ?
-                        </Button>
-                      )}
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </Grid.Column>
-              <Grid.Column width={4} />
-            </Grid.Row>
-            <Grid.Row centered columns={3}>
-              <Grid.Column width={10}>
-                <TableScoreInGame teamsData={teamsData} counter={counter} />
-              </Grid.Column>
-              <Grid.Column width={6}>
-                {teamLoader ? (
-                  'loading'
-                ) : (
-                  <Planet percentage={(100 * teamScore) / total} />
-                )}
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row centered columns={2}>
-              <Grid.Column width={11}>
-                <VirusButton
-                  counter={counter}
-                  increment={this.increment}
-                  rhume={rhume}
-                  lepre={lepre}
-                  sida={sida}
-                  covid19={covid19}
-                />
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Zoom>
-      </div>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        {counter > 20 ? (
+                          <Button
+                            size="mini"
+                            color="teal"
+                            onClick={this.changeToSkin2}
+                          >
+                            Skin 2
+                          </Button>
+                        ) : (
+                          <Button
+                            size="mini"
+                            color="teal"
+                            disabled
+                            onClick={this.changeToSkin2}
+                          >
+                            Skin 2
+                          </Button>
+                        )}
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        {counter > 40 ? (
+                          <Button
+                            size="mini"
+                            color="teal"
+                            onClick={this.changeToSkin3}
+                          >
+                            Skin 3
+                          </Button>
+                        ) : (
+                          <Button
+                            size="mini"
+                            color="teal"
+                            disabled
+                            onClick={this.changeToSkin3}
+                          >
+                            Skin 3
+                          </Button>
+                        )}
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        {counter > 60 ? (
+                          <Button
+                            size="mini"
+                            color="teal"
+                            onClick={this.changeToSkinWtf}
+                          >
+                            Skin ?
+                          </Button>
+                        ) : (
+                          <Button
+                            size="mini"
+                            color="teal"
+                            disabled
+                            onClick={this.changeToSkinWtf}
+                          >
+                            Skin ?
+                          </Button>
+                        )}
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col
+                  style={{ textAlign: 'center' }}
+                  xs={{ size: '6', offset: 0 }}
+                  sm={{ size: '6', offset: 0 }}
+                  md={{ size: '6', offset: 0 }}
+                  lg={{ size: '6', offset: 0 }}
+                >
+                  <TableScoreInGame teamsData={teamsData} counter={counter} />
+                </Col>
+                <Col
+                  style={{ textAlign: 'center' }}
+                  xs={{ size: '6', offset: 0 }}
+                  sm={{ size: '6', offset: 0 }}
+                  md={{ size: '6', offset: 0 }}
+                  lg={{ size: '6', offset: 0 }}
+                >
+                  {teamLoader ? (
+                    'loading'
+                  ) : (
+                    <Planet percentage={(100 * teamScore) / total} />
+                  )}
+                </Col>
+              </Row>
+
+              <Row>
+                <Col style={{ textAlign: 'center' }}>
+                  <VirusButton
+                    counter={counter}
+                    increment={this.increment}
+                    rhume={rhume}
+                    lepre={lepre}
+                    sida={sida}
+                    covid19={covid19}
+                  />
+                </Col>
+              </Row>
+            </Container>
+          </Row>
+        </Container>
+      </Zoom>
     );
   }
 }

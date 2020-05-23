@@ -52,11 +52,11 @@ class User extends React.Component {
       return <p>Error!</p>;
     }
     return (
-      <div className={styles.userBlock}>
-        <p className={styles.pseudoName}>{userPseudo}</p>
-        <p className={styles.teamName}>{team}</p>
-        <Image src={logo} alt={team} circular size="large" />
-      </div>
+      <>
+        <h5>{userPseudo}</h5>
+        <h6>{team}</h6>
+        <img src={logo} alt={team}  />
+      </>
     );
   }
 }

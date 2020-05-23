@@ -1,20 +1,10 @@
-.main {
-  /* color: rgb(251, 4, 169); */
-  font-family: 'Quicksand', sans-serif;
-}
 
 .titleInGame {
   font-family: 'Stalinist One', cursive;
-  font-size: medium;
-  white-space: nowrap;
   padding-top: 10px;
-  color: rgba(4, 75, 168, 0.959);
-}
-.scoreCount {
-  font-family: 'Quicksand', sans-serif;
-  font-weight: 600;
 }
 
+
 .flashText {
-  color: #a333c8 !important;
+  color: #dc3545 !important;
 }

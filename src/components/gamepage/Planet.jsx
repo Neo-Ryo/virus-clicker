@@ -18,18 +18,18 @@ export default function Planet({ percentage }) {
     color = 'green';
   }
   return (
-    <Container textAlign="center">
-      <Image
+    <>
+      <img
         className={styles.logoplanet}
         src={PLanetLogo}
         alt="Planet logo"
-        style={{ opacity: planetOpacity }}
+        style={{ opacity: planetOpacity, width: '150px' }}
       />
       <Statistic size="tiny" color={color}>
         <Statistic.Value>{`${roundPercent} %`}</Statistic.Value>
       </Statistic>
       <Progress percent={percentage} indicating />
-    </Container>
+    </>
   );
 }
 

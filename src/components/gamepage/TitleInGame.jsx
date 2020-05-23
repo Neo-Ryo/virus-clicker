@@ -9,33 +9,33 @@ function TitleInGame({ counter }) {
   switch (true) {
     case counter > 20 && counter < 30:
       skinMessage = (
-        <h4 className={styles.flashText}>You have unlock a new Skin!</h4>
+        <h5 className={styles.flashText}>You have unlock a new Skin!</h5>
       );
       break;
     case counter > 40 && counter < 50:
       skinMessage = (
-        <h4 className={styles.flashText}>You have unlock a new Skin!</h4>
+        <h5 className={styles.flashText}>You have unlock a new Skin!</h5>
       );
       break;
     case counter > 60 && counter < 70:
       skinMessage = (
-        <h4 className={styles.flashText}>You have unlock a new Skin!</h4>
+        <h5 className={styles.flashText}>You have unlock a new Skin!</h5>
       );
       break;
     case counter > 70:
       skinMessage = (
-        <h4 className={styles.flashText}>Keep on smashing that VIRUS!</h4>
+        <h5 className={styles.flashText}>Keep on smashing that Virus !</h5>
       );
       break;
     default:
-      skinMessage = 'Help us !';
+      skinMessage = <h5 className={styles.flashText}>Smash that Virus !</h5>
   }
   return (
-    <Container textAlign="center" className={styles.main}>
-      <h1 className={styles.titleInGame}>Virus clicker</h1>
-      <h4 className={styles.scoreCount}>{`SCORE : ${counter}`}</h4>
+    <>
+      <h3 className={styles.titleInGame}>Virus clicker</h3>
+      <h5 className={styles.scoreCount}>{`Score : ${counter}`}</h5>
       <Flash>{skinMessage}</Flash>
-    </Container>
+    </>
   );
 }
 

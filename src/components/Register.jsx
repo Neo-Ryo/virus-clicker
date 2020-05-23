@@ -204,10 +204,10 @@ class Register extends React.Component {
     }
     return (
       <div>
-        <h1 className={styles.title}>Game Builder</h1>
+        <h1 className={styles.title}>Register</h1>
         <Container>
-          <Row  style={{ textAlign: 'center' }}>
-            <Col>
+          <Row style={{ textAlign: 'center' }}>
+            <Col style={{ textAlign: 'start' }}>
               {wantCreateATeam ? (
                 <Button
                   style={{ margin: 0 }}
@@ -215,16 +215,22 @@ class Register extends React.Component {
                   color="danger"
                   size="lg"
                   onClick={this.toggleCreationTeamPanel}
+                  className={styles.buttons}
                 >
                   Join a team
                 </Button>
               ) : (
-                <Button style={{ margin: 0 }} color="danger" size="lg">
+                <Button
+                  style={{ margin: 0 }}
+                  color="danger"
+                  size="lg"
+                  className={styles.buttons}
+                >
                   Join a team
                 </Button>
               )}
             </Col>
-            <Col>
+            <Col style={{ textAlign: 'end' }}>
               {!wantCreateATeam ? (
                 <Button
                   style={{ margin: 0 }}
@@ -232,130 +238,154 @@ class Register extends React.Component {
                   color="danger"
                   size="lg"
                   onClick={this.toggleCreationTeamPanel}
+                  className={styles.buttons}
                 >
                   Create a team
                 </Button>
               ) : (
-                <Button style={{ margin: 0 }} color="danger" size="lg">
+                <Button
+                  style={{ margin: 0 }}
+                  color="danger"
+                  size="lg"
+                  className={styles.buttons}
+                >
                   Create a team
                 </Button>
               )}
             </Col>
           </Row>
-        </Container>
 
-        {!wantCreateATeam && (
-          <>
-            <Form size="large" onSubmit={this.submitJoinTeam}>
-              <Form.Field style={{ margin: '10px' }}>
-                <Form.Input
-                  required
-                  placeholder="Pseudo"
-                  value={pseudoUser}
-                  name="pseudoUser"
-                  onChange={this.handleChange}
-                  error={
-                    errorPseudoJoin && {
-                      content: 'This pseudo is already taken',
-                      pointing: 'below',
-                    }
-                  }
-                />
-              </Form.Field>
-              <Zoom left>
-                <Slider>
-                  {teams
-                    .filter((team) => team.logo && team.logo.length > 40)
-                    .map(({ uuid, logo, name, createdAt, users }) => {
-                      return (
-                        <CardsGroup
-                          key={uuid}
-                          image={logo}
-                          header={name}
-                          date={createdAt}
-                          usersNumber={users.length}
-                          onClick={() => this.chooseTeam(uuid)}
-                          teamUuid={teamUuid}
-                          uuid={uuid}
-                        />
-                      );
-                    })}
-                </Slider>
-              </Zoom>
-              <Grid>
-                <Grid.Row textAlign="center" columns={1}>
-                  <Grid.Column width={16}>
-                    {!wantCreateATeam && (
-                      <Button
-                        color="danger"
-                        type="submit"
-                        value=""
-                        disabled={isLoading}
-                        size="lg"
-                        style={{ margin: '50px' }}
-                      >
-                        {!isLoading ? 'Start' : 'Loading...'}
-                      </Button>
-                    )}
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-            </Form>
-          </>
-        )}
+          {!wantCreateATeam && (
+            <>
+              <Form size="large" onSubmit={this.submitJoinTeam}>
+                <Row>
+                  <Col>
+                    <Form.Field style={{ margin: '10px 0px' }}>
+                      <Form.Input
+                        required
+                        placeholder="Pseudo"
+                        value={pseudoUser}
+                        name="pseudoUser"
+                        onChange={this.handleChange}
+                        error={
+                          errorPseudoJoin && {
+                            content: 'This pseudo is already taken',
+                            pointing: 'below',
+                          }
+                        }
+                      />
+                    </Form.Field>
+                  </Col>
+                </Row>
 
-        {wantCreateATeam && (
-          <>
-            <Form size="large" onSubmit={this.submitCreateTeam}>
-              <Form.Field style={{ margin: '10px' }}>
-                <Form.Input
-                  required
-                  placeholder="Pseudo"
-                  value={pseudoUser}
-                  name="pseudoUser"
-                  onChange={this.handleChange}
-                  error={
-                    errorPseudoCreate && {
-                      content: 'This pseudo is already taken',
-                      pointing: 'below',
-                    }
-                  }
-                />
-              </Form.Field>
-              <Form.Field style={{ margin: '10px' }}>
-                <Form.Input
-                  required
-                  placeholder="Team name"
-                  value={teamName}
-                  name="teamName"
-                  onChange={this.handleChange}
-                  error={
-                    errorTeam && {
-                      content: "This team's name is already taken",
-                      pointing: 'below',
-                    }
-                  }
-                />
-              </Form.Field>
-              <Form.Field style={{ margin: '10px' }}>
-                <Form.Input
-                  required
-                  placeholder="https://image.png ou https://image.jpg"
-                  value={teamLogo}
-                  name="teamLogo"
-                  onChange={this.handleChange}
-                  error={
-                    errorUrl && {
-                      content: 'This URL is not valid',
-                      pointing: 'below',
-                    }
-                  }
-                />
-              </Form.Field>
+                <Row style={{ justifyContent: 'center' }}>
+                  <Zoom>
+                    {teams
+                      .filter((team) => team.logo.includes('PokeAPI'))
+                      .map(({ uuid, logo, name, createdAt, users }) => {
+                        return (
+                          <Col style={{ marginTop: '20px' }}>
+                            <CardsGroup
+                              key={uuid}
+                              image={logo}
+                              header={name}
+                              date={createdAt}
+                              usersNumber={users.length}
+                              onClick={() => this.chooseTeam(uuid)}
+                              teamUuid={teamUuid}
+                              uuid={uuid}
+                            />
+                          </Col>
+                        );
+                      })}
+                  </Zoom>
+                </Row>
+                <Zoom left>
+                  <Row>
+                    <Col style={{ textAlign: 'center' }}>
+                      {!wantCreateATeam && (
+                        <Button
+                          color="danger"
+                          type="submit"
+                          value=""
+                          disabled={isLoading}
+                          size="lg"
+                          style={{ margin: '50px' }}
+                          className={styles.buttons}
+                        >
+                          {!isLoading ? 'Start' : 'Loading...'}
+                        </Button>
+                      )}
+                    </Col>
+                  </Row>
+                </Zoom>
+              </Form>
+            </>
+          )}
 
-              <Grid column={2} centered>
-                <Grid.Row textAlign="center">
-                  <Grid.Column width={8}>
+          {wantCreateATeam && (
+            <>
+              <Form size="large" onSubmit={this.submitCreateTeam}>
+                <Row>
+                  <Col>
+                    <Form.Field style={{ margin: '10px 0px 5px 0px' }}>
+                      <Form.Input
+                        required
+                        placeholder="Pseudo"
+                        value={pseudoUser}
+                        name="pseudoUser"
+                        onChange={this.handleChange}
+                        error={
+                          errorPseudoCreate && {
+                            content: 'This pseudo is already taken',
+                            pointing: 'below',
+                          }
+                        }
+                      />
+                    </Form.Field>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Form.Field style={{ margin: '5px 0px' }}>
+                      <Form.Input
+                        required
+                        placeholder="Team name"
+                        value={teamName}
+                        name="teamName"
+                        onChange={this.handleChange}
+                        error={
+                          errorTeam && {
+                            content: "This team's name is already taken",
+                            pointing: 'below',
+                          }
+                        }
+                      />
+                    </Form.Field>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Form.Field style={{ margin: '5px 0px 10px 0px', display: 'none' }}>
+                      <Form.Input
+                        required
+                        placeholder="https://image.png ou https://image.jpg"
+                        value={teamLogo}
+                        name="teamLogo"
+                        onChange={this.handleChange}
+                        error={
+                          errorUrl && {
+                            content: 'This URL is not valid',
+                            pointing: 'below',
+                          }
+                        }
+                      />
+                    </Form.Field>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col style={{ textAlign: '-webkit-center' }}>
                     <Image
                       textAlign="center"
                       style={{
@@ -366,52 +396,52 @@ class Register extends React.Component {
                       }}
                       src={teamLogo || randomPic || Wilson}
                     />
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-              <Grid>
-                <Grid.Row textAlign="center" columns={1}>
-                  <Grid.Column width={16}>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col style={{ textAlign: 'center', marginTop: '10px' }}>
                     <Button
                       textAlign="center"
-                      color="danger"
+                      color="warning"
                       type="button"
                       onClick={this.getRandomPic}
                       disabled={isLoading}
                       size="lg"
+                      className={styles.buttons}
                     >
                       Random picture
                     </Button>
-                  </Grid.Column>
-                </Grid.Row>
-                <Grid.Row textAlign="center" columns={1}>
-                  <Grid.Column width={16}>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col style={{ textAlign: 'center', marginTop: '30px' }}>
                     <Button
                       textAlign="center"
                       color="danger"
                       type="submit"
                       disabled={isLoading}
                       size="lg"
+                      className={styles.buttons}
                     >
                       {!isLoading ? 'Start' : 'Loading...'}
                     </Button>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-            </Form>
-          </>
-        )}
-        {error ? (
-          <Message warning>
-            <Message.Header>Error</Message.Header>
-            <p>
-              Unexpected error has occurred. Please check if every fields are
-              completed.
-            </p>
-          </Message>
-        ) : (
-          <></>
-        )}
+                  </Col>
+                </Row>
+              </Form>
+            </>
+          )}
+          {error ? (
+            <Message warning>
+              <Message.Header>Error</Message.Header>
+              <p>
+                Unexpected error has occurred. Please check if every fields are
+                completed.
+              </p>
+            </Message>
+          ) : (
+            <></>
+          )}
+        </Container>
       </div>
     );
   }

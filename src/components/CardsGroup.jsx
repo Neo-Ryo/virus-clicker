@@ -15,20 +15,25 @@ function CardsGroup({
     <Card
       onClick={onClick}
       style={
-        teamUuid === uuid ? { border: 'solid purple 4px', height: '100%' } : {}
+        teamUuid === uuid ? { opacity: '0.5'} : {}
       }
       centered
     >
       <Image
         src={image}
-        style={{ margin: 0, width: '100%', height: '200px' }}
+        style={{
+          margin: 0,
+          width: '100%',
+          height: '200px',
+          background: '#ffc107',
+        }}
       />
       <Card.Content extra>
         <Header as="h3">{header}</Header>
         <Card.Meta>
           <span className="date">{`Create in ${date.substring(0, 10)}`}</span>
         </Card.Meta>
-        <Icon color="teal" text-align="right" name="user" />
+        <Icon style={{color: '#dc3545'}} text-align="right" name="user" />
         {`${usersNumber} friends`}
       </Card.Content>
     </Card>
