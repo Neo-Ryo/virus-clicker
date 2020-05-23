@@ -1,22 +1,22 @@
 import React from 'react';
 import Zoom from 'react-reveal/Zoom';
 import Slider from 'infinite-react-carousel';
-import 'react-awesome-slider/dist/styles.css';
 import axios from 'axios';
 import {
   Header,
   Form,
-  Button,
   Image,
   Grid,
   Loader,
-  Container,
   Message,
+  Dimmer,
+  Segment,
 } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import CardsGroup from './CardsGroup';
 import styles from './Register.module.css';
 import Wilson from './gamepage/images/matthew.png';
+import { Button, Container, Row, Col } from 'reactstrap';
 
 class Register extends React.Component {
   constructor(props) {
@@ -192,7 +192,7 @@ class Register extends React.Component {
     if (isLoading) {
       return (
         <Container style={{ paddingTop: '300px' }}>
-          <Loader active inline="centered" size="huge">
+          <Loader active inverted inline="centered" size="huge">
             Loading
           </Loader>
         </Container>
@@ -203,48 +203,46 @@ class Register extends React.Component {
       return <Redirect to="/game" />;
     }
     return (
-      <div className={styles.backgrd}>
-        <Header as="h1" className={styles.title}>
-          Game Builder
-        </Header>
-        <Grid divided="vertically">
-          <Grid.Row textAlign="center" columns={2}>
-            <Grid.Column width={8}>
+      <div>
+        <h1 className={styles.title}>Game Builder</h1>
+        <Container>
+          <Row  style={{ textAlign: 'center' }}>
+            <Col>
               {wantCreateATeam ? (
                 <Button
                   style={{ margin: 0 }}
-                  basic
-                  color="purple"
-                  size="large"
+                  outline
+                  color="danger"
+                  size="lg"
                   onClick={this.toggleCreationTeamPanel}
                 >
                   Join a team
                 </Button>
               ) : (
-                <Button style={{ margin: 0 }} color="purple" size="large">
+                <Button style={{ margin: 0 }} color="danger" size="lg">
                   Join a team
                 </Button>
               )}
-            </Grid.Column>
-            <Grid.Column width={8}>
+            </Col>
+            <Col>
               {!wantCreateATeam ? (
                 <Button
                   style={{ margin: 0 }}
-                  basic
-                  color="purple"
-                  size="large"
+                  outline
+                  color="danger"
+                  size="lg"
                   onClick={this.toggleCreationTeamPanel}
                 >
                   Create a team
                 </Button>
               ) : (
-                <Button style={{ margin: 0 }} color="purple" size="large">
+                <Button style={{ margin: 0 }} color="danger" size="lg">
                   Create a team
                 </Button>
               )}
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+            </Col>
+          </Row>
+        </Container>
 
         {!wantCreateATeam && (
           <>
@@ -289,11 +287,11 @@ class Register extends React.Component {
                   <Grid.Column width={16}>
                     {!wantCreateATeam && (
                       <Button
-                        color="teal"
+                        color="danger"
                         type="submit"
                         value=""
                         disabled={isLoading}
-                        size="large"
+                        size="lg"
                         style={{ margin: '50px' }}
                       >
                         {!isLoading ? 'Start' : 'Loading...'}
@@ -376,11 +374,11 @@ class Register extends React.Component {
                   <Grid.Column width={16}>
                     <Button
                       textAlign="center"
-                      color="teal"
+                      color="danger"
                       type="button"
                       onClick={this.getRandomPic}
                       disabled={isLoading}
-                      size="large"
+                      size="lg"
                     >
                       Random picture
                     </Button>
@@ -390,10 +388,10 @@ class Register extends React.Component {
                   <Grid.Column width={16}>
                     <Button
                       textAlign="center"
-                      color="purple"
+                      color="danger"
                       type="submit"
                       disabled={isLoading}
-                      size="large"
+                      size="lg"
                     >
                       {!isLoading ? 'Start' : 'Loading...'}
                     </Button>

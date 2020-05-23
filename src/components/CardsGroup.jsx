@@ -12,30 +12,26 @@ function CardsGroup({
   uuid,
 }) {
   return (
-    <>
-      <Card
-        onClick={onClick}
-        style={
-          teamUuid === uuid
-            ? { border: 'solid purple 4px', height: '100%' }
-            : {}
-        }
-        centered
-      >
-        <Image
-          src={image}
-          style={{ margin: 0, width: '100%', height: '200px' }}
-        />
-        <Card.Content extra>
-          <Header as="h3">{header}</Header>
-          <Card.Meta>
-            <span className="date">{`Create in ${date.substring(0, 10)}`}</span>
-          </Card.Meta>
-          <Icon color="teal" text-align="right" name="user" />
-          {`${usersNumber} friends`}
-        </Card.Content>
-      </Card>
-    </>
+    <Card
+      onClick={onClick}
+      style={
+        teamUuid === uuid ? { border: 'solid purple 4px', height: '100%' } : {}
+      }
+      centered
+    >
+      <Image
+        src={image}
+        style={{ margin: 0, width: '100%', height: '200px' }}
+      />
+      <Card.Content extra>
+        <Header as="h3">{header}</Header>
+        <Card.Meta>
+          <span className="date">{`Create in ${date.substring(0, 10)}`}</span>
+        </Card.Meta>
+        <Icon color="teal" text-align="right" name="user" />
+        {`${usersNumber} friends`}
+      </Card.Content>
+    </Card>
   );
 }
 

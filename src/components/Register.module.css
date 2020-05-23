@@ -1,12 +1,6 @@
-.backgrd {
-  background: center / cover
-    url('https://wallpaperplay.com/walls/full/1/f/d/39437.jpg') repeat;
-  min-height: 103vh !important;
-}
-
 .title {
   text-align: center !important;
-  padding-top: 15px !important;
   font-family: 'Stalinist One', cursive !important;
-  color: rgba(255, 0, 242, 0.959) !important;
+  color: rgb(220, 53, 69) !important;
+  margin-top: 20px !important;
 }

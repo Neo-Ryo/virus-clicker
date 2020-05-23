@@ -29,7 +29,7 @@ class StartVirusButton extends React.Component {
   render() {
     const { show, uuid } = this.state;
     return (
-      <div>
+      
         <Zoom left>
           <Container>
             <Row>
@@ -89,7 +89,7 @@ class StartVirusButton extends React.Component {
             </Row>
           </Container>
         </Zoom>
-      </div>
+      
     );
   }
 }
