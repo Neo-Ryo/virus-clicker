@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-  Table,
-  Button,
-  Container,
-  Header,
-  Image,
-  Loader,
-} from 'semantic-ui-react';
+import { Button, Container, Header, Image, Loader } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Media, Table } from 'reactstrap';
 
 import Axios from 'axios';
 import Flash from 'react-reveal/Flash';
@@ -63,9 +57,11 @@ class TableScoreInGame extends React.Component {
   filterData() {
     const { teamsData } = this.props;
     const { uuid } = this.state;
-    const arrayInOrder = teamsData.sort((a, b) => {
-      return b.score - a.score;
-    });
+    const arrayInOrder = teamsData
+      .filter((team) => team.logo.includes('PokeAPI'))
+      .sort((a, b) => {
+        return b.score - a.score;
+      });
     const arrayFiltered = [];
     for (let i = 0; i < arrayInOrder.length; i += 1) {
       if (arrayInOrder[i].uuid === uuid) {
@@ -100,35 +96,29 @@ class TableScoreInGame extends React.Component {
     }
 
     return (
-      <Container className={styles.tableScore}>
-        <Table basic="very" collapsing unstackable>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Logo</Table.HeaderCell>
-              <Table.HeaderCell>Teams</Table.HeaderCell>
-              <Table.HeaderCell>Scores</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-
-          <Table.Body>
+      <>
+        <Table borderless>
+          <tbody>
             {arrayOk
+
               .map((team) => (
-                <Table.Row key={team.uuid}>
-                  <Table.Cell>
-                    <Image src={team.logo} rounded size="mini" alt="teamLogo" />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Header as="h4" image>
-                      <Header.Content>
-                        {team.name}
-                        <Header.Subheader>
-                          {` ${team.users.length}
-                            Players`}
-                        </Header.Subheader>
-                      </Header.Content>
-                    </Header>
-                  </Table.Cell>
-                  <Table.Cell>
+                <tr>
+                  <td style={{ verticalAlign: 'middle', padding: 0 }}>
+                    <img
+                      src={team.logo}
+                      style={{ width: '70%' }}
+                      alt="teamLogo"
+                    />
+                  </td>
+                  <td style={{ verticalAlign: 'middle', textAlign: 'start' }}>
+                   <h4>{team.name}</h4> 
+                  </td>
+                  <td style={{ verticalAlign: 'middle' }}>
+                    {` ${team.users.length}
+                  Players`}
+                  </td>
+
+                  <td style={{ verticalAlign: 'middle' }}>
                     {team.uuid === uuid ? (
                       <Flash>
                         <h3>{team.score}</h3>
@@ -136,16 +126,13 @@ class TableScoreInGame extends React.Component {
                     ) : (
                       <>{team.score}</>
                     )}
-                  </Table.Cell>
-                </Table.Row>
+                  </td>
+                </tr>
               ))
               .sort()}
-          </Table.Body>
+          </tbody>
         </Table>
-        <Link to="/tableScore">
-          <Button size="mini" color="teal" onClick={() => ''} content="+" />
-        </Link>
-      </Container>
+      </>
     );
   }
 }

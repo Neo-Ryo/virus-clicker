@@ -1,8 +1,8 @@
 import React from 'react';
-import { Container, Progress, Statistic, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import PLanetLogo from './images/earth.png';
 import styles from './styles/planet.module.css';
+import { Progress } from 'reactstrap';
 
 export default function Planet({ percentage }) {
   const roundPercent = percentage.toFixed(2);
@@ -19,16 +19,14 @@ export default function Planet({ percentage }) {
   }
   return (
     <>
-      <img
+       <img
         className={styles.logoplanet}
         src={PLanetLogo}
-        alt="Planet logo"
-        style={{ opacity: planetOpacity, width: '150px' }}
-      />
-      <Statistic size="tiny" color={color}>
-        <Statistic.Value>{`${roundPercent} %`}</Statistic.Value>
-      </Statistic>
-      <Progress percent={percentage} indicating />
+        alt="Planet logo" 
+        style={{ opacity: planetOpacity, width: '50px' }}
+      /> 
+     
+      <Progress animated color="warning" value={percentage} style={{width: '50px', margin: 'auto'}} />
     </>
   );
 }

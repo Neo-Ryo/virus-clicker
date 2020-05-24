@@ -1,7 +1,9 @@
 
 .titleInGame {
   font-family: 'Stalinist One', cursive;
-  padding-top: 10px;
+  color: #dc3545 !important;
+  margin: 0;
+
 }
 
 

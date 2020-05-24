@@ -1,5 +1,7 @@
 .virusLogo {
   cursor: pointer;
+  width: 90%;
+  padding-top: 20px;
 }
 .virusLogoContainer {
   text-align: -webkit-center;

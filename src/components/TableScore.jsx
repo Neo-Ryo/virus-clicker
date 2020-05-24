@@ -87,7 +87,7 @@ class TableScore extends React.Component {
                   .sort((a, b) => {
                     return b.score - a.score;
                   })
-                  .filter((team) => team.logo && team.logo.length > 40)
+                  .filter((team) => team.logo.includes('PokeAPI'))
                   .map((team) => (
                     <Table.Row key={team.name}>
                       <Table.Cell>

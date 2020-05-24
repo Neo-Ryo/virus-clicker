@@ -1,7 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import { Loader, Image } from 'semantic-ui-react';
-import styles from './styles/userInfos.module.css';
+import {
+  Button,
+  Popover,
+  PopoverHeader,
+  PopoverBody,
+  UncontrolledPopover,
+} from 'reactstrap';
 
 class User extends React.Component {
   constructor(props) {
@@ -53,9 +59,26 @@ class User extends React.Component {
     }
     return (
       <>
-        <h5>{userPseudo}</h5>
-        <h6>{team}</h6>
-        <img src={logo} alt={team}  />
+        <Button id="PopoverLegacy" type="button"   color="danger">
+          Profil
+        </Button>
+
+        <UncontrolledPopover
+          trigger="legacy"
+          placement="bottom"
+          target="PopoverLegacy"
+        >
+          <PopoverHeader>
+            <h5>{userPseudo}</h5>
+          </PopoverHeader>
+          <PopoverHeader>
+            {' '}
+            <h6>{team}</h6>
+          </PopoverHeader>
+          <PopoverBody>
+            <img src={logo} alt={team} />
+          </PopoverBody>
+        </UncontrolledPopover>
       </>
     );
   }
