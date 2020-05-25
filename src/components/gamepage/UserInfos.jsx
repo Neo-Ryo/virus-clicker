@@ -1,9 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import { Loader, Image } from 'semantic-ui-react';
+import { Loader} from 'semantic-ui-react';
 import {
   Button,
-  Popover,
   PopoverHeader,
   PopoverBody,
   UncontrolledPopover,

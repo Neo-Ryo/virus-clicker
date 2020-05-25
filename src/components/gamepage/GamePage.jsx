@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import Zoom from 'react-reveal/Zoom';
-import { Loader, Dropdown } from 'semantic-ui-react';
+import { Loader } from 'semantic-ui-react';
 import axios from 'axios';
 import { Redirect, Link } from 'react-router-dom';
 import Planet from './Planet';
@@ -13,15 +13,9 @@ import {
   Row,
   Col,
   Container,
-  Popover,
-  PopoverHeader,
   PopoverBody,
   UncontrolledPopover,
   Button,
-  Toast,
-  ToastBody,
-  ToastHeader,
-  Alert,
   Badge,
 } from 'reactstrap';
 
@@ -243,22 +237,19 @@ class GamePage extends React.Component {
           <Row>
             <Col
               style={{ textAlign: 'center', padding: 0 }}
-              xs={{ size: '12', offset: 0 }}
-              sm={{ size: '12', offset: 0 }}
+              xs={{ size: '8', offset: 0 }}
+              sm={{ size: '8', offset: 0 }}
               md={{ size: '3', offset: 0 }}
               lg={{ size: '3', offset: 0 }}
             >
               <TableScoreInGame teamsData={teamsData} counter={counter} />
             </Col>
-          </Row>
-
-          <Row style={{ backgroundColor: 'rgb(0, 0, 102)' }}>
             <Col
               style={{ textAlign: 'center', alignSelf: 'center' }}
-              xs={{ size: '3', offset: 0 }}
-              sm={{ size: '3', offset: 0 }}
-              md={{ size: '3', offset: 0 }}
-              lg={{ size: '3', offset: 0 }}
+              xs={{ size: '4', offset: 0 }}
+              sm={{ size: '4', offset: 0 }}
+              md={{ size: '4', offset: 0 }}
+              lg={{ size: '4', offset: 0 }}
             >
               {teamLoader ? (
                 'loading'
@@ -266,6 +257,10 @@ class GamePage extends React.Component {
                 <Planet percentage={(100 * teamScore) / total} />
               )}
             </Col>
+          </Row>
+
+          <Row style={{ backgroundColor: 'rgb(0, 0, 102)' }}>
+            
             <Col
               style={{ textAlign: 'center', alignSelf: 'center' }}
               xs={{ size: '6'}}

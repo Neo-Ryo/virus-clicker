@@ -1,6 +1,5 @@
 import React from 'react';
 import Flash from 'react-reveal/Flash';
-import { Container } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import styles from './styles/titleInGame.module.css';
 

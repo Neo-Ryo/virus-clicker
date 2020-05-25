@@ -1,16 +1,11 @@
 import React from 'react';
 import Zoom from 'react-reveal/Zoom';
-import Slider from 'infinite-react-carousel';
 import axios from 'axios';
 import {
-  Header,
   Form,
   Image,
-  Grid,
   Loader,
   Message,
-  Dimmer,
-  Segment,
 } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import CardsGroup from './CardsGroup';

@@ -1,12 +1,10 @@
 import React from 'react';
-import { Button, Container, Header, Image, Loader } from 'semantic-ui-react';
+import {  Loader } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { Media, Table } from 'reactstrap';
+import { Table } from 'reactstrap';
 
 import Axios from 'axios';
 import Flash from 'react-reveal/Flash';
-import styles from './styles/tableScore.module.css';
 
 class TableScoreInGame extends React.Component {
   constructor(props) {
@@ -97,7 +95,7 @@ class TableScoreInGame extends React.Component {
 
     return (
       <>
-        <Table borderless>
+        <Table >
           <tbody>
             {arrayOk
 
@@ -112,11 +110,10 @@ class TableScoreInGame extends React.Component {
                   </td>
                   <td style={{ verticalAlign: 'middle', textAlign: 'start' }}>
                    <h4>{team.name}</h4> 
+                   <h6> {` ${team.users.length}
+                  Players`}</h6>
                   </td>
-                  <td style={{ verticalAlign: 'middle' }}>
-                    {` ${team.users.length}
-                  Players`}
-                  </td>
+                 
 
                   <td style={{ verticalAlign: 'middle' }}>
                     {team.uuid === uuid ? (

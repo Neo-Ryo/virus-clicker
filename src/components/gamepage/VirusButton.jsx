@@ -33,6 +33,7 @@ function VirusButton({ increment, counter, lepre, sida, covid19 }) {
           onClick={increment}
           src={sickness}
           alt="logo"
+          style={{width: "90%"}}
         />
       </Tada>
     </Container>
