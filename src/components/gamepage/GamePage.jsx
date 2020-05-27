@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React from 'react';
-import Zoom from 'react-reveal/Zoom';
+import Fade from 'react-reveal/Fade';
 import { Loader } from 'semantic-ui-react';
 import axios from 'axios';
 import { Redirect, Link } from 'react-router-dom';
@@ -161,7 +161,7 @@ class GamePage extends React.Component {
     }
 
     return (
-      <Zoom left>
+      <Fade left>
         <Container fluid>
           <Row
             style={{ background: '#000066', color: 'white', height: '70px' }}
@@ -171,25 +171,28 @@ class GamePage extends React.Component {
               xs={{ size: '3', offset: 0 }}
               sm={{ size: '3', offset: 0 }}
               md={{ size: '3', offset: 0 }}
-              lg={{ size: '3', offset: 0 }}
+              lg={{ size: '2', offset: 2 }}
             >
               <UserInfos />
             </Col>
             <Col
-              style={{ textAlign: 'center', alignSelf: 'center' }}
+              style={{ textAlign: 'center', alignSelf: 'center', top: '5px' }}
               xs={{ size: '6', offset: 0 }}
               sm={{ size: '6', offset: 0 }}
               md={{ size: '6', offset: 0 }}
-              lg={{ size: '6', offset: 0 }}
+              lg={{ size: '4', offset: 0 }}
             >
               <TitleInGame counter={counter} />
+              <Badge color="danger" pill>
+                My score : {counter}
+              </Badge>
             </Col>
             <Col
               style={{ textAlign: 'center', alignSelf: 'center' }}
               xs={{ size: '3', offset: 0 }}
               sm={{ size: '3', offset: 0 }}
               md={{ size: '3', offset: 0 }}
-              lg={{ size: '3', offset: 0 }}
+              lg={{ size: '2', offset: 0 }}
             >
               <Button id="Skins" type="button" color="danger">
                 Skins
@@ -234,17 +237,20 @@ class GamePage extends React.Component {
             </Col>
           </Row>
 
+        
+
           <Row>
             <Col
               style={{ textAlign: 'center', padding: 0 }}
-              xs={{ size: '8', offset: 0 }}
-              sm={{ size: '8', offset: 0 }}
-              md={{ size: '3', offset: 0 }}
-              lg={{ size: '3', offset: 0 }}
+              xs={{ size: '12', offset: 0 }}
+              sm={{ size: '12', offset: 0 }}
+              md={{ size: '8', offset: 2 }}
+              lg={{ size: '4', offset: 4 }}
             >
               <TableScoreInGame teamsData={teamsData} counter={counter} />
             </Col>
-            <Col
+            </Row>
+            {/* <Col
               style={{ textAlign: 'center', alignSelf: 'center' }}
               xs={{ size: '4', offset: 0 }}
               sm={{ size: '4', offset: 0 }}
@@ -256,43 +262,14 @@ class GamePage extends React.Component {
               ) : (
                 <Planet percentage={(100 * teamScore) / total} />
               )}
-            </Col>
-          </Row>
-
-          <Row style={{ backgroundColor: 'rgb(0, 0, 102)' }}>
+            </Col> */}
             
+            <Row>
             <Col
-              style={{ textAlign: 'center', alignSelf: 'center' }}
-              xs={{ size: '6'}}
-              sm={{ size: '6'}}
-              md={{ size: '6'}}
-              lg={{ size: '6'}}
-            >
-               <Badge color="warning" pill>My score : {counter}</Badge>
-            </Col>
-
-            <Col
-              style={{ textAlign: 'center', alignSelf: 'center' }}
-              xs={{ size: '3' }}
-              sm={{ size: '3' }}
-              md={{ size: '3' }}
-              lg={{ size: '3' }}
-            >
-              <Link to="/tableScore">
-                <Button onClick={() => ''} color="warning">
-                  Scores
-                </Button>
-              </Link>
-            </Col>
-            
-          </Row>
-
-          <Row>
-            <Col
-              style={{ textAlign: 'center' }}
+              style={{ textAlign: 'center', margin: 'auto' }}
               xs={{ size: '12', offset: 0 }}
               sm={{ size: '12', offset: 0 }}
-              md={{ size: '4', offset: 4 }}
+              md={{ size: '8', offset: 0 }}
               lg={{ size: '4', offset: 4 }}
             >
               <VirusButton
@@ -306,7 +283,7 @@ class GamePage extends React.Component {
             </Col>
           </Row>
         </Container>
-      </Zoom>
+      </Fade>
     );
   }
 }

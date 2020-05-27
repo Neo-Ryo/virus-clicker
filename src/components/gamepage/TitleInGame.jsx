@@ -33,7 +33,7 @@ function TitleInGame({ counter }) {
     <>
       <h3 className={styles.titleInGame}>Virus clicker</h3>
       {/* <h6 className={styles.scoreCount}>{`Score : ${counter}`}</h6> */}
-      <Flash>{skinMessage}</Flash>
+      {/* <Flash>{skinMessage}</Flash> */}
     </>
   );
 }

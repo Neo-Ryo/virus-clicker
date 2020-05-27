@@ -1,10 +1,12 @@
 import React from 'react';
-import {  Loader } from 'semantic-ui-react';
+import { Loader } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { Table } from 'reactstrap';
+import { Table, Badge, Button, Container } from 'reactstrap';
 
 import Axios from 'axios';
 import Flash from 'react-reveal/Flash';
+import { Link } from 'react-router-dom';
+import Avatar from './pika.png';
 
 class TableScoreInGame extends React.Component {
   constructor(props) {
@@ -39,7 +41,7 @@ class TableScoreInGame extends React.Component {
         uuid: res.data.TeamUuid,
       });
     } finally {
-      this.setState({ isLoading: true });
+      this.setState({ isLoading: false });
     }
   }
 
@@ -95,7 +97,7 @@ class TableScoreInGame extends React.Component {
 
     return (
       <>
-        <Table >
+        <Table borderless style={{ margin: '15px 0 0 0', width: '95%' }}>
           <tbody>
             {arrayOk
 
@@ -103,32 +105,60 @@ class TableScoreInGame extends React.Component {
                 <tr>
                   <td style={{ verticalAlign: 'middle', padding: 0 }}>
                     <img
-                      src={team.logo}
-                      style={{ width: '70%' }}
+                      src={isLoading ? Avatar : team.logo}
+                      style={{ width: '80px' }}
                       alt="teamLogo"
                     />
                   </td>
-                  <td style={{ verticalAlign: 'middle', textAlign: 'start' }}>
-                   <h4>{team.name}</h4> 
-                   <h6> {` ${team.users.length}
-                  Players`}</h6>
+                  <td
+                    style={{
+                      verticalAlign: 'middle',
+                      textAlign: 'start',
+                      padding: 0,
+                    }}
+                  >
+                    <h5>{team.name}</h5>
+                    <Badge color="secondary">{` ${team.users.length}
+                  Players`}</Badge>
                   </td>
-                 
 
                   <td style={{ verticalAlign: 'middle' }}>
                     {team.uuid === uuid ? (
                       <Flash>
-                        <h3>{team.score}</h3>
+                        <Badge style={{ width: '60px' }} color="warning" pill>
+                          {team.score}
+                        </Badge>
                       </Flash>
                     ) : (
-                      <>{team.score}</>
+                      <Badge style={{ width: '60px' }} color="warning" pill>
+                        {team.score}
+                      </Badge>
                     )}
                   </td>
+                  {/* <td style={{ verticalAlign: 'middle', padding: 0 }}>
+                    <img
+                      src={isLoading ? Avatar : team.logo}
+                      style={{ width: '80px' }}
+                      alt="teamLogo"
+                    />
+                  </td> */}
                 </tr>
               ))
               .sort()}
           </tbody>
         </Table>
+        <Container style={{ textAlign: 'end' }}>
+          <Link to="/tableScore">
+            <Button
+              size="sm"
+              style={{ width: '30px' }}
+              onClick={() => ''}
+              color="danger"
+            >
+              +
+            </Button>
+          </Link>
+        </Container>
       </>
     );
   }

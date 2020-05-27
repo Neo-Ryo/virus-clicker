@@ -25,7 +25,7 @@ function CardsGroup({
           margin: 0,
           width: '100%',
           height: '200px',
-          background: '#ffc107',
+          background: '#cce2ff',
         }}
       />
       <Card.Content extra>

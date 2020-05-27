@@ -58,7 +58,7 @@ class StartVirusButton extends React.Component {
                   src={Virus}
                   alt="logo"
                 />
-                <Fade bottom when={show}>
+                <Fade  when={show}>
                   {uuid ? (
                     <Link to={`/game/${uuid}`}>
                       <Button
