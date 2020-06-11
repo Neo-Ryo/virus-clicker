@@ -1,7 +1,7 @@
 import React from 'react';
 import { Loader } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { Table, Badge, Button, Container } from 'reactstrap';
+import { Table, Badge, Button, Container, Row, Col } from 'reactstrap';
 
 import Axios from 'axios';
 import Flash from 'react-reveal/Flash';
@@ -91,8 +91,49 @@ class TableScoreInGame extends React.Component {
 
   render() {
     const { isLoading, uuid, arrayOk } = this.state;
+    const { counter } = this.props;
     if (isLoading) {
       return <Loader active inline="centered" />;
+    }
+    let skinMessage;
+    switch (true) {
+      case counter > 20 && counter < 30:
+        skinMessage = (
+          <h4 style={{ color: '#000066', fontFamily: 'Bangers' }}>
+            New Skin unlocked !
+          </h4>
+        );
+        break;
+      case counter > 40 && counter < 50:
+        skinMessage = (
+          <h4 style={{ color: '#000066', fontFamily: 'Bangers' }}>
+            New Skin unlocked !
+          </h4>
+        );
+        break;
+      case counter > 60 && counter < 70:
+        skinMessage = (
+          <h4 style={{ color: '#000066', fontFamily: 'Bangers' }}>
+            New Skin unlocked !
+          </h4>
+        );
+        break;
+      case counter > 70:
+        skinMessage = (
+          <h4 style={{ color: '#000066', fontFamily: 'Bangers' }}>
+            Keep going !
+          </h4>
+        );
+        break;
+      case counter > 100:
+        skinMessage = (
+          <h4 style={{ color: '#000066', fontFamily: 'Bangers' }}>
+            Don't Stop !
+          </h4>
+        );
+        break;
+      default:
+        skinMessage = '';
     }
 
     return (
@@ -118,8 +159,7 @@ class TableScoreInGame extends React.Component {
                     }}
                   >
                     <h5>{team.name}</h5>
-                    <Badge color="secondary">{` ${team.users.length}
-                  Players`}</Badge>
+                    <Badge color="secondary">{`${team.users.length}Players`}</Badge>
                   </td>
 
                   <td style={{ verticalAlign: 'middle' }}>
@@ -147,17 +187,29 @@ class TableScoreInGame extends React.Component {
               .sort()}
           </tbody>
         </Table>
-        <Container style={{ textAlign: 'end' }}>
-          <Link to="/tableScore">
-            <Button
-              size="sm"
-              style={{ width: '30px' }}
-              onClick={() => ''}
-              color="danger"
+        <Container>
+          <Row>
+            <Col
+              xs={{ size: '8', offset: 2 }}
+              sm={{ size: '8', offset: 2 }}
+              md={{ size: '8', offset: 2 }}
+              lg={{ size: '8', offset: 2 }}
             >
-              +
-            </Button>
-          </Link>
+              <Flash>{skinMessage}</Flash>
+            </Col>
+            <Col xs="2" sm="2" md="2" lg="2" style={{ textAlign: 'end' }}>
+              <Link to="/tableScore">
+                <Button
+                  size="sm"
+                  style={{ width: '30px' }}
+                  onClick={() => ''}
+                  color="danger"
+                >
+                  +
+                </Button>
+              </Link>
+            </Col>
+          </Row>
         </Container>
       </>
     );

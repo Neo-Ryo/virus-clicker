@@ -237,8 +237,6 @@ class GamePage extends React.Component {
             </Col>
           </Row>
 
-        
-
           <Row>
             <Col
               style={{ textAlign: 'center', padding: 0 }}
@@ -249,8 +247,8 @@ class GamePage extends React.Component {
             >
               <TableScoreInGame teamsData={teamsData} counter={counter} />
             </Col>
-            </Row>
-            {/* <Col
+          </Row>
+          {/* <Col
               style={{ textAlign: 'center', alignSelf: 'center' }}
               xs={{ size: '4', offset: 0 }}
               sm={{ size: '4', offset: 0 }}
@@ -263,8 +261,8 @@ class GamePage extends React.Component {
                 <Planet percentage={(100 * teamScore) / total} />
               )}
             </Col> */}
-            
-            <Row>
+
+          <Row>
             <Col
               style={{ textAlign: 'center', margin: 'auto' }}
               xs={{ size: '12', offset: 0 }}

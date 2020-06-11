@@ -1,17 +1,12 @@
 import React from 'react';
 import Zoom from 'react-reveal/Zoom';
 import axios from 'axios';
-import {
-  Form,
-  Image,
-  Loader,
-  Message,
-} from 'semantic-ui-react';
+import { Form, Image, Loader, Message } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
+import { Button, Container, Row, Col } from 'reactstrap';
 import CardsGroup from './CardsGroup';
 import styles from './Register.module.css';
 import Wilson from './gamepage/images/matthew.png';
-import { Button, Container, Row, Col } from 'reactstrap';
 
 class Register extends React.Component {
   constructor(props) {
@@ -361,7 +356,9 @@ class Register extends React.Component {
                 </Row>
                 <Row>
                   <Col>
-                    <Form.Field style={{ margin: '5px 0px 10px 0px', display: 'none' }}>
+                    <Form.Field
+                      style={{ margin: '5px 0px 10px 0px', display: 'none' }}
+                    >
                       <Form.Input
                         required
                         placeholder="https://image.png ou https://image.jpg"

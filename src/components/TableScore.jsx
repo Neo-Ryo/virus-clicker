@@ -3,7 +3,6 @@ import Zoom from 'react-reveal/Zoom';
 import axios from 'axios';
 import {
   Table,
-  Button,
   Container,
   Header,
   Image,
@@ -12,6 +11,7 @@ import {
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import styles from './gamepage/styles/GamePage.module.css';
+import { Button } from 'reactstrap';
 
 class TableScore extends React.Component {
   constructor(props) {
@@ -62,7 +62,7 @@ class TableScore extends React.Component {
     if (isLoading) {
       return (
         <Container style={{ paddingTop: '300px' }}>
-          <Loader active inline="centered" size="huge">
+          <Loader inverted active inline="centered" size="huge">
             Loading
           </Loader>
         </Container>
@@ -164,12 +164,9 @@ class TableScore extends React.Component {
               </Table.Body>
             </Table>
             <Link to="/game">
-              <Button
-                size="mini"
-                color="teal"
-                onClick={() => ''}
-                content="Back"
-              />
+              <Button type="button" color="danger">
+                Back
+              </Button>
             </Link>
           </Zoom>
         </Container>
