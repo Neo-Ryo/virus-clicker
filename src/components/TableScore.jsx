@@ -9,9 +9,9 @@ import {
   Rating,
   Loader,
 } from 'semantic-ui-react';
+import { Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import styles from './gamepage/styles/GamePage.module.css';
-import { Button } from 'reactstrap';
 
 class TableScore extends React.Component {
   constructor(props) {
