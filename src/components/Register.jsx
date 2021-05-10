@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Zoom from 'react-reveal/Zoom';
 import axios from 'axios';
 import { Form, Image, Loader, Message } from 'semantic-ui-react';
@@ -8,95 +8,82 @@ import CardsGroup from './CardsGroup';
 import styles from './Register.module.css';
 import Wilson from './gamepage/images/matthew.png';
 
-class Register extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      teams: [],
-      users: [],
-      pseudoUser: '',
-      teamUuid: null,
-      wantCreateATeam: false,
-      teamName: '',
-      teamLogo: '',
-      randomPic: '',
-      isLoading: true,
-      canPlayGame: false,
-      error: false,
-      errorUrl: false,
-      errorPseudoJoin: false,
-      errorPseudoCreate: false,
-      errorTeam: false,
-    };
-    this.toggleCreationTeamPanel = this.toggleCreationTeamPanel.bind(this);
-    this.chooseTeam = this.chooseTeam.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.submitJoinTeam = this.submitJoinTeam.bind(this);
-    this.submitCreateTeam = this.submitCreateTeam.bind(this);
-    this.getRandomPic = this.getRandomPic.bind(this);
-  }
+export default function Register() {
+  const [teams, setTeams] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [pseudoUser, setPseudoUser] = useState('');
+  const [TeamUuid, setTeamUuid] = useState('');
+  // TeamUuid: null,
+  const [wantCreateATeam, setWantCreateATeam] = useState(false);
+  const [teamName, setTeamName] = useState('');
+  const [teamLogo, setTeamLogo] = useState('');
+  const [randomPic, setRandomPic] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [canPlayGame, setCanPlayGame] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorUrl, setErrorUrl] = useState(false);
+  const [errorPseudoJoin, setErrorPseudoJoin] = useState(false);
+  const [errorPseudoCreate, setErrorPseudoCreate] = useState(false);
+  const [errorTeam, setErrorTeam] = useState(false);
 
-  async componentDidMount() {
+  const getAllData = async () => {
     try {
-      await axios
-        .get('https://virusclicker.herokuapp.com/teams')
-        .then((res) => {
-          this.setState({ teams: res.data });
-        });
-      await axios
-        .get('https://virusclicker.herokuapp.com/users')
-        .then((res) => {
-          this.setState({ users: res.data });
-        });
+      await axios.get('http://localhost:8000/teams').then((res) => {
+        console.log('TEAM CALL DATA: ', res.data);
+        setTeams(res.data);
+      });
+      await axios.get('http://localhost:8000/users').then((res) => {
+        console.log('USERS CALL DATA: ', res.data);
+        setUsers(res.data);
+      });
+    } catch (err) {
+      console.log('ERROR HANDLE...', err.message);
     } finally {
-      this.setState({ isLoading: false });
+      setIsLoading(false);
     }
-  }
+  };
 
-  async getRandomPic() {
+  useEffect(() => {
+    getAllData();
+  }, []);
+
+  const getRandomPic = async () => {
     const randomNumber = Math.floor(Math.random() * 807);
     const res = await axios.get(
       `https://pokeapi.co/api/v2/pokemon/${randomNumber}`
     );
-    this.setState({ teamLogo: res.data.sprites.front_default });
-  }
+    setTeamLogo(res.data.sprites.front_default);
+  };
 
-  async submitJoinTeam(e) {
-    const { teamUuid, pseudoUser } = this.state;
+  const submitJoinTeam = async (e) => {
     e.preventDefault(); // prevent page reload
 
     try {
-      const { data } = await axios.get(
-        'https://virusclicker.herokuapp.com/users'
-      );
+      const { data } = await axios.get('http://localhost:8000/users');
       if (
         !data.find(
           (user) => user.pseudo.toLowerCase() === pseudoUser.toLowerCase()
         ) &&
-        teamUuid &&
+        TeamUuid &&
         pseudoUser
       ) {
-        const res = await axios.post(
-          'https://virusclicker.herokuapp.com/users',
-          {
-            pseudo: pseudoUser,
-            team: teamUuid,
-          }
-        );
+        const res = await axios.post('http://localhost:8000/users', {
+          pseudo: pseudoUser,
+          team: TeamUuid,
+        });
         window.localStorage.setItem('uuid', res.data.uuid);
-        this.setState({ canPlayGame: true });
+        setCanPlayGame(true);
       } else {
-        this.setState({ errorPseudoJoin: true });
+        setErrorPseudoJoin(true);
       }
     } catch (err) {
-      this.setState({ error: err });
+      setError(err);
     } finally {
-      this.setState({ isLoading: false });
+      setIsLoading(false);
     }
-  }
+  };
 
-  async submitCreateTeam(event) {
-    const { teams, teamName, teamLogo, pseudoUser, users } = this.state;
+  const submitCreateTeam = async (event) => {
     event.preventDefault();
 
     try {
@@ -111,87 +98,71 @@ class Register extends React.Component {
           (user) => user.pseudo.toLowerCase() === pseudoUser.toLowerCase()
         )
       ) {
-        const resTeam = await axios.post(
-          'https://virusclicker.herokuapp.com/teams',
-          {
-            name: teamName,
-            logo: teamLogo,
-          }
-        );
+        const resTeam = await axios.post('http://localhost:8000/teams', {
+          name: teamName,
+          logo: teamLogo,
+        });
 
-        const resUser = await axios.post(
-          'https://virusclicker.herokuapp.com/users',
-          {
-            pseudo: pseudoUser,
-            team: resTeam.data.uuid,
-          }
-        );
+        const resUser = await axios.post('http://localhost:8000/users', {
+          pseudo: pseudoUser,
+          team: resTeam.data.uuid,
+        });
 
         localStorage.setItem('uuid', resUser.data.uuid);
 
-        this.setState({ canPlayGame: true });
+        setCanPlayGame(true);
       } else if (
         teams.find((team) => team.name.toLowerCase() === teamName.toLowerCase())
       ) {
-        this.setState({ errorTeam: true });
+        setErrorTeam(true);
       } else if (
         users.find(
           (user) => user.pseudo.toLowerCase() === pseudoUser.toLowerCase()
         )
       ) {
-        this.setState({ errorPseudoCreate: true });
+        setErrorPseudoCreate(true);
       }
+      setIsLoading(false);
     } catch (err) {
-      this.setState({ error: err });
-      this.setState({ errorUrl: true });
-    } finally {
-      this.setState({ isLoading: false });
+      setError(err);
+      setErrorUrl(true);
     }
-  }
+  };
 
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
+  const handlePseudoChange = (event) => {
+    setPseudoUser(event.target.value);
+  };
 
-  chooseTeam(id) {
-    this.setState({ teamUuid: id });
-  }
+  const handleTeamNameChange = (event) => {
+    setTeamName(event.target.value);
+  };
 
-  toggleCreationTeamPanel() {
-    const { wantCreateATeam } = this.state;
-    this.setState({ wantCreateATeam: !wantCreateATeam });
-  }
+  const handleTeamLogoChange = (event) => {
+    setTeamLogo(event.target.value);
+  };
 
-  render() {
-    const {
-      canPlayGame,
-      teams,
-      pseudoUser,
-      wantCreateATeam,
-      teamName,
-      teamLogo,
-      isLoading,
-      error,
-      errorPseudoJoin,
-      errorTeam,
-      errorUrl,
-      errorPseudoCreate,
-      teamUuid,
-      randomPic,
-    } = this.state;
-    if (isLoading) {
-      return (
-        <Container style={{ paddingTop: '300px' }}>
-          <Loader active inverted inline="centered" size="huge">
-            Loading
-          </Loader>
-        </Container>
-      );
-    }
+  const handlePseudoUserChange = (event) => {
+    setPseudoUser(event.target.value);
+  };
 
-    if (canPlayGame || window.localStorage.getItem('uuid')) {
-      return <Redirect to="/game" />;
-    }
+  const chooseTeam = (id) => {
+    setTeamUuid(id);
+  };
+
+  const toggleCreationTeamPanel = () => {
+    setWantCreateATeam(!wantCreateATeam);
+  };
+  if (isLoading) {
+    return (
+      <Container style={{ paddingTop: '300px' }}>
+        <Loader active inverted inline="centered" size="huge">
+          Loading
+        </Loader>
+      </Container>
+    );
+  } else if (canPlayGame || window.localStorage.getItem('uuid')) {
+    return <Redirect to="/game" />;
+  } else {
     return (
       <div>
         <h1 className={styles.title}>Register</h1>
@@ -204,7 +175,7 @@ class Register extends React.Component {
                   outline
                   color="danger"
                   size="lg"
-                  onClick={this.toggleCreationTeamPanel}
+                  onClick={() => toggleCreationTeamPanel()}
                   className={styles.buttons}
                 >
                   Join a team
@@ -227,7 +198,7 @@ class Register extends React.Component {
                   outline
                   color="danger"
                   size="lg"
-                  onClick={this.toggleCreationTeamPanel}
+                  onClick={() => toggleCreationTeamPanel()}
                   className={styles.buttons}
                 >
                   Create a team
@@ -246,76 +217,72 @@ class Register extends React.Component {
           </Row>
 
           {!wantCreateATeam && (
-            <>
-              <Form size="large" onSubmit={this.submitJoinTeam}>
-                <Row>
-                  <Col>
-                    <Form.Field style={{ margin: '10px 0px' }}>
-                      <Form.Input
-                        required
-                        placeholder="Pseudo"
-                        value={pseudoUser}
-                        name="pseudoUser"
-                        onChange={this.handleChange}
-                        error={
-                          errorPseudoJoin && {
-                            content: 'This pseudo is already taken',
-                            pointing: 'below',
-                          }
+            <Form size="large" onSubmit={submitJoinTeam}>
+              <Row>
+                <Col>
+                  <Form.Field style={{ margin: '10px 0px' }}>
+                    <Form.Input
+                      required
+                      placeholder="Pseudo"
+                      value={pseudoUser}
+                      name="pseudoUser"
+                      onChange={(e) => handlePseudoChange(e)}
+                      error={
+                        errorPseudoJoin && {
+                          content: 'This pseudo is already taken',
+                          pointing: 'below',
                         }
-                      />
-                    </Form.Field>
+                      }
+                    />
+                  </Form.Field>
+                </Col>
+              </Row>
+
+              <Zoom>
+                <Row style={{ justifyContent: 'center' }}>
+                  {teams
+                    .filter((team) => team.logo.includes('PokeAPI'))
+                    .map(({ uuid, logo, name, createdAt, Users }) => (
+                      <Col style={{ marginTop: '20px' }}>
+                        <CardsGroup
+                          key={uuid}
+                          image={logo}
+                          header={name}
+                          date={createdAt}
+                          usersNumber={Users.length}
+                          onClick={() => chooseTeam(uuid)}
+                          TeamUuid={TeamUuid}
+                          uuid={uuid}
+                        />
+                      </Col>
+                    ))}
+                </Row>
+              </Zoom>
+              <Zoom left>
+                <Row>
+                  <Col style={{ textAlign: 'center' }}>
+                    {!wantCreateATeam && (
+                      <Button
+                        color="danger"
+                        type="submit"
+                        value=""
+                        disabled={isLoading}
+                        size="lg"
+                        style={{ margin: '50px' }}
+                        className={styles.buttons}
+                      >
+                        {!isLoading ? 'Start' : 'Loading...'}
+                      </Button>
+                    )}
                   </Col>
                 </Row>
-
-                <Row style={{ justifyContent: 'center' }}>
-                  <Zoom>
-                    {teams
-                      .filter((team) => team.logo.includes('PokeAPI'))
-                      .map(({ uuid, logo, name, createdAt, users }) => {
-                        return (
-                          <Col style={{ marginTop: '20px' }}>
-                            <CardsGroup
-                              key={uuid}
-                              image={logo}
-                              header={name}
-                              date={createdAt}
-                              usersNumber={users.length}
-                              onClick={() => this.chooseTeam(uuid)}
-                              teamUuid={teamUuid}
-                              uuid={uuid}
-                            />
-                          </Col>
-                        );
-                      })}
-                  </Zoom>
-                </Row>
-                <Zoom left>
-                  <Row>
-                    <Col style={{ textAlign: 'center' }}>
-                      {!wantCreateATeam && (
-                        <Button
-                          color="danger"
-                          type="submit"
-                          value=""
-                          disabled={isLoading}
-                          size="lg"
-                          style={{ margin: '50px' }}
-                          className={styles.buttons}
-                        >
-                          {!isLoading ? 'Start' : 'Loading...'}
-                        </Button>
-                      )}
-                    </Col>
-                  </Row>
-                </Zoom>
-              </Form>
-            </>
+              </Zoom>
+            </Form>
           )}
 
           {wantCreateATeam && (
             <>
-              <Form size="large" onSubmit={this.submitCreateTeam}>
+              <Form size="large" onSubmit={submitCreateTeam}>
                 <Row>
                   <Col>
                     <Form.Field style={{ margin: '10px 0px 5px 0px' }}>
@@ -324,7 +291,7 @@ class Register extends React.Component {
                         placeholder="Pseudo"
                         value={pseudoUser}
                         name="pseudoUser"
-                        onChange={this.handleChange}
+                        onChange={(e) => handlePseudoUserChange(e)}
                         error={
                           errorPseudoCreate && {
                             content: 'This pseudo is already taken',
@@ -343,7 +310,7 @@ class Register extends React.Component {
                         placeholder="Team name"
                         value={teamName}
                         name="teamName"
-                        onChange={this.handleChange}
+                        onChange={(e) => handleTeamNameChange(e)}
                         error={
                           errorTeam && {
                             content: "This team's name is already taken",
@@ -364,7 +331,7 @@ class Register extends React.Component {
                         placeholder="https://image.png ou https://image.jpg"
                         value={teamLogo}
                         name="teamLogo"
-                        onChange={this.handleChange}
+                        onChange={(e) => handleTeamLogoChange(e)}
                         error={
                           errorUrl && {
                             content: 'This URL is not valid',
@@ -396,7 +363,7 @@ class Register extends React.Component {
                       textAlign="center"
                       color="warning"
                       type="button"
-                      onClick={this.getRandomPic}
+                      onClick={() => getRandomPic()}
                       disabled={isLoading}
                       size="lg"
                       className={styles.buttons}
@@ -438,5 +405,3 @@ class Register extends React.Component {
     );
   }
 }
-
-export default Register;

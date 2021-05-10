@@ -26,6 +26,8 @@ class GamePage extends React.Component {
       counter: 0,
       total: 500,
       teamsData: [],
+      userInfo: {},
+      teamInfo: {},
       userTeamUuid: '',
       teamScore: '',
       isLoading: true,
@@ -59,11 +61,15 @@ class GamePage extends React.Component {
     try {
       const uuid = window.localStorage.getItem('uuid');
       const resUuidUser = await axios.get(
-        `https://virusclicker.herokuapp.com/users/${uuid}`
+        `http://localhost:8000/users/${uuid}`
       );
-      const resTeam = await axios.get(
-        `https://virusclicker.herokuapp.com/teams`
+      this.setState({ userInfo: resUuidUser.data });
+      const resTeam = await axios.get(`http://localhost:8000/teams`);
+      const myTeamInfos = resTeam.data.filter(
+        (team) => team.uuid === resUuidUser.data.TeamUuid
       );
+      this.setState({ teamInfo: myTeamInfos[0] });
+      console.log('COUCOU', myTeamInfos);
 
       const teamsWithScores = resTeam.data.map((team) => {
         return {
@@ -94,7 +100,7 @@ class GamePage extends React.Component {
     event.preventDefault();
     const uuid = window.localStorage.getItem('uuid');
     const { counter } = this.state;
-    axios.put(`https://virusclicker.herokuapp.com/users/${uuid}/click`);
+    axios.put(`http://localhost:8000/users/${uuid}/click`);
     this.setState({ counter: counter + 1 });
   }
 
@@ -146,6 +152,8 @@ class GamePage extends React.Component {
       covid19,
       teamScore,
       teamLoader,
+      userInfo,
+      teamInfo,
     } = this.state;
     if (isLoading) {
       return (
@@ -173,7 +181,11 @@ class GamePage extends React.Component {
               md={{ size: '3', offset: 0 }}
               lg={{ size: '2', offset: 2 }}
             >
-              <UserInfos />
+              <UserInfos
+                pseudo={userInfo.pseudo}
+                team={teamInfo.name}
+                logo={teamInfo.logo}
+              />
             </Col>
             <Col
               style={{ textAlign: 'center', alignSelf: 'center', top: '5px' }}

@@ -28,33 +28,31 @@ class TableScore extends React.Component {
     this.getOk();
   }
 
-  getOk() {
-    const uuid = window.localStorage.getItem('uuid');
-    axios
-      .get(`https://virusclicker.herokuapp.com/users/${uuid}`)
-      .then((res) => res.data)
-      .then((data) => {
-        this.setState({ counter: data.score });
-        return axios
-          .get(`https://virusclicker.herokuapp.com/teams`)
-          .then((res) => {
-            this.setState({ teamsData: res.data });
-          });
-      })
-      .then(() => {
-        this.setState((prevState) => ({
-          ...prevState,
-          teamsData: prevState.teamsData.map((team) => {
-            return {
-              ...team,
-              score: team.users
-                .map((user) => user.score)
-                .reduce((somme, score) => somme + score, 0),
-            };
-          }),
-        }));
-      })
-      .then(() => this.setState({ isLoading: false }));
+  async getOk() {
+    try {
+      const uuid = window.localStorage.getItem('uuid');
+      const res = await axios.get(`http://localhost:8000/users/${uuid}`);
+      this.setState({ counter: res.data.score });
+      const resTeams = await axios.get(`http://localhost:8000/teams`);
+      this.setState({ teamsData: resTeams.data });
+
+      this.setState((prevState) => ({
+        ...prevState,
+        teamsData: prevState.teamsData.map((team) => {
+          return {
+            ...team,
+            score: team.Users.map((user) => user.score).reduce(
+              (somme, score) => somme + score,
+              0
+            ),
+          };
+        }),
+      }));
+
+      this.setState({ isLoading: false });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   render() {
