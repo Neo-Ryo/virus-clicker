@@ -28,14 +28,18 @@ export default function Register() {
 
   const getAllData = async () => {
     try {
-      await axios.get('http://localhost:8000/teams').then((res) => {
-        console.log('TEAM CALL DATA: ', res.data);
-        setTeams(res.data);
-      });
-      await axios.get('http://localhost:8000/users').then((res) => {
-        console.log('USERS CALL DATA: ', res.data);
-        setUsers(res.data);
-      });
+      await axios
+        .get('https://virus-clicker.herokuapp.com/teams')
+        .then((res) => {
+          console.log('TEAM CALL DATA: ', res.data);
+          setTeams(res.data);
+        });
+      await axios
+        .get('https://virus-clicker.herokuapp.com/users')
+        .then((res) => {
+          console.log('USERS CALL DATA: ', res.data);
+          setUsers(res.data);
+        });
     } catch (err) {
       console.log('ERROR HANDLE...', err.message);
     } finally {
@@ -59,7 +63,9 @@ export default function Register() {
     e.preventDefault(); // prevent page reload
 
     try {
-      const { data } = await axios.get('http://localhost:8000/users');
+      const { data } = await axios.get(
+        'https://virus-clicker.herokuapp.com/users'
+      );
       if (
         !data.find(
           (user) => user.pseudo.toLowerCase() === pseudoUser.toLowerCase()
@@ -67,10 +73,13 @@ export default function Register() {
         TeamUuid &&
         pseudoUser
       ) {
-        const res = await axios.post('http://localhost:8000/users', {
-          pseudo: pseudoUser,
-          team: TeamUuid,
-        });
+        const res = await axios.post(
+          'https://virus-clicker.herokuapp.com/users',
+          {
+            pseudo: pseudoUser,
+            team: TeamUuid,
+          }
+        );
         window.localStorage.setItem('uuid', res.data.uuid);
         setCanPlayGame(true);
       } else {
@@ -98,15 +107,21 @@ export default function Register() {
           (user) => user.pseudo.toLowerCase() === pseudoUser.toLowerCase()
         )
       ) {
-        const resTeam = await axios.post('http://localhost:8000/teams', {
-          name: teamName,
-          logo: teamLogo,
-        });
+        const resTeam = await axios.post(
+          'https://virus-clicker.herokuapp.com/teams',
+          {
+            name: teamName,
+            logo: teamLogo,
+          }
+        );
 
-        const resUser = await axios.post('http://localhost:8000/users', {
-          pseudo: pseudoUser,
-          team: resTeam.data.uuid,
-        });
+        const resUser = await axios.post(
+          'https://virus-clicker.herokuapp.com/users',
+          {
+            pseudo: pseudoUser,
+            team: resTeam.data.uuid,
+          }
+        );
 
         localStorage.setItem('uuid', resUser.data.uuid);
 

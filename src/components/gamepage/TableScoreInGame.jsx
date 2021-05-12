@@ -34,7 +34,9 @@ class TableScoreInGame extends React.Component {
   async getUser() {
     const uuid = window.localStorage.getItem('uuid');
     try {
-      const res = await Axios.get(`http://localhost:8000/users/${uuid}`);
+      const res = await Axios.get(
+        `https://virus-clicker.herokuapp.com/users/${uuid}`
+      );
       this.setState({
         uuid: res.data.TeamUuid,
       });

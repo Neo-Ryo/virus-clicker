@@ -14,7 +14,7 @@ export default function User({ pseudo, team, logo, isLoading, error }) {
   //   const uuid = window.localStorage.getItem('uuid');
   //   // const { userPseudo, logo, team } = this.state;
   //   try {
-  //     const res = await axios.get(`http://localhost:8000/users/${uuid}`);
+  //     const res = await axios.get(`https://virus-clicker.herokuapp.com/users/${uuid}`);
   //     this.setState({
   //       userPseudo: res.data.pseudo,
   //       logo: res.data.Team.logo,

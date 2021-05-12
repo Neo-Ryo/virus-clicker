@@ -61,10 +61,12 @@ class GamePage extends React.Component {
     try {
       const uuid = window.localStorage.getItem('uuid');
       const resUuidUser = await axios.get(
-        `http://localhost:8000/users/${uuid}`
+        `https://virus-clicker.herokuapp.com/users/${uuid}`
       );
       this.setState({ userInfo: resUuidUser.data });
-      const resTeam = await axios.get(`http://localhost:8000/teams`);
+      const resTeam = await axios.get(
+        `https://virus-clicker.herokuapp.com/teams`
+      );
       const myTeamInfos = resTeam.data.filter(
         (team) => team.uuid === resUuidUser.data.TeamUuid
       );
@@ -100,7 +102,7 @@ class GamePage extends React.Component {
     event.preventDefault();
     const uuid = window.localStorage.getItem('uuid');
     const { counter } = this.state;
-    axios.put(`http://localhost:8000/users/${uuid}/click`);
+    axios.put(`https://virus-clicker.herokuapp.com/users/${uuid}/click`);
     this.setState({ counter: counter + 1 });
   }
 

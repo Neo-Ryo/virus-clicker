@@ -31,9 +31,13 @@ class TableScore extends React.Component {
   async getOk() {
     try {
       const uuid = window.localStorage.getItem('uuid');
-      const res = await axios.get(`http://localhost:8000/users/${uuid}`);
+      const res = await axios.get(
+        `https://virus-clicker.herokuapp.com/users/${uuid}`
+      );
       this.setState({ counter: res.data.score });
-      const resTeams = await axios.get(`http://localhost:8000/teams`);
+      const resTeams = await axios.get(
+        `https://virus-clicker.herokuapp.com/teams`
+      );
       this.setState({ teamsData: resTeams.data });
 
       this.setState((prevState) => ({
